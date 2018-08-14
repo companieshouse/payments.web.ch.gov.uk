@@ -5,7 +5,7 @@
 
 	<groupId>uk.gov.companieshouse</groupId>
 	<artifactId>payments.web.ch.gov.uk</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>unversioned</version>
 	<packaging>jar</packaging>
 
 	<name>payments.web.ch.gov.uk</name>
