@@ -65,5 +65,11 @@
         </plugins>
     </build>
 
+    <repositories>
+        <repository>
+            <id>virtual-release</id>
+            <url>${MAVEN_REPOSITORY_URL}/virtual-release</url>
+        </repository>
+    </repositories>
 
 </project>
