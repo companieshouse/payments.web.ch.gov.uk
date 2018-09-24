@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.payments.web.ch.gov.uk;
+package uk.gov.companieshouse.web.payments;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
