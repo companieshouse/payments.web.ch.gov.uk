@@ -13,19 +13,21 @@
         <form th:action="@{''}" th:object="${choosePaymentType}" method="post"
               class="form" id="choosePaymentType">
             <div class="grid-row">
-                <table>
-                    <tr>
-                        <th>Payment Description</th>
-                        <th>Amount to Pay</th>
-                    </tr>
-                    <tr>
-                        <td>Late Filing Penalty</td>
-                        <td>100</td>
-                    </tr>
-                </table>
+                <div class="column-one-half">
+                    <b>Payment Description</b>
+                </div>
+                <div class="column-one-half">
+                    <b>Amount to Pay</b>
+                </div>
             </div>
-
-            <p></p>
+            <div class="grid-row">
+                <div class="column-one-half">
+                    <p>Late Filing Penalty</p>
+                </div>
+                <div class="column-one-half">
+                    <p>100</p>
+                </div>
+            </div>
             <div class="form-group">
                 <input class="button" type="submit" role="button" value="Continue"/>
             </div>
