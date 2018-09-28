@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/payments/{paymentId}/payment-summary")
 public class PaymentSummaryController  {
 
-    private static final String TEMPLATE = "payments/paymentSummary";
+    static final String PAYMENT_SUMMARY_VIEW = "payments/paymentSummary";
 
     @GetMapping
     public String getPaymentSummary(@PathVariable String paymentId,
                                      Model model) {
-        return TEMPLATE;
+        return PAYMENT_SUMMARY_VIEW;
     }
+
 }
