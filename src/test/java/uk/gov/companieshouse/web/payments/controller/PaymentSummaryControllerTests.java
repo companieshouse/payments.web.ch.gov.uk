@@ -15,17 +15,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @ExtendWith(MockitoExtension.class)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PaymentSummaryControllerTests {
+
+    private static final String PAYMENT_ID = "paymentId";
+    private static final String PAYMENT_SUMMARY_PATH = "/payments/" + PAYMENT_ID + "/payment-summary";
 
     private MockMvc mockMvc;
 
     @InjectMocks
     private PaymentSummaryController controller;
-
-    private static final String PAYMENT_ID = "paymentId";
-    private static final String PAYMENT_SUMMARY_PATH = "/payments/" + PAYMENT_ID + "/payment-summary";
-    private static final String PAYMENT_SUMMARY_VIEW = "payments/paymentSummary";
 
     @BeforeEach
     private void setup() {
@@ -38,6 +36,6 @@ public class PaymentSummaryControllerTests {
 
         this.mockMvc.perform(get(PAYMENT_SUMMARY_PATH))
                 .andExpect(status().isOk())
-                .andExpect(view().name(PAYMENT_SUMMARY_VIEW));
+                .andExpect(view().name(PaymentSummaryController.PAYMENT_SUMMARY_VIEW));
     }
 }
