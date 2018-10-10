@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <div th:fragment="fieldErrorRow">
+            <div class="grid-row" th:class="${#fields.hasErrors('__${currentField}__')} ? '' : 'error-hidden'">
+                <div class="govuk-grid-column-one-half">&nbsp;</div>
+                <div class="govuk-grid-column-one-quarter">
+                    <span th:if="${#fields.hasErrors('__${currentField}__')}"
+                          th:id="${currentField} + '-errorId'"
+                          th:each="e : ${#fields.errors('__${currentField}__')}"
+                          th:text="${e}"
+                          class="govuk-error-message">
+                    </span>
+                </div>
+                <div class="govuk-grid-column-one-quarter">
+                    <!-- This fragment will be expanded to support a previous field -->
+                    &nbsp;
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
