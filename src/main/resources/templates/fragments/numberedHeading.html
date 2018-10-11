@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <h1 id="page-title" th:fragment="numberedHeading" class="govuk-heading-l">
+            <!--<span id="page-title-number" class="circle circle-step-large" th:text='${number}'></span>-->
+            <span id="page-title-heading" th:text='${headingText}'></span>
+            <span id="page-title-sub-heading" class="circle-subheading" th:text='${subheading}'></span>
+        </h1>
+    </body>
+</html>
