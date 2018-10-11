@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/payments/{paymentId}/payment-summary")
+@RequestMapping("/payments/{paymentId}/pay")
 public class PaymentSummaryController  {
 
     static final String PAYMENT_SUMMARY_VIEW = "payments/paymentSummary";
