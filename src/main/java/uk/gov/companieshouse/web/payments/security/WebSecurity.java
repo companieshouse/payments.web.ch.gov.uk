@@ -15,7 +15,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Configuration
     @Order(1)
-    public static class CompanyAccountsSecurityFilterConfig extends WebSecurityConfigurerAdapter {
+    public static class PaymentsWebSecurityFilterConfig extends WebSecurityConfigurerAdapter {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
