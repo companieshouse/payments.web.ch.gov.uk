@@ -31,7 +31,7 @@
         <spring-security-core.version>5.1.0.RELEASE</spring-security-core.version>
 
         <!-- Sonar -->
-        <sonar-maven-plugin.version>3.4.0.905</sonar-maven-plugin.version>
+        <sonar-maven-plugin.version>3.5.0.1254</sonar-maven-plugin.version>
         <sonar.host.url>${CODE_ANALYSIS_HOST_URL}</sonar.host.url>
         <sonar.login>${CODE_ANALYSIS_LOGIN}</sonar.login>
         <sonar.password>${CODE_ANALYSIS_PASSWORD}</sonar.password>
