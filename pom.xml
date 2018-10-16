@@ -29,6 +29,12 @@
         <java-session-handler.version>2.0.0-rc4</java-session-handler.version>
         <web-security-java.version>1.1.0-rc1</web-security-java.version>
         <spring-security-core.version>5.1.0.RELEASE</spring-security-core.version>
+
+        <!-- Sonar -->
+        <sonar-maven-plugin.version>3.4.0.905</sonar-maven-plugin.version>
+        <sonar.host.url>${CODE_ANALYSIS_HOST_URL}</sonar.host.url>
+        <sonar.login>${CODE_ANALYSIS_LOGIN}</sonar.login>
+        <sonar.password>${CODE_ANALYSIS_PASSWORD}</sonar.password>
     </properties>
 
     <dependencies>
@@ -72,6 +78,13 @@
             <version>${mockito-junit-jupiter.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.sonarsource.scanner.maven</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+            <version>${sonar-maven-plugin.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>uk.gov.companieshouse</groupId>
             <artifactId>java-session-handler</artifactId>
