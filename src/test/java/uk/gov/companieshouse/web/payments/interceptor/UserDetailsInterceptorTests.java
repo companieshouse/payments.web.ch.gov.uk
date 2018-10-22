@@ -34,6 +34,8 @@ public class UserDetailsInterceptorTests {
 
     private static final String TEST_EMAIL_ADDRESS = "test_email_address";
 
+    private static final Map<String, Object> userProfile = new HashMap<>();
+
     @Mock
     private HttpServletRequest httpServletRequest;
 
@@ -52,8 +54,6 @@ public class UserDetailsInterceptorTests {
     @Test
     @DisplayName("Tests the interceptor adds the user email to the model for GET requests")
     void postHandleForGetRequestSuccess() throws Exception {
-
-        Map<String, Object> userProfile = new HashMap<>();
         userProfile.put(EMAIL_KEY, TEST_EMAIL_ADDRESS);
 
         Map<String, Object> signInInfo = new HashMap<>();
@@ -73,8 +73,6 @@ public class UserDetailsInterceptorTests {
     @Test
     @DisplayName("Tests the interceptor adds the user email to the model for POST requests which don't redirect")
     void postHandleForPostRequestError() throws Exception {
-
-        Map<String, Object> userProfile = new HashMap<>();
         userProfile.put(EMAIL_KEY, TEST_EMAIL_ADDRESS);
 
         Map<String, Object> signInInfo = new HashMap<>();
@@ -108,9 +106,7 @@ public class UserDetailsInterceptorTests {
     @DisplayName("Tests the interceptor does not add the user email to the model if no sign in info is available")
     void postHandleForGetRequestWithoutSignInInfoIgnored() throws Exception {
 
-        Map<String, Object> sessionData = new HashMap<>();
-
-        when(sessionService.getSessionDataFromContext()).thenReturn(sessionData);
+        when(sessionService.getSessionDataFromContext()).thenReturn(new HashMap<>());
         when(httpServletRequest.getMethod()).thenReturn(HttpMethod.GET.toString());
 
         userDetailsInterceptor.postHandle(httpServletRequest, httpServletResponse, new Object(), modelAndView);
