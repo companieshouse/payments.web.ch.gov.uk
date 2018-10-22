@@ -7,7 +7,7 @@
 <div th:fragment="piwik">
   <script th:inline="javascript">
                 (function() {
-                    bindPiwikListener('company-accounts', /*[[${@environment.getProperty('piwik.url')}]]*/, /*[[${@environment.getProperty('piwik.siteId')}]]*/);
+                    bindPiwikListener('company-accounts');
                 })();
             </script>
   <noscript>
