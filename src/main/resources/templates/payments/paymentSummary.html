@@ -8,30 +8,40 @@
     <title>Make Payment</title>
 </head>
 <body>
-    <div id="payments-main-content" layout:fragment="content">
+<div id="payments-main-content" layout:fragment="content">
 
-        <form th:action="@{''}" th:object="${choosePaymentType}" method="post"
-              class="form" id="choosePaymentType">
-            <div class="grid-row">
-                <div class="column-one-half">
-                    <b>Payment Description</b>
-                </div>
-                <div class="column-one-half">
-                    <b>Amount to Pay</b>
+    <form th:action="@{''}" method="post" class="form" id="paymentSummary">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <h1 id="page-title " class="govuk-heading-xl">
+                    <span id="page-title-heading">Review your basket</span>
+                </h1>
+                <p class="govuk-body-l">
+                    Review the items in your basket before continuing.
+                </p>
+                <table class="govuk-table">
+                    <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="col">Item</th>
+                        <th class="govuk-table__header" scope="col">Amount to pay</th>
+                    </tr>
+                    </thead>
+                    <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell " scope="row"></td>
+                        <td class="govuk-table__cell "></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h2 id="page-total" class="govuk-heading-m">
+                    The total amount to pay is
+                </h2>
+                <div class="form-group">
+                    <input id="next-button" class="govuk-button" type="submit" role="button" value="Continue"/>
                 </div>
             </div>
-            <div class="grid-row">
-                <div class="column-one-half">
-                    <p></p>
-                </div>
-                <div class="column-one-half">
-                    <p></p>
-                </div>
-            </div>
-            <div class="form-group">
-                <input class="button" type="submit" role="button" value="Continue"/>
-            </div>
-        </form>
-    </div>
+        </div>
+    </form>
+</div>
 </body>
 </html>

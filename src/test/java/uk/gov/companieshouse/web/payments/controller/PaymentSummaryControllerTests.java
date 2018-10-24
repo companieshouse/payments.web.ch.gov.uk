@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class PaymentSummaryControllerTests {
 
     private static final String PAYMENT_ID = "paymentId";
-    private static final String PAYMENT_SUMMARY_PATH = "/payments/" + PAYMENT_ID + "/payment-summary";
+    private static final String PAYMENT_SUMMARY_PATH = "/payments/" + PAYMENT_ID + "/pay";
 
     private MockMvc mockMvc;
 

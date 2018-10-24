@@ -1,0 +1,20 @@
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+       <title></title>
+   </head>
+   <body>
+       <div th:fragment="totalInput" class="govuk-form-group">
+           <span class="currency-type">£</span>
+           <label class="form-label-bold" th:for="${id}">
+               <span th:id="${id} + '-mobile-label'" th:text="${text}" class="mobile-only-label"></span>
+               <input th:field="*{__${id}__}"
+                     th:id="${id}"
+                     th:name="${id}"
+                     class="govuk-input"
+                     type="text">
+           </label>
+       </div>
+   </body>
+</html>
+
+
