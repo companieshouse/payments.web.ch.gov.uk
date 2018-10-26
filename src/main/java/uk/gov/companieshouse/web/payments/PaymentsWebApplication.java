@@ -10,6 +10,8 @@ import uk.gov.companieshouse.web.payments.interceptor.UserDetailsInterceptor;
 @SpringBootApplication
 public class PaymentsWebApplication implements WebMvcConfigurer {
 
+    public static final String APPLICATION_NAME_SPACE = "payments.web.ch.gov.uk";
+
     private UserDetailsInterceptor userDetailsInterceptor;
 
     @Autowired
