@@ -14,6 +14,7 @@ import uk.gov.companieshouse.web.payments.service.PaymentService;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -42,6 +43,7 @@ public class PaymentSummaryControllerTests {
         when(paymentService.getPaymentSummary(PAYMENT_ID)).thenReturn(new PaymentSummary());
         this.mockMvc.perform(get(PAYMENT_SUMMARY_PATH))
                 .andExpect(status().isOk())
-                .andExpect(view().name(controller.getTemplateName()));
+                .andExpect(view().name(controller.getTemplateName()))
+                .andExpect(model().attributeExists("paymentSummary"));
     }
 }
