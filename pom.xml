@@ -64,7 +64,6 @@
             <artifactId>api-sdk-java</artifactId>
             <version>${api-sdk-java.version}</version>
         </dependency>
-
         <dependency>
             <groupId>uk.gov.companieshouse</groupId>
             <artifactId>sdk-manager-java</artifactId>
