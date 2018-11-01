@@ -9,13 +9,16 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import uk.gov.companieshouse.web.payments.exception.ServiceException;
 import uk.gov.companieshouse.web.payments.model.PaymentSummary;
 import uk.gov.companieshouse.web.payments.service.PaymentService;
 
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static uk.gov.companieshouse.web.payments.controller.BaseController.ERROR_VIEW;
 
 @ExtendWith(MockitoExtension.class)
 public class PaymentSummaryControllerTests {
@@ -43,5 +46,16 @@ public class PaymentSummaryControllerTests {
         this.mockMvc.perform(get(PAYMENT_SUMMARY_PATH))
                 .andExpect(status().isOk())
                 .andExpect(view().name(controller.getTemplateName()));
+    }
+
+    @Test
+    @DisplayName("Get payment view failure path due to error on payment summary retrieval")
+    void getRequestFailureInGetPayment() throws Exception {
+
+        doThrow(ServiceException.class).when(paymentService).getPaymentSummary(PAYMENT_ID);
+
+        this.mockMvc.perform(get(PAYMENT_SUMMARY_PATH))
+                .andExpect(status().isOk())
+                .andExpect(view().name(ERROR_VIEW));
     }
 }
