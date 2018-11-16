@@ -7,4 +7,7 @@ public interface PaymentService {
 
     PaymentSummary getPaymentSummary(String paymentId)
             throws ServiceException;
+
+    String getExternalPaymentUrl(String paymentId)
+            throws ServiceException;
 }

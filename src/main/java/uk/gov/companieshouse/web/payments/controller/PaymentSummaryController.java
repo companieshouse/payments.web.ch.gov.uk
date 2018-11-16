@@ -5,9 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.gov.companieshouse.web.payments.exception.ServiceException;
-import uk.gov.companieshouse.web.payments.model.PaymentSummary;
 import uk.gov.companieshouse.web.payments.service.PaymentService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,5 +38,21 @@ public class PaymentSummaryController extends BaseController {
         }
 
         return getTemplateName();
+    }
+
+    @PostMapping
+    public String postPayment(@PathVariable String paymentId, HttpServletRequest request) {
+
+        try {
+            String externalUrl = paymentService.getExternalPaymentUrl(paymentId);
+            LOGGER.info("External URL is " + externalUrl);
+        } catch (ServiceException e) {
+
+            LOGGER.errorRequest(request, e.getMessage(), e);
+            return ERROR_VIEW;
+        }
+
+        // TODO Redirect to Payment Provider
+        return ERROR_VIEW;
     }
 }
