@@ -16,10 +16,9 @@
 </head>
 <body>
 <div class="entire-wrapper">
-    <div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/header :: header (headerText = 'Companies House Payment Service')"></div>
     <div class="govuk-width-container">
         <div th:replace="fragments/betaBanner :: betaBanner"></div>
-        <div th:replace="fragments/userBar :: userBar"></div>
         <div th:replace="fragments/backButtonLink :: backButtonLink"></div>
         <main id="content" role="main" class="govuk-main-wrapper">
             <div layout:fragment="content"></div>
@@ -33,6 +32,6 @@
 <script th:src="@{{cdnUrl}/javascripts/vendor/selection-buttons.js(cdnUrl=${@environment.getProperty('cdn.url')})}" type="text/javascript"></script>
 <script th:src="@{{cdnUrl}/javascripts/vendor/application.js(cdnUrl=${@environment.getProperty('cdn.url')})}" type="text/javascript"></script>
 <script th:src="@{{cdnUrl}/javascripts/app/piwik-enable.js(cdnUrl=${@environment.getProperty('cdn.url')})}" type="text/javascript"></script>
-<div th:replace="fragments/piwik :: piwik"></div>
+<div th:replace="fragments/piwik :: piwik (moduleName = 'payment-service')"></div>
 </body>
 </html>
