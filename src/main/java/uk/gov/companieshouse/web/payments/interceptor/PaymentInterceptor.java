@@ -24,8 +24,8 @@ public class PaymentInterceptor extends HandlerInterceptorAdapter {
     private PaymentService paymentService;
 
     /**
-     * Ensure requests are authenticated for the correct company if a company
-     * number is specified on the transaction
+     * Ensure requests are authenticated for the existence of a payment id and if it matches an
+     * entry in the database.
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
