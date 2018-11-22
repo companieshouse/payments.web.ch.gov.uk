@@ -6,6 +6,7 @@ public class PaymentSummary {
 
     private String total;
     private List<Payment> payments;
+    private String email;
 
 
     public String getTotal() {
@@ -22,6 +23,14 @@ public class PaymentSummary {
 
     public void setPayments(List<Payment> payments) {
         this.payments = payments;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }
