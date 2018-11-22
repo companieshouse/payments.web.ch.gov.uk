@@ -7,14 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.gov.companieshouse.web.payments.exception.ServiceException;
-import uk.gov.companieshouse.web.payments.model.PaymentSummary;
 import uk.gov.companieshouse.web.payments.service.PaymentService;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/payments/{paymentId}/confirm")
-public class ConfirmationController extends BaseController {
+public class PaymentConfirmationController extends BaseController {
 
     private static final String PAYMENT_CONFIRM_VIEW = "payments/confirmation";
 
