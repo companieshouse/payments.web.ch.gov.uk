@@ -2,6 +2,7 @@ package uk.gov.companieshouse.web.payments.transformer;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import uk.gov.companieshouse.api.model.payment.CreatedByApi;
 import uk.gov.companieshouse.api.model.payment.ItemsApi;
 import uk.gov.companieshouse.api.model.payment.PaymentApi;
 import uk.gov.companieshouse.web.payments.model.PaymentSummary;
@@ -21,6 +22,7 @@ public class PaymentTransformerTests {
     private static final String DESCRIPTION_ITEM_2 = "Item Description 2";
     private static final String AMOUNT_ITEM_1 = "200";
     private static final String AMOUNT_ITEM_2 = "100";
+    private static final String EMAIL = "email@companieshouse.gov.uk";
 
     private PaymentTransformer transformer = new PaymentTransformerImpl();
 
@@ -33,6 +35,7 @@ public class PaymentTransformerTests {
         assertNotNull(paymentSummary);
         assertNotNull(paymentSummary.getPayments());
         assertEquals(SINGLE_PAYMENT_AMOUNT, paymentSummary.getTotal());
+        assertEquals(EMAIL, paymentSummary.getEmail());
         assertEquals(1, paymentSummary.getPayments().size());
         assertEquals(SINGLE_PAYMENT_AMOUNT, paymentSummary.getPayments().get(0).getCost());
         assertEquals(DESCRIPTION_ITEM_1, paymentSummary.getPayments().get(0).getDescription());
@@ -48,6 +51,7 @@ public class PaymentTransformerTests {
         assertNotNull(paymentSummary.getPayments());
         assertEquals(MULTIPLE_PAYMENTS_AMOUNT, paymentSummary.getTotal());
         assertEquals(2, paymentSummary.getPayments().size());
+        assertEquals(EMAIL, paymentSummary.getEmail());
 
         assertEquals(AMOUNT_ITEM_1, paymentSummary.getPayments().get(0).getCost());
         assertEquals(DESCRIPTION_ITEM_1, paymentSummary.getPayments().get(0).getDescription());
@@ -60,6 +64,9 @@ public class PaymentTransformerTests {
         List<ItemsApi> items  = new ArrayList<>();
         PaymentApi paymentApi = new PaymentApi();
         paymentApi.setAmount(SINGLE_PAYMENT_AMOUNT);
+        CreatedByApi createdBy = new CreatedByApi();
+        createdBy.setEmail(EMAIL);
+        paymentApi.setCreatedBy(createdBy);
         ItemsApi item  = new ItemsApi();
         item.setAmount(SINGLE_PAYMENT_AMOUNT);
         item.setDescription(DESCRIPTION_ITEM_1);
@@ -71,6 +78,9 @@ public class PaymentTransformerTests {
         List<ItemsApi> items  = new ArrayList<>();
         PaymentApi paymentApi = new PaymentApi();
         paymentApi.setAmount(MULTIPLE_PAYMENTS_AMOUNT);
+        CreatedByApi createdBy = new CreatedByApi();
+        createdBy.setEmail(EMAIL);
+        paymentApi.setCreatedBy(createdBy);
 
         // Add Item 1
         ItemsApi item1  = new ItemsApi();
