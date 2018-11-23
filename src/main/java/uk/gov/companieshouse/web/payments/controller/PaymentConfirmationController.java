@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/payments/{paymentId}/confirm")
 public class PaymentConfirmationController extends BaseController {
 
-    private static final String PAYMENT_CONFIRM_VIEW = "payments/confirmation";
+    private static final String PAYMENT_CONFIRM_VIEW = "payments/paymentConfirmation";
 
     @Autowired
     private PaymentService paymentService;
