@@ -42,7 +42,7 @@ public class PaymentConfirmationController extends BaseController {
         }
 
         if (!StringUtils.equals(paymentSummary.getStatus(), "paid")) {
-            LOGGER.errorRequest(request, "payment not complete");
+            LOGGER.errorRequest(request, "payment not complete. Incorrect status: " + paymentSummary.getStatus());
             return ERROR_VIEW;
         }
 
