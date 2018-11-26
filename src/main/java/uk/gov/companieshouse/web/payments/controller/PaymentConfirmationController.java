@@ -1,5 +1,6 @@
 package uk.gov.companieshouse.web.payments.controller;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +41,7 @@ public class PaymentConfirmationController extends BaseController {
             return ERROR_VIEW;
         }
 
-        if (!paymentSummary.getStatus().equals("paid")) {
+        if (!StringUtils.equals(paymentSummary.getStatus(), "paid")) {
             LOGGER.errorRequest(request, "payment not complete");
             return ERROR_VIEW;
         }
