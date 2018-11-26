@@ -38,14 +38,14 @@
                             <tbody class="govuk-table__body">
                                 <tr th:each="payment : ${paymentSummary.payments}">
                                     <td th:text="${payment.description}">keyvalue</td>
-                                    <div th:with="totalInPounds=${payment.cost}">
-                                        <td th:text="${'£' + totalInPounds}">num</td>
+                                    <div>
+                                        <td th:text="${payment.cost}">num</td>
                                     </div>
                                 </tr>
                             </tbody>
                         </table>
 
-                        <h3 th:text="${'The total amount paid is £' + paymentSummary.total}" id="page-total" class="govuk-heading-m">total</h3>
+                        <h3 th:text="${'The total amount paid is ' + paymentSummary.total}" id="page-total" class="govuk-heading-m">total</h3>
 
                     </div>
                 </div>

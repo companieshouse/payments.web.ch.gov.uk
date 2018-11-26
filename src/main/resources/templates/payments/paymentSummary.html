@@ -30,15 +30,15 @@
 
                     <tr th:each="payment : ${paymentSummary.payments}">
                         <td th:text="${payment.description}">keyvalue</td>
-                        <div th:with="totalInPounds=${payment.cost}">
-                            <td th:text="${'£' + totalInPounds}">num</td>
+                        <div>
+                            <td th:text="${payment.cost}">num</td>
                         </div>
                     </tr>
 
                     </tbody>
                 </table>
 
-                <h2 th:text="${'The total amount to pay is £' + paymentSummary.total}" id="page-total" class="govuk-heading-m">
+                <h2 th:text="${'The total amount to pay is ' + paymentSummary.total}" id="page-total" class="govuk-heading-m">
                 </h2>
                 <div class="form-group">
                     <input id="next-button" class="govuk-button" type="submit" role="button" value="Continue"/>
