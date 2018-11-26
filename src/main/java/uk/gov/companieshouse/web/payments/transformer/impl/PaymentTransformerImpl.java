@@ -18,6 +18,7 @@ public class PaymentTransformerImpl implements PaymentTransformer {
         PaymentSummary paymentSummary = new PaymentSummary();
         paymentSummary.setTotal(paymentApi.getAmount());
         paymentSummary.setEmail(paymentApi.getCreatedBy().getEmail());
+        paymentSummary.setStatus(paymentApi.getStatus());
 
         List<Payment> payments = paymentApi.getItems().stream()
                                 .map(p -> new Payment( p.getDescription(), p.getAmount())).collect(Collectors.toList());

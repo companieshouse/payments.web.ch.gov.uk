@@ -41,7 +41,9 @@ public class PaymentConfirmationControllerTests {
     @Test
     @DisplayName("Payment Confirmation view success path")
     void getRequestSuccess() throws Exception {
-        when(paymentService.getPaymentSummary(PAYMENT_ID)).thenReturn(new PaymentSummary());
+        PaymentSummary paymentSummary = new PaymentSummary();
+        paymentSummary.setStatus("paid");
+        when(paymentService.getPaymentSummary(PAYMENT_ID)).thenReturn(paymentSummary);
         this.mockMvc.perform(get(PAYMENT_CONFIRM_PATH))
                 .andExpect(status().isOk())
                 .andExpect(view().name(controller.getTemplateName()))
