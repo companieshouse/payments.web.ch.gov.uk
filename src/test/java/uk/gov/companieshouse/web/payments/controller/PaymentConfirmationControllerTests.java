@@ -18,6 +18,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static uk.gov.companieshouse.web.payments.controller.BaseController.ERROR_VIEW;
+import static uk.gov.companieshouse.web.payments.controller.PaymentConfirmationController.PAYMENT_PAID;
 
 @ExtendWith(MockitoExtension.class)
 public class PaymentConfirmationControllerTests {
@@ -42,7 +43,7 @@ public class PaymentConfirmationControllerTests {
     @DisplayName("Payment Confirmation view success path")
     void getRequestSuccess() throws Exception {
         PaymentSummary paymentSummary = new PaymentSummary();
-        paymentSummary.setStatus("paid");
+        paymentSummary.setStatus(PAYMENT_PAID);
         when(paymentService.getPaymentSummary(PAYMENT_ID)).thenReturn(paymentSummary);
 
         this.mockMvc.perform(get(PAYMENT_CONFIRM_PATH))

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 public class PaymentConfirmationController extends BaseController {
 
     private static final String PAYMENT_CONFIRM_VIEW = "payments/paymentConfirmation";
+    public static final String PAYMENT_PAID = "paid";
 
     @Autowired
     private PaymentService paymentService;
@@ -41,7 +42,7 @@ public class PaymentConfirmationController extends BaseController {
             return ERROR_VIEW;
         }
 
-        if (!StringUtils.equals(paymentSummary.getStatus(), "paid")) {
+        if (!StringUtils.equals(paymentSummary.getStatus(), PAYMENT_PAID)) {
             LOGGER.errorRequest(request, "payment not complete. Incorrect status: " + paymentSummary.getStatus());
             return ERROR_VIEW;
         }
