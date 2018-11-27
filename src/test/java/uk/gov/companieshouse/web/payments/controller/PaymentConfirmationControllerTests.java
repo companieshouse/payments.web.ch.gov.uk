@@ -44,10 +44,12 @@ public class PaymentConfirmationControllerTests {
         PaymentSummary paymentSummary = new PaymentSummary();
         paymentSummary.setStatus("paid");
         when(paymentService.getPaymentSummary(PAYMENT_ID)).thenReturn(paymentSummary);
+
         this.mockMvc.perform(get(PAYMENT_CONFIRM_PATH))
                 .andExpect(status().isOk())
                 .andExpect(view().name(controller.getTemplateName()))
                 .andExpect(model().attributeExists("paymentSummary"))
+                .andExpect(model().attributeExists("paymentID"))
                 .andExpect(model().attribute("paymentID", PAYMENT_ID));
     }
 
@@ -56,6 +58,18 @@ public class PaymentConfirmationControllerTests {
     void getRequestFailureInGetPayment() throws Exception {
 
         doThrow(ServiceException.class).when(paymentService).getPaymentSummary(PAYMENT_ID);
+
+        this.mockMvc.perform(get(PAYMENT_CONFIRM_PATH))
+                .andExpect(status().isOk())
+                .andExpect(view().name(ERROR_VIEW));
+    }
+
+    @Test
+    @DisplayName("Get Payment Confirmation error due to incorrect status")
+    void getRequestFailureIncorrectStatus() throws Exception {
+        PaymentSummary paymentSummary = new PaymentSummary();
+        paymentSummary.setStatus("pending");
+        when(paymentService.getPaymentSummary(PAYMENT_ID)).thenReturn(paymentSummary);
 
         this.mockMvc.perform(get(PAYMENT_CONFIRM_PATH))
                 .andExpect(status().isOk())
