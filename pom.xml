@@ -32,6 +32,7 @@
         <sdk-manager-java.version>1.1.0-rc2</sdk-manager-java.version>
         <api-sdk-java.version>3.2.0-rc1</api-sdk-java.version>
         <common-web-java.version>1.0.0-rc2</common-web-java.version>
+        <joda-money.version>1.0.1</joda-money.version>
 
         <!-- Sonar -->
         <sonar-maven-plugin.version>3.5.0.1254</sonar-maven-plugin.version>
@@ -104,7 +105,7 @@
         <dependency>
             <groupId>org.joda</groupId>
             <artifactId>joda-money</artifactId>
-            <version>1.0.1</version>
+            <version>${joda-money.version}</version>
         </dependency>
 
         <dependency>
