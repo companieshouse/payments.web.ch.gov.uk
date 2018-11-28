@@ -9,7 +9,9 @@ import uk.gov.companieshouse.web.payments.model.Payment;
 import uk.gov.companieshouse.web.payments.model.PaymentSummary;
 import uk.gov.companieshouse.web.payments.transformer.PaymentTransformer;
 
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import static org.joda.money.CurrencyUnit.GBP;
@@ -20,7 +22,11 @@ public class PaymentTransformerImpl implements PaymentTransformer {
     @Override
     public PaymentSummary getPaymentSummary(PaymentApi paymentApi) {
 
-        MoneyFormatter f = new MoneyFormatterBuilder().appendCurrencySymbolLocalized().appendAmountLocalized().toFormatter();
+        Locale.setDefault(Locale.UK);
+        MoneyFormatter f = new MoneyFormatterBuilder()
+                .appendLiteral(Currency.getInstance(Locale.UK).getSymbol())
+                .appendAmountLocalized()
+                .toFormatter();
 
         PaymentSummary paymentSummary = new PaymentSummary();
         paymentSummary.setTotal(formatAmount(paymentApi.getAmount(), f));
