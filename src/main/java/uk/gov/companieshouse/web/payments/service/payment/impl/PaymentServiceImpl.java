@@ -1,7 +1,6 @@
-package uk.gov.companieshouse.web.payments.service.impl;
+package uk.gov.companieshouse.web.payments.service.payment.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriTemplate;
 import uk.gov.companieshouse.api.ApiClient;
@@ -12,8 +11,7 @@ import uk.gov.companieshouse.api.model.payment.PaymentApi;
 import uk.gov.companieshouse.web.payments.api.ApiClientService;
 import uk.gov.companieshouse.web.payments.exception.ServiceException;
 import uk.gov.companieshouse.web.payments.model.PaymentSummary;
-import uk.gov.companieshouse.web.payments.service.PaymentMethod;
-import uk.gov.companieshouse.web.payments.service.PaymentService;
+import uk.gov.companieshouse.web.payments.service.payment.PaymentService;
 import uk.gov.companieshouse.web.payments.transformer.PaymentTransformer;
 
 @Service
@@ -31,11 +29,8 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired
     private PaymentTransformer transformer;
 
-    @Autowired
-    private Environment env;
-
     @Override
-    public PaymentSummary getPaymentSummary(String paymentId)
+    public PaymentSummary getPayment(String paymentId)
             throws ServiceException {
 
         ApiClient apiClient = apiClientService.getPublicApiClient();
@@ -47,37 +42,28 @@ public class PaymentServiceImpl implements PaymentService {
         } catch (ApiErrorResponseException ex) {
             throw new ServiceException("Error retrieving Payment", ex);
         } catch (URIValidationException ex) {
-
             throw new ServiceException("Invalid URI for Payment", ex);
         }
 
         // Convert the API model to the web model
-        return transformer.getPaymentSummary(paymentApi);
+        return transformer.getPayment(paymentApi);
     }
 
     @Override
-    public String getExternalPaymentUrl(String paymentId)
+    public void patchPayment(String paymentId, String paymentMethod)
             throws ServiceException {
 
         InternalApiClient apiClient = apiClientService.getPrivateApiClient();
 
         try {
-            // Firstly patch the Payment Method..
-            String uri = PATCH_PAYMENT_URI.expand(paymentId).toString();
+            String uriPatch = PATCH_PAYMENT_URI.expand(paymentId).toString();
             PaymentApi payment = new PaymentApi();
-            payment.setPaymentMethod(PaymentMethod.GOV_PAY.getPaymentMethod());
-            apiClient.privatePayment().patch(uri, payment).execute();
-
-            // TODO Get the next URL here..
-
-
+            payment.setPaymentMethod(paymentMethod);
+            apiClient.privatePayment().patch(uriPatch, payment).execute();
         } catch (ApiErrorResponseException ex) {
-            throw new ServiceException("Error retrieving Payment", ex);
+            throw new ServiceException("Error patching Payment", ex);
         } catch (URIValidationException ex) {
-
             throw new ServiceException("Invalid URI for Payment", ex);
         }
-
-        return "'NextURL'";
     }
 }

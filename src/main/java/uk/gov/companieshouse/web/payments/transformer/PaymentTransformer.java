@@ -9,5 +9,5 @@ public interface PaymentTransformer {
      * @param paymentApi populated payment summary
      * @return converted payment summary for web.
      */
-    PaymentSummary getPaymentSummary(PaymentApi paymentApi);
+    PaymentSummary getPayment(PaymentApi paymentApi);
 }

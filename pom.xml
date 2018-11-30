@@ -5,7 +5,7 @@
 
     <groupId>uk.gov.companieshouse</groupId>
     <artifactId>payments.web.ch.gov.uk</artifactId>
-    <version>unversioned</version>
+    <version>1989618</version>
     <packaging>jar</packaging>
 
     <name>payments.web</name>
@@ -29,7 +29,7 @@
         <java-session-handler.version>2.1.0-rc2</java-session-handler.version>
         <web-security-java.version>1.1.0-rc1</web-security-java.version>
         <spring-security-core.version>5.1.0.RELEASE</spring-security-core.version>
-        <sdk-manager-java.version>1.2.0-rc1</sdk-manager-java.version>
+        <sdk-manager-java.version>1.2.0-rc2</sdk-manager-java.version>
 
         <!-- Sonar -->
         <sonar-maven-plugin.version>3.5.0.1254</sonar-maven-plugin.version>
@@ -45,6 +45,10 @@
         <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
         <maven-jar-plugin.version>2.4</maven-jar-plugin.version>
         <junit-platform-surefire-provider.version>1.2.0</junit-platform-surefire-provider.version>
+
+        <!-- Repositories -->
+        <artifactoryResolveSnapshotRepo>libs-snapshot-local</artifactoryResolveSnapshotRepo>
+        <artifactoryResolveReleaseRepo>libs-release-local</artifactoryResolveReleaseRepo>
     </properties>
 
     <dependencies>
@@ -184,8 +188,12 @@
 
     <repositories>
         <repository>
-            <id>virtual-release</id>
-            <url>${MAVEN_REPOSITORY_URL}/virtual-release</url>
+            <id>ch-artifactory-release</id>
+            <url>${MAVEN_REPOSITORY_URL}/${artifactoryResolveReleaseRepo}</url>
+        </repository>
+        <repository>
+            <id>ch-artifactory-snapshot</id>
+            <url>${MAVEN_REPOSITORY_URL}/${artifactoryResolveSnapshotRepo}</url>
         </repository>
     </repositories>
 

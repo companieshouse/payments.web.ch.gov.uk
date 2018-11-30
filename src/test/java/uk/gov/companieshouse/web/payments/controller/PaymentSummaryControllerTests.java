@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import uk.gov.companieshouse.web.payments.exception.ServiceException;
 import uk.gov.companieshouse.web.payments.model.PaymentSummary;
-import uk.gov.companieshouse.web.payments.service.PaymentService;
+import uk.gov.companieshouse.web.payments.service.payment.PaymentService;
 
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
@@ -43,7 +43,7 @@ public class PaymentSummaryControllerTests {
     @Test
     @DisplayName("Payment Summary view success path")
     void getRequestSuccess() throws Exception {
-        when(paymentService.getPaymentSummary(PAYMENT_ID)).thenReturn(new PaymentSummary());
+        when(paymentService.getPayment(PAYMENT_ID)).thenReturn(new PaymentSummary());
         this.mockMvc.perform(get(PAYMENT_SUMMARY_PATH))
                 .andExpect(status().isOk())
                 .andExpect(view().name(controller.getTemplateName()))
@@ -54,7 +54,7 @@ public class PaymentSummaryControllerTests {
     @DisplayName("Get payment view failure path due to error on payment summary retrieval")
     void getRequestFailureInGetPayment() throws Exception {
 
-        doThrow(ServiceException.class).when(paymentService).getPaymentSummary(PAYMENT_ID);
+        doThrow(ServiceException.class).when(paymentService).getPayment(PAYMENT_ID);
 
         this.mockMvc.perform(get(PAYMENT_SUMMARY_PATH))
                 .andExpect(status().isOk())

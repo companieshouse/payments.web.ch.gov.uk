@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.web.payments.service;
+package uk.gov.companieshouse.web.payments.util;
 
 public enum PaymentMethod {
     GOV_PAY("GovPay");

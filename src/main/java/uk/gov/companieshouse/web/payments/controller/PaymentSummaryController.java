@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import uk.gov.companieshouse.web.payments.exception.ServiceException;
-import uk.gov.companieshouse.web.payments.service.PaymentService;
+import uk.gov.companieshouse.web.payments.service.externalpayment.ExternalPaymentService;
+import uk.gov.companieshouse.web.payments.service.payment.PaymentService;
+import uk.gov.companieshouse.web.payments.util.PaymentMethod;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,6 +24,9 @@ public class PaymentSummaryController extends BaseController {
     @Autowired
     private PaymentService paymentService;
 
+    @Autowired
+    private ExternalPaymentService externalPaymentService;
+
     @Override
     protected String getTemplateName() {
         return PAYMENT_SUMMARY_VIEW;
@@ -31,7 +37,7 @@ public class PaymentSummaryController extends BaseController {
                                      Model model,
                                      HttpServletRequest request) {
         try {
-            model.addAttribute("paymentSummary", paymentService.getPaymentSummary(paymentId));
+            model.addAttribute("paymentSummary", paymentService.getPayment(paymentId));
         } catch (ServiceException e) {
          LOGGER.errorRequest(request, e.getMessage(), e);
             return ERROR_VIEW;
@@ -41,18 +47,32 @@ public class PaymentSummaryController extends BaseController {
     }
 
     @PostMapping
-    public String postPayment(@PathVariable String paymentId, HttpServletRequest request) {
+    public String postExternalPayment(@PathVariable String paymentId, HttpServletRequest request) {
+        String journey_url;
 
+        /**
+         * Patch chosen Payment Method for payment session.
+         * @param paymentMethod - Hardcoded to GovPay until more payment providers are added.
+         */
         try {
-            String externalUrl = paymentService.getExternalPaymentUrl(paymentId);
-            LOGGER.info("External URL is " + externalUrl);
+            String paymentMethod = PaymentMethod.GOV_PAY.getPaymentMethod();
+            paymentService.patchPayment(paymentId, paymentMethod);
         } catch (ServiceException e) {
-
             LOGGER.errorRequest(request, e.getMessage(), e);
             return ERROR_VIEW;
         }
 
-        // TODO Redirect to Payment Provider
-        return ERROR_VIEW;
+        /**
+         * Post to API to start external journey with chosen Payment provider.
+         * @param journey_url - Generated from API layer to redirect user to external payment provider.
+         */
+        try {
+            journey_url = externalPaymentService.createExternalPayment(paymentId);
+        } catch (ServiceException e) {
+            LOGGER.errorRequest(request, e.getMessage(), e);
+            return ERROR_VIEW;
+        }
+
+        return UrlBasedViewResolver.REDIRECT_URL_PREFIX + journey_url;
     }
 }

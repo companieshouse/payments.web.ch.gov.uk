@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class PaymentTransformerImpl implements PaymentTransformer {
 
     @Override
-    public PaymentSummary getPaymentSummary(PaymentApi paymentApi) {
+    public PaymentSummary getPayment(PaymentApi paymentApi) {
 
         PaymentSummary paymentSummary =  new PaymentSummary();
         paymentSummary.setTotal(paymentApi.getAmount());

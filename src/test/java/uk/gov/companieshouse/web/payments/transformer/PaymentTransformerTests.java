@@ -28,7 +28,7 @@ public class PaymentTransformerTests {
     @DisplayName("Get Single Payment")
     void getSinglePayment() {
         PaymentApi mockSinglePayment = createSingleMockPayment();
-        PaymentSummary paymentSummary = transformer.getPaymentSummary(mockSinglePayment);
+        PaymentSummary paymentSummary = transformer.getPayment(mockSinglePayment);
 
         assertNotNull(paymentSummary);
         assertNotNull(paymentSummary.getPayments());
@@ -42,7 +42,7 @@ public class PaymentTransformerTests {
     @DisplayName("Get Multiple Payments")
     void getMultiplePayments() {
         PaymentApi mockSinglePayment = createMultipleMockPayments();
-        PaymentSummary paymentSummary = transformer.getPaymentSummary(mockSinglePayment);
+        PaymentSummary paymentSummary = transformer.getPayment(mockSinglePayment);
 
         assertNotNull(paymentSummary);
         assertNotNull(paymentSummary.getPayments());

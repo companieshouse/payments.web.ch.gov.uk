@@ -1,13 +1,13 @@
-package uk.gov.companieshouse.web.payments.service;
+package uk.gov.companieshouse.web.payments.service.payment;
 
 import uk.gov.companieshouse.web.payments.exception.ServiceException;
 import uk.gov.companieshouse.web.payments.model.PaymentSummary;
 
 public interface PaymentService {
 
-    PaymentSummary getPaymentSummary(String paymentId)
+    PaymentSummary getPayment(String paymentId)
             throws ServiceException;
 
-    String getExternalPaymentUrl(String paymentId)
+    void patchPayment(String paymentId, String paymentMethod)
             throws ServiceException;
 }
