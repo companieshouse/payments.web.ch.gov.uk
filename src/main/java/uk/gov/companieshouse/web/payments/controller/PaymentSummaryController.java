@@ -50,9 +50,7 @@ public class PaymentSummaryController extends BaseController {
     public String postExternalPayment(@PathVariable String paymentId, HttpServletRequest request) {
         String journeyUrl;
 
-        /**
-         * Patch chosen Payment Method for payment session.
-         */
+        // Patch chosen Payment Method for payment session.
         try {
             String paymentMethod = PaymentMethod.GOV_PAY.getPaymentMethod();
             paymentService.patchPayment(paymentId, paymentMethod);
@@ -61,9 +59,7 @@ public class PaymentSummaryController extends BaseController {
             return ERROR_VIEW;
         }
 
-        /**
-         * Post to API to start external journey with chosen Payment provider.
-         */
+        // Post to API to start external journey with chosen Payment provider.
         try {
             journeyUrl = externalPaymentService.createExternalPayment(paymentId);
         } catch (ServiceException e) {
