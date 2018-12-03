@@ -11,7 +11,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import uk.gov.companieshouse.web.payments.exception.ServiceException;
 import uk.gov.companieshouse.web.payments.model.PaymentSummary;
-import uk.gov.companieshouse.web.payments.service.PaymentService;
+import uk.gov.companieshouse.web.payments.service.payment.PaymentService;
+
 
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
@@ -44,7 +45,7 @@ public class PaymentConfirmationControllerTests {
     void getRequestSuccess() throws Exception {
         PaymentSummary paymentSummary = new PaymentSummary();
         paymentSummary.setStatus(PAYMENT_PAID);
-        when(paymentService.getPaymentSummary(PAYMENT_ID)).thenReturn(paymentSummary);
+        when(paymentService.getPayment(PAYMENT_ID)).thenReturn(paymentSummary);
 
         this.mockMvc.perform(get(PAYMENT_CONFIRM_PATH))
                 .andExpect(status().isOk())
@@ -58,7 +59,7 @@ public class PaymentConfirmationControllerTests {
     @DisplayName("Get payment view failure path due to error on payment confirmation retrieval")
     void getRequestFailureInGetPayment() throws Exception {
 
-        doThrow(ServiceException.class).when(paymentService).getPaymentSummary(PAYMENT_ID);
+        doThrow(ServiceException.class).when(paymentService).getPayment(PAYMENT_ID);
 
         this.mockMvc.perform(get(PAYMENT_CONFIRM_PATH))
                 .andExpect(status().isOk())
@@ -70,7 +71,7 @@ public class PaymentConfirmationControllerTests {
     void getRequestFailureIncorrectStatus() throws Exception {
         PaymentSummary paymentSummary = new PaymentSummary();
         paymentSummary.setStatus("pending");
-        when(paymentService.getPaymentSummary(PAYMENT_ID)).thenReturn(paymentSummary);
+        when(paymentService.getPayment(PAYMENT_ID)).thenReturn(paymentSummary);
 
         this.mockMvc.perform(get(PAYMENT_CONFIRM_PATH))
                 .andExpect(status().isOk())
