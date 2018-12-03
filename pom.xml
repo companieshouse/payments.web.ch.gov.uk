@@ -5,7 +5,7 @@
 
     <groupId>uk.gov.companieshouse</groupId>
     <artifactId>payments.web.ch.gov.uk</artifactId>
-    <version>5307786</version>
+    <version>unversioned</version>
     <packaging>jar</packaging>
 
     <name>payments.web</name>
@@ -50,7 +50,7 @@
 
         <!-- Repositories -->
         <artifactoryResolveSnapshotRepo>libs-snapshot-local</artifactoryResolveSnapshotRepo>
-        <artifactoryResolveReleaseRepo>libs-release-local</artifactoryResolveReleaseRepo>
+        <artifactoryResolveReleaseRepo>virtual-release</artifactoryResolveReleaseRepo>
     </properties>
 
     <dependencies>
