@@ -48,11 +48,10 @@ public class PaymentSummaryController extends BaseController {
 
     @PostMapping
     public String postExternalPayment(@PathVariable String paymentId, HttpServletRequest request) {
-        String journey_url;
+        String journeyUrl;
 
         /**
          * Patch chosen Payment Method for payment session.
-         * @param paymentMethod - Hardcoded to GovPay until more payment providers are added.
          */
         try {
             String paymentMethod = PaymentMethod.GOV_PAY.getPaymentMethod();
@@ -64,15 +63,14 @@ public class PaymentSummaryController extends BaseController {
 
         /**
          * Post to API to start external journey with chosen Payment provider.
-         * @param journey_url - Generated from API layer to redirect user to external payment provider.
          */
         try {
-            journey_url = externalPaymentService.createExternalPayment(paymentId);
+            journeyUrl = externalPaymentService.createExternalPayment(paymentId);
         } catch (ServiceException e) {
             LOGGER.errorRequest(request, e.getMessage(), e);
             return ERROR_VIEW;
         }
 
-        return UrlBasedViewResolver.REDIRECT_URL_PREFIX + journey_url;
+        return UrlBasedViewResolver.REDIRECT_URL_PREFIX + journeyUrl;
     }
 }
