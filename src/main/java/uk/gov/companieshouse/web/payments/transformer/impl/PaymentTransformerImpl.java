@@ -20,7 +20,7 @@ import static org.joda.money.CurrencyUnit.GBP;
 public class PaymentTransformerImpl implements PaymentTransformer {
 
     @Override
-    public PaymentSummary getPaymentSummary(PaymentApi paymentApi) {
+    public PaymentSummary getPayment(PaymentApi paymentApi) {
 
         Locale.setDefault(Locale.UK);
         MoneyFormatter f = new MoneyFormatterBuilder()
