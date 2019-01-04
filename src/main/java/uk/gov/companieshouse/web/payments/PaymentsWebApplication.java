@@ -5,9 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import uk.gov.companieshouse.web.payments.interceptor.UserDetailsInterceptor;
 import uk.gov.companieshouse.web.payments.interceptor.LoggingInterceptor;
-
+import uk.gov.companieshouse.web.payments.interceptor.UserDetailsInterceptor;
 
 @SpringBootApplication
 public class PaymentsWebApplication implements WebMvcConfigurer {
@@ -16,7 +15,6 @@ public class PaymentsWebApplication implements WebMvcConfigurer {
 
     private UserDetailsInterceptor userDetailsInterceptor;
     private LoggingInterceptor loggingInterceptor;
-
 
     @Autowired
     public PaymentsWebApplication(UserDetailsInterceptor userDetailsInterceptor,
@@ -33,6 +31,5 @@ public class PaymentsWebApplication implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loggingInterceptor);
         registry.addInterceptor(userDetailsInterceptor);
-
     }
 }
