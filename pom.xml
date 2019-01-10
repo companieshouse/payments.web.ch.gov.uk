@@ -99,7 +99,6 @@
         </dependency>
 
         <!-- Test scope -->
-        <!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest -->
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest</artifactId>
