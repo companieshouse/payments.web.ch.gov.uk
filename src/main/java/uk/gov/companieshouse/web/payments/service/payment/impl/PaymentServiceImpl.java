@@ -24,7 +24,7 @@ public class PaymentServiceImpl implements PaymentService {
             new UriTemplate("/private/payments/{paymentId}");
 
     @Autowired
-    ApiClientService apiClientService;
+   private ApiClientService apiClientService;
 
     @Autowired
     private PaymentTransformer transformer;
