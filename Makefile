@@ -1,3 +1,5 @@
+artifact_name       := payments.web.ch.gov.uk
+
 .PHONY: all
 all: build
 
