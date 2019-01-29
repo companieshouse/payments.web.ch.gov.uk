@@ -12,9 +12,9 @@
     <description>Payments web application to handle Companies House payments</description>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.1.RELEASE</version>
+        <groupId>uk.gov.companieshouse</groupId>
+        <artifactId>companies-house-spring-boot-parent</artifactId>
+        <version>1.0.0-rc1</version>
         <relativePath/>
     </parent>
 
