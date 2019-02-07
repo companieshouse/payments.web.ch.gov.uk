@@ -3,6 +3,8 @@ package uk.gov.companieshouse.web.payments.model;
 import java.util.List;
 
 public class PaymentSummary {
+    public static final String PAYMENT_STATUS_PAID = "paid";
+    public static final String PAYMENT_STATUS_PENDING = "pending";
 
     private String total;
     private List<Payment> payments;

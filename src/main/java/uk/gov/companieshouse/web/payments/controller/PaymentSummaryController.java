@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import uk.gov.companieshouse.web.payments.exception.ServiceException;
+import uk.gov.companieshouse.web.payments.model.Payment;
+import uk.gov.companieshouse.web.payments.model.PaymentSummary;
 import uk.gov.companieshouse.web.payments.service.externalpayment.ExternalPaymentService;
 import uk.gov.companieshouse.web.payments.service.payment.PaymentService;
 import uk.gov.companieshouse.web.payments.util.PaymentMethod;
@@ -36,12 +38,21 @@ public class PaymentSummaryController extends BaseController {
     public String getPaymentSummary(@PathVariable String paymentId,
                                      Model model,
                                      HttpServletRequest request) {
+
+        PaymentSummary paymentSummary;
+
         try {
-            model.addAttribute("paymentSummary", paymentService.getPayment(paymentId));
+            paymentSummary = paymentService.getPayment(paymentId);
         } catch (ServiceException e) {
          LOGGER.errorRequest(request, e.getMessage(), e);
             return ERROR_VIEW;
         }
+
+        if (paymentSummary.getStatus().equals(PaymentSummary.PAYMENT_STATUS_PAID)) {
+            return  ERROR_VIEW;
+        }
+
+        model.addAttribute("paymentSummary", paymentSummary);
 
         return getTemplateName();
     }
