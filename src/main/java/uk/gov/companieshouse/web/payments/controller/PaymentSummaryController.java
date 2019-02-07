@@ -1,5 +1,6 @@
 package uk.gov.companieshouse.web.payments.controller;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,11 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import uk.gov.companieshouse.web.payments.exception.ServiceException;
-import uk.gov.companieshouse.web.payments.model.Payment;
 import uk.gov.companieshouse.web.payments.model.PaymentSummary;
 import uk.gov.companieshouse.web.payments.service.externalpayment.ExternalPaymentService;
 import uk.gov.companieshouse.web.payments.service.payment.PaymentService;
 import uk.gov.companieshouse.web.payments.util.PaymentMethod;
+import uk.gov.companieshouse.web.payments.util.PaymentStatus;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,11 +45,12 @@ public class PaymentSummaryController extends BaseController {
         try {
             paymentSummary = paymentService.getPayment(paymentId);
         } catch (ServiceException e) {
-         LOGGER.errorRequest(request, e.getMessage(), e);
+            LOGGER.errorRequest(request, e.getMessage(), e);
             return ERROR_VIEW;
         }
 
-        if (paymentSummary.getStatus().equals(PaymentSummary.PAYMENT_STATUS_PAID)) {
+        if (StringUtils.equals(paymentSummary.getStatus(), (PaymentStatus.PAYMENT_STATUS_PAID.paymentStatus()))) {
+            LOGGER.errorRequest(request, "payment session status is paid, cannot pay again");
             return  ERROR_VIEW;
         }
 
