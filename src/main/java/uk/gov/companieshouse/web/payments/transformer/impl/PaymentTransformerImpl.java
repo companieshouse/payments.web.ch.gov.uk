@@ -37,7 +37,7 @@ public class PaymentTransformerImpl implements PaymentTransformer {
 
         paymentSummary.setStatus(paymentApi.getStatus());
 
-        List<Payment> payments = paymentApi.getItems().stream()
+        List<Payment> payments = paymentApi.getCosts().stream()
                 .map(p -> new Payment( p.getDescription(), formatAmount(p.getAmount(), f))).collect(Collectors.toList());
 
         paymentSummary.setPayments(payments);
