@@ -2,8 +2,8 @@ package uk.gov.companieshouse.web.payments.transformer;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import uk.gov.companieshouse.api.model.payment.CostsApi;
 import uk.gov.companieshouse.api.model.payment.CreatedByApi;
-import uk.gov.companieshouse.api.model.payment.ItemsApi;
 import uk.gov.companieshouse.api.model.payment.PaymentApi;
 import uk.gov.companieshouse.web.payments.model.PaymentSummary;
 import uk.gov.companieshouse.web.payments.transformer.impl.PaymentTransformerImpl;
@@ -65,40 +65,40 @@ public class PaymentTransformerTests {
     }
 
     private PaymentApi createSingleMockPayment() {
-        List<ItemsApi> items  = new ArrayList<>();
+        List<CostsApi> costs  = new ArrayList<>();
         PaymentApi paymentApi = new PaymentApi();
         paymentApi.setAmount(SINGLE_PAYMENT_AMOUNT);
         CreatedByApi createdBy = new CreatedByApi();
         createdBy.setEmail(EMAIL);
         paymentApi.setCreatedBy(createdBy);
-        ItemsApi item  = new ItemsApi();
-        item.setAmount(SINGLE_PAYMENT_AMOUNT);
-        item.setDescription(DESCRIPTION_ITEM_1);
-        items.add(item);
-        paymentApi.setItems(items);
+        CostsApi cost  = new CostsApi();
+        cost.setAmount(SINGLE_PAYMENT_AMOUNT);
+        cost.setDescription(DESCRIPTION_ITEM_1);
+        costs.add(cost);
+        paymentApi.setCosts(costs);
         return paymentApi;
     }
     private PaymentApi createMultipleMockPayments() {
-        List<ItemsApi> items  = new ArrayList<>();
+        List<CostsApi> costs  = new ArrayList<>();
         PaymentApi paymentApi = new PaymentApi();
         paymentApi.setAmount(MULTIPLE_PAYMENTS_AMOUNT);
         CreatedByApi createdBy = new CreatedByApi();
         createdBy.setEmail(EMAIL);
         paymentApi.setCreatedBy(createdBy);
 
-        // Add Item 1
-        ItemsApi item1  = new ItemsApi();
-        item1.setAmount(AMOUNT_ITEM_1);
-        item1.setDescription(DESCRIPTION_ITEM_1);
-        items.add(item1);
+        // Add Cost 1
+        CostsApi cost1  = new CostsApi();
+        cost1.setAmount(AMOUNT_ITEM_1);
+        cost1.setDescription(DESCRIPTION_ITEM_1);
+        costs.add(cost1);
 
-        // Add Item 2
-        ItemsApi item2  = new ItemsApi();
-        item2.setAmount(AMOUNT_ITEM_2);
-        item2.setDescription(DESCRIPTION_ITEM_2);
-        items.add(item2);
+        // Add Cost 2
+        CostsApi cost2  = new CostsApi();
+        cost2.setAmount(AMOUNT_ITEM_2);
+        cost2.setDescription(DESCRIPTION_ITEM_2);
+        costs.add(cost2);
 
-        paymentApi.setItems(items);
+        paymentApi.setCosts(costs);
         return paymentApi;
     }
 }
