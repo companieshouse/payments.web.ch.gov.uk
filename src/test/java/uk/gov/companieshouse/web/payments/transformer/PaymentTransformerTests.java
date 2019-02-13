@@ -86,17 +86,17 @@ public class PaymentTransformerTests {
         createdBy.setEmail(EMAIL);
         paymentApi.setCreatedBy(createdBy);
 
-        // Add Item 1
-        CostsApi item1  = new CostsApi();
-        item1.setAmount(AMOUNT_ITEM_1);
-        item1.setDescription(DESCRIPTION_ITEM_1);
-        costs.add(item1);
+        // Add Cost 1
+        CostsApi cost1  = new CostsApi();
+        cost1.setAmount(AMOUNT_ITEM_1);
+        cost1.setDescription(DESCRIPTION_ITEM_1);
+        costs.add(cost1);
 
-        // Add Item 2
-        CostsApi item2  = new CostsApi();
-        item2.setAmount(AMOUNT_ITEM_2);
-        item2.setDescription(DESCRIPTION_ITEM_2);
-        costs.add(item2);
+        // Add Cost 2
+        CostsApi cost2  = new CostsApi();
+        cost2.setAmount(AMOUNT_ITEM_2);
+        cost2.setDescription(DESCRIPTION_ITEM_2);
+        costs.add(cost2);
 
         paymentApi.setCosts(costs);
         return paymentApi;
