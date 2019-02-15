@@ -3,7 +3,6 @@ package uk.gov.companieshouse.web.payments.model;
 import java.util.List;
 
 public class PaymentSummary {
-
     private String total;
     private List<Payment> payments;
     private String email;
