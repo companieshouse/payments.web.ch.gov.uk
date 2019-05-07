@@ -1,6 +1,0 @@
-app_name: payments.web.ch.gov.uk
-group: web
-
-weight: 900
-routes:
-   1: /payments/(.*)/.*
