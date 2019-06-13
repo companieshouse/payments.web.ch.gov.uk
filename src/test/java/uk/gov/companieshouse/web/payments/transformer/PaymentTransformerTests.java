@@ -2,7 +2,7 @@ package uk.gov.companieshouse.web.payments.transformer;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import uk.gov.companieshouse.api.model.payment.CostsApi;
+import uk.gov.companieshouse.api.model.payment.Cost;
 import uk.gov.companieshouse.api.model.payment.CreatedByApi;
 import uk.gov.companieshouse.api.model.payment.PaymentApi;
 import uk.gov.companieshouse.web.payments.model.PaymentSummary;
@@ -13,6 +13,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 
 public class PaymentTransformerTests {
 
@@ -65,13 +66,13 @@ public class PaymentTransformerTests {
     }
 
     private PaymentApi createSingleMockPayment() {
-        List<CostsApi> costs  = new ArrayList<>();
+        List<Cost> costs  = new ArrayList<>();
         PaymentApi paymentApi = new PaymentApi();
         paymentApi.setAmount(SINGLE_PAYMENT_AMOUNT);
         CreatedByApi createdBy = new CreatedByApi();
         createdBy.setEmail(EMAIL);
         paymentApi.setCreatedBy(createdBy);
-        CostsApi cost  = new CostsApi();
+        Cost cost  = new Cost();
         cost.setAmount(SINGLE_PAYMENT_AMOUNT);
         cost.setDescription(DESCRIPTION_ITEM_1);
         costs.add(cost);
@@ -79,7 +80,7 @@ public class PaymentTransformerTests {
         return paymentApi;
     }
     private PaymentApi createMultipleMockPayments() {
-        List<CostsApi> costs  = new ArrayList<>();
+        List<Cost> costs  = new ArrayList<>();
         PaymentApi paymentApi = new PaymentApi();
         paymentApi.setAmount(MULTIPLE_PAYMENTS_AMOUNT);
         CreatedByApi createdBy = new CreatedByApi();
@@ -87,13 +88,13 @@ public class PaymentTransformerTests {
         paymentApi.setCreatedBy(createdBy);
 
         // Add Cost 1
-        CostsApi cost1  = new CostsApi();
+        Cost cost1  = new Cost();
         cost1.setAmount(AMOUNT_ITEM_1);
         cost1.setDescription(DESCRIPTION_ITEM_1);
         costs.add(cost1);
 
         // Add Cost 2
-        CostsApi cost2  = new CostsApi();
+        Cost cost2  = new Cost();
         cost2.setAmount(AMOUNT_ITEM_2);
         cost2.setDescription(DESCRIPTION_ITEM_2);
         costs.add(cost2);

@@ -7,6 +7,7 @@ import uk.gov.companieshouse.api.ApiClient;
 import uk.gov.companieshouse.api.InternalApiClient;
 import uk.gov.companieshouse.api.error.ApiErrorResponseException;
 import uk.gov.companieshouse.api.handler.exception.URIValidationException;
+import uk.gov.companieshouse.api.model.ApiResponse;
 import uk.gov.companieshouse.api.model.payment.PaymentApi;
 import uk.gov.companieshouse.web.payments.api.ApiClientService;
 import uk.gov.companieshouse.web.payments.exception.ServiceException;
@@ -34,11 +35,11 @@ public class PaymentServiceImpl implements PaymentService {
             throws ServiceException {
 
         ApiClient apiClient = apiClientService.getPublicApiClient();
-        PaymentApi paymentApi;
+        ApiResponse<PaymentApi> apiResponse;
 
         try {
             String uri = GET_PAYMENT_URI.expand(paymentId).toString();
-            paymentApi = apiClient.payment().get(uri).execute();
+            apiResponse = apiClient.payment().get(uri).execute();
         } catch (ApiErrorResponseException ex) {
             throw new ServiceException("Error retrieving Payment", ex);
         } catch (URIValidationException ex) {
@@ -46,7 +47,7 @@ public class PaymentServiceImpl implements PaymentService {
         }
 
         // Convert the API model to the web model
-        return transformer.getPayment(paymentApi);
+        return transformer.getPayment(apiResponse.getData());
     }
 
     @Override
