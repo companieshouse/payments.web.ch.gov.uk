@@ -6,6 +6,7 @@ import org.springframework.web.util.UriTemplate;
 import uk.gov.companieshouse.api.InternalApiClient;
 import uk.gov.companieshouse.api.error.ApiErrorResponseException;
 import uk.gov.companieshouse.api.handler.exception.URIValidationException;
+import uk.gov.companieshouse.api.model.ApiResponse;
 import uk.gov.companieshouse.api.model.externalpayment.ExternalPaymentApi;
 import uk.gov.companieshouse.web.payments.api.ApiClientService;
 import uk.gov.companieshouse.web.payments.exception.ServiceException;
@@ -29,8 +30,9 @@ public class ExternalPaymentServiceImpl implements ExternalPaymentService{
         try {
             String uriPost = POST_EXTERNAL_PAYMENT_URI.expand(paymentId).toString();
             ExternalPaymentApi externalPaymentApi = new ExternalPaymentApi();
-            externalPaymentApi = apiClient.privateExternalPayment().create(uriPost, externalPaymentApi).execute();
-            externalPaymentUrl = externalPaymentApi.getNextUrl();
+            ApiResponse<ExternalPaymentApi> apiResponse;
+            apiResponse = apiClient.privateExternalPayment().create(uriPost, externalPaymentApi).execute();
+            externalPaymentUrl = apiResponse.getData().getNextUrl();
         } catch (ApiErrorResponseException e) {
             throw new ServiceException("Error creating external journey", e);
         } catch (URIValidationException e) {

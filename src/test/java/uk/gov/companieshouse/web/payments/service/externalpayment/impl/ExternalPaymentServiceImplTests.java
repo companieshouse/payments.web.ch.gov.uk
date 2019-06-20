@@ -14,6 +14,7 @@ import uk.gov.companieshouse.api.error.ApiErrorResponseException;
 import uk.gov.companieshouse.api.handler.exception.URIValidationException;
 import uk.gov.companieshouse.api.handler.externalpayment.PrivateExternalPaymentResourceHandler;
 import uk.gov.companieshouse.api.handler.externalpayment.request.ExternalPaymentCreate;
+import uk.gov.companieshouse.api.model.ApiResponse;
 import uk.gov.companieshouse.api.model.externalpayment.ExternalPaymentApi;
 import uk.gov.companieshouse.web.payments.api.ApiClientService;
 import uk.gov.companieshouse.web.payments.exception.ServiceException;
@@ -60,10 +61,11 @@ public class ExternalPaymentServiceImplTests {
 
         ExternalPaymentApi externalPaymentApi = new ExternalPaymentApi();
         externalPaymentApi.setNextUrl(NEXT_URL);
+        ApiResponse<ExternalPaymentApi> apiResponse = new ApiResponse<>(201, null, externalPaymentApi);
 
         when(apiClient.privateExternalPayment()).thenReturn(privateExternalPaymentResourceHandler);
         when(apiClient.privateExternalPayment().create(eq(VALID_URI), any(ExternalPaymentApi.class))).thenReturn(externalPaymentCreate);
-        when(externalPaymentCreate.execute()).thenReturn(externalPaymentApi);
+        when(externalPaymentCreate.execute()).thenReturn(apiResponse);
 
         String nextUrl = externalPaymentService.createExternalPayment(PAYMENT_ID);
 

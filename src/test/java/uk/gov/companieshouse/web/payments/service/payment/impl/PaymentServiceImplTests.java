@@ -15,6 +15,7 @@ import uk.gov.companieshouse.api.handler.payment.PaymentResourceHandler;
 import uk.gov.companieshouse.api.handler.payment.PrivatePaymentResourceHandler;
 import uk.gov.companieshouse.api.handler.payment.request.PaymentGet;
 import uk.gov.companieshouse.api.handler.payment.request.PaymentPatch;
+import uk.gov.companieshouse.api.model.ApiResponse;
 import uk.gov.companieshouse.api.model.payment.PaymentApi;
 import uk.gov.companieshouse.web.payments.api.ApiClientService;
 import uk.gov.companieshouse.web.payments.exception.ServiceException;
@@ -78,10 +79,11 @@ public class PaymentServiceImplTests {
         paymentApi.setAmount(AMOUNT);
         PaymentSummary paymentSummary = new PaymentSummary();
         paymentSummary.setTotal(AMOUNT);
+        ApiResponse<PaymentApi> apiResponse = new ApiResponse<PaymentApi>(201, null, paymentApi);
 
         when(apiClient.payment()).thenReturn(paymentResourceHandler);
         when(apiClient.payment().get(GET_PAYMENT_VALID_URI)).thenReturn(paymentGet);
-        when(paymentGet.execute()).thenReturn(paymentApi);
+        when(paymentGet.execute()).thenReturn(apiResponse);
         when(paymentTransformer.getPayment(paymentApi)).thenReturn(paymentSummary);
 
         String totalAmount = paymentService.getPayment(PAYMENT_ID).getTotal();
