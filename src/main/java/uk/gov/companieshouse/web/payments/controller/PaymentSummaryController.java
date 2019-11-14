@@ -65,7 +65,7 @@ public class PaymentSummaryController extends BaseController {
 
         // Patch chosen Payment Method for payment session.
         try {
-            String paymentMethod = PaymentMethod.GOV_PAY.getPaymentMethod();
+            String paymentMethod = PaymentMethod.GOV_PAY.getPayMethod();
             paymentService.patchPayment(paymentId, paymentMethod);
         } catch (ServiceException e) {
             LOGGER.errorRequest(request, e.getMessage(), e);
