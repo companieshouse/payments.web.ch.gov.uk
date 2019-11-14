@@ -14,7 +14,7 @@
     <parent>
         <groupId>uk.gov.companieshouse</groupId>
         <artifactId>companies-house-spring-boot-parent</artifactId>
-        <version>1.0.0-rc1</version>
+        <version>1.2.0</version>
         <relativePath/>
     </parent>
 
@@ -30,16 +30,10 @@
         <web-security-java.version>1.1.0-rc1</web-security-java.version>
         <spring-security-core.version>5.1.0.RELEASE</spring-security-core.version>
         <sdk-manager-java.version>1.4.0-rc1</sdk-manager-java.version>
-        <common-web-java.version>1.0.1-rc3</common-web-java.version>
+        <common-web-java.version>1.1.0-rc1</common-web-java.version>
         <joda-money.version>1.0.1</joda-money.version>
         <hamcrest-library-version>2.1</hamcrest-library-version>
         <spring-test.version>5.1.3.RELEASE</spring-test.version>
-
-        <!-- Sonar -->
-        <sonar-maven-plugin.version>3.5.0.1254</sonar-maven-plugin.version>
-        <sonar.host.url>${CODE_ANALYSIS_HOST_URL}</sonar.host.url>
-        <sonar.login>${CODE_ANALYSIS_LOGIN}</sonar.login>
-        <sonar.password>${CODE_ANALYSIS_PASSWORD}</sonar.password>
 
         <!-- Jacoco -->
         <jacoco-maven-plugin.version>0.7.7.201606060606</jacoco-maven-plugin.version>
@@ -68,7 +62,7 @@
         <dependency>
             <groupId>uk.gov.companieshouse</groupId>
             <artifactId>api-sdk-java</artifactId>
-            <version>4.1.14</version>
+            <version>4.1.43</version>
         </dependency>
         <dependency>
             <groupId>nz.net.ultraq.thymeleaf</groupId>
