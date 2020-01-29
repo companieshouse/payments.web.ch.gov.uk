@@ -118,6 +118,23 @@ public class PaymentServiceImplTests {
     }
 
     @Test
+    @DisplayName("Patch Payment Session - Success Path")
+    void patchPaymentSessionSuccess() throws ServiceException, ApiErrorResponseException, URIValidationException {
+
+        when(apiClientService.getPrivateApiClient()).thenReturn(internalApiClient);
+
+        ApiResponse<Void> apiResponse = new ApiResponse<Void>(201, null);
+
+        when(internalApiClient.privatePayment()).thenReturn(privatePaymentResourceHandler);
+        when(internalApiClient.privatePayment().patch(eq(PATCH_PAYMENT_VALID_URI), any(PaymentApi.class))).thenReturn(paymentPatch);
+        when(paymentPatch.execute()).thenReturn(apiResponse);
+
+        paymentService.patchPayment(PAYMENT_ID, PAYMENT_METHOD_GOV_PAY);
+
+        verify(paymentPatch, times(1)).execute();
+    }
+
+    @Test
     @DisplayName("Patch Payment Session - API Error Response Exception Thrown")
     void patchPaymentSessionApiResponseExceptionThrown() throws ApiErrorResponseException, URIValidationException {
 

@@ -3,14 +3,14 @@ package uk.gov.companieshouse.web.payments.util;
 public enum PaymentMethod {
     GOV_PAY("GovPay");
 
-    private String paymentMethod;
+    private String payMethod;
 
-    private PaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
+    PaymentMethod(String payMethod) {
+        this.payMethod = payMethod;
     }
 
-    public String getPaymentMethod() {
-        return paymentMethod;
+    public String getPayMethod() {
+        return payMethod;
     }
 
 }
