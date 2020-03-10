@@ -4,10 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import uk.gov.companieshouse.web.payments.exception.ServiceException;
 import uk.gov.companieshouse.web.payments.model.PaymentSummary;
@@ -37,6 +34,7 @@ public class PaymentSummaryController extends BaseController {
 
     @GetMapping
     public String getPaymentSummary(@PathVariable String paymentId,
+                                    @RequestParam(value = "summary", required = false, defaultValue = "true") Boolean summary,
                                      Model model,
                                      HttpServletRequest request) {
 
@@ -52,6 +50,11 @@ public class PaymentSummaryController extends BaseController {
         if (StringUtils.equals(paymentSummary.getStatus(), (PaymentStatus.PAYMENT_STATUS_PAID.paymentStatus()))) {
             LOGGER.errorRequest(request, "payment session status is paid, cannot pay again");
             return  ERROR_VIEW;
+        }
+
+        // If the query parameter is set to not display summary screen then return GovPay URL
+        if (summary.equals(false)) {
+            return postExternalPayment(paymentId, request);
         }
 
         model.addAttribute("paymentSummary", paymentSummary);
