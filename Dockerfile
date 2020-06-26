@@ -1,8 +1,9 @@
 FROM maven:3-openjdk-8-slim AS builder
 WORKDIR /build
+ENV MAVEN_REPOSITORY_URL=http://repository.aws.chdev.org:8081/
+ENV artifactoryResolveSnapshotRepo=artifactory/virtual-release
 
 COPY pom.xml ./
-# RUN mvn dependency:resolve && mvn dependency:resolve-plugins
 RUN mvn verify --fail-never
 
 COPY src ./src
@@ -14,5 +15,4 @@ WORKDIR /app
 
 COPY --from=builder /build/target/payments.web.ch.gov.uk-unversioned.jar payments.web.ch.gov.uk.jar
 
-# CMD ["/app/payments.web.ch.gov.uk.jar"]
 ENTRYPOINT ["java", "-jar", "-Dserver.port=3056", "/app/payments.web.ch.gov.uk.jar"]
