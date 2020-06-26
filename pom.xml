@@ -209,7 +209,7 @@
         </plugins>
     </build>
 
-    <repositories>
+    <!-- <repositories>
         <repository>
             <id>ch-artifactory-release</id>
             <url>${MAVEN_REPOSITORY_URL}/${artifactoryResolveReleaseRepo}</url>
@@ -218,6 +218,12 @@
             <id>ch-artifactory-snapshot</id>
             <url>${MAVEN_REPOSITORY_URL}/${artifactoryResolveSnapshotRepo}</url>
         </repository>
+    </repositories> -->
+    
+    <repositories>
+        <repository>
+            <id>Companies House</id>
+            <url>http://repository.aws.chdev.org:8081/artifactory/virtual-release</url>
+        </repository>
     </repositories>
-
 </project>
