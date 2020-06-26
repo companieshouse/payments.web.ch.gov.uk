@@ -208,7 +208,8 @@
             </plugin>
         </plugins>
     </build>
-    <repositories>
+
+    <!-- <repositories>
         <repository>
             <id>ch-artifactory-release</id>
             <url>${MAVEN_REPOSITORY_URL}/${artifactoryResolveReleaseRepo}</url>
@@ -216,6 +217,17 @@
         <repository>
             <id>ch-artifactory-snapshot</id>
             <url>${MAVEN_REPOSITORY_URL}/${artifactoryResolveSnapshotRepo}</url>
+        </repository>
+    </repositories> -->
+
+    <repositories>
+        <repository>
+            <id>ch-artifactory-release</id>
+            <url>http://repository.aws.chdev.org:8081/artifactory/virtual-release</url>
+        </repository>
+        <repository>
+            <id>ch-artifactory-snapshot</id>
+            <url>http://repository.aws.chdev.org:8081/libs-snapshot-local</url>
         </repository>
     </repositories>
 </project>
