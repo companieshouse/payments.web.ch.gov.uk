@@ -16,7 +16,7 @@ import uk.gov.companieshouse.web.payments.util.PaymentStatus;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/payments/{paymentId}/pay")
+@RequestMapping({"/payments/{paymentId}/pay", "/payments/{paymentId}/pay/legacy"})
 public class PaymentSummaryController extends BaseController {
 
     private static final String PAYMENT_SUMMARY_VIEW = "payments/paymentSummary";
@@ -39,14 +39,14 @@ public class PaymentSummaryController extends BaseController {
                                      HttpServletRequest request) {
 
         PaymentSummary paymentSummary;
-
+        System.out.println("Im in controller");
         try {
             paymentSummary = paymentService.getPayment(paymentId);
         } catch (ServiceException e) {
             LOGGER.errorRequest(request, e.getMessage(), e);
             return ERROR_VIEW;
         }
-
+        System.out.println("Im in controller 1");
         if (StringUtils.equals(paymentSummary.getStatus(), (PaymentStatus.PAYMENT_STATUS_PAID.paymentStatus()))) {
             LOGGER.errorRequest(request, "payment session status is paid, cannot pay again");
             return  ERROR_VIEW;
@@ -56,7 +56,7 @@ public class PaymentSummaryController extends BaseController {
         if (summary.equals(false)) {
             return postExternalPayment(paymentId, request);
         }
-
+        System.out.println("Im in controller 2");
         model.addAttribute("paymentSummary", paymentSummary);
 
         return getTemplateName();

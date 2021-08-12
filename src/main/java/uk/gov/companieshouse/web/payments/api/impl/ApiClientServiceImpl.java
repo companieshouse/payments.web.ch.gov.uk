@@ -11,6 +11,7 @@ public class ApiClientServiceImpl implements ApiClientService {
 
     @Override
     public ApiClient getPublicApiClient() {
+        System.out.println("in getPublicAPIClient");
         return ApiClientManager.getSDK();
     }
 
