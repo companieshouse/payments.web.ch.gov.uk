@@ -16,7 +16,7 @@ import uk.gov.companieshouse.web.payments.util.PaymentStatus;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping({"/payments/{paymentId}/pay", "/payments/{paymentId}/pay/legacy"})
+@RequestMapping({"/payments/{paymentId}/pay", "/payments/{paymentId}/pay/api-key"})
 public class PaymentSummaryController extends BaseController {
 
     private static final String PAYMENT_SUMMARY_VIEW = "payments/paymentSummary";
@@ -39,14 +39,13 @@ public class PaymentSummaryController extends BaseController {
                                      HttpServletRequest request) {
 
         PaymentSummary paymentSummary;
-        System.out.println("Im in controller");
         try {
             paymentSummary = paymentService.getPayment(paymentId);
         } catch (ServiceException e) {
             LOGGER.errorRequest(request, e.getMessage(), e);
             return ERROR_VIEW;
         }
-        System.out.println("Im in controller 1");
+
         if (StringUtils.equals(paymentSummary.getStatus(), (PaymentStatus.PAYMENT_STATUS_PAID.paymentStatus()))) {
             LOGGER.errorRequest(request, "payment session status is paid, cannot pay again");
             return  ERROR_VIEW;
@@ -56,7 +55,7 @@ public class PaymentSummaryController extends BaseController {
         if (summary.equals(false)) {
             return postExternalPayment(paymentId, request);
         }
-        System.out.println("Im in controller 2");
+
         model.addAttribute("paymentSummary", paymentSummary);
 
         return getTemplateName();
@@ -65,7 +64,6 @@ public class PaymentSummaryController extends BaseController {
     @PostMapping
     public String postExternalPayment(@PathVariable String paymentId, HttpServletRequest request) {
         String journeyUrl;
-
         // Patch chosen Payment Method for payment session.
         try {
             String paymentMethod = PaymentMethod.GOV_PAY.getPaymentMethod();
@@ -74,7 +72,6 @@ public class PaymentSummaryController extends BaseController {
             LOGGER.errorRequest(request, e.getMessage(), e);
             return ERROR_VIEW;
         }
-
         // Post to API to start external journey with chosen Payment provider.
         try {
             journeyUrl = externalPaymentService.createExternalPayment(paymentId);
@@ -82,7 +79,6 @@ public class PaymentSummaryController extends BaseController {
             LOGGER.errorRequest(request, e.getMessage(), e);
             return ERROR_VIEW;
         }
-
         return UrlBasedViewResolver.REDIRECT_URL_PREFIX + journeyUrl;
     }
 }

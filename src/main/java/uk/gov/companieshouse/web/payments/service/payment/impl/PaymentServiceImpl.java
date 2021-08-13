@@ -33,11 +33,9 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public PaymentSummary getPayment(String paymentId)
             throws ServiceException {
-        System.out.println("Im in getPayment PaymentServiceImpl");
 
         ApiClient apiClient = apiClientService.getPublicApiClient();
         ApiResponse<PaymentApi> apiResponse;
-        System.out.println("Im in getPayment PaymentServiceImpl 1");
 
         try {
             String uri = GET_PAYMENT_URI.expand(paymentId).toString();
@@ -47,7 +45,6 @@ public class PaymentServiceImpl implements PaymentService {
         } catch (URIValidationException ex) {
             throw new ServiceException("Invalid URI for Payment", ex);
         }
-        System.out.println("Im in getPayment PaymentServiceImpl 2");
         // Convert the API model to the web model
         return transformer.getPayment(apiResponse.getData());
     }
