@@ -86,7 +86,7 @@ public class PaymentServiceImplTests {
         when(paymentGet.execute()).thenReturn(apiResponse);
         when(paymentTransformer.getPayment(paymentApi)).thenReturn(paymentSummary);
 
-        String totalAmount = paymentService.getPayment(PAYMENT_ID).getTotal();
+        String totalAmount = paymentService.getPayment(PAYMENT_ID, false).getTotal();
 
         assertEquals(AMOUNT, totalAmount);
     }
@@ -101,7 +101,7 @@ public class PaymentServiceImplTests {
         when(apiClient.payment().get(GET_PAYMENT_VALID_URI)).thenReturn(paymentGet);
         when(paymentGet.execute()).thenThrow(ApiErrorResponseException.class);
 
-        assertThrows(ServiceException.class, () -> paymentService.getPayment(PAYMENT_ID));
+        assertThrows(ServiceException.class, () -> paymentService.getPayment(PAYMENT_ID, false));
     }
 
     @Test
@@ -114,7 +114,7 @@ public class PaymentServiceImplTests {
         when(apiClient.payment().get(GET_PAYMENT_VALID_URI)).thenReturn(paymentGet);
         when(paymentGet.execute()).thenThrow(URIValidationException.class);
 
-        assertThrows(ServiceException.class, () -> paymentService.getPayment(PAYMENT_ID));
+        assertThrows(ServiceException.class, () -> paymentService.getPayment(PAYMENT_ID, false));
     }
 
     @Test
@@ -127,7 +127,7 @@ public class PaymentServiceImplTests {
         when(internalApiClient.privatePayment().patch(eq(PATCH_PAYMENT_VALID_URI), any(PaymentApi.class))).thenReturn(paymentPatch);
         when(paymentPatch.execute()).thenThrow(ApiErrorResponseException.class);
 
-        assertThrows(ServiceException.class, () -> paymentService.patchPayment(PAYMENT_ID, PAYMENT_METHOD_GOV_PAY));
+        assertThrows(ServiceException.class, () -> paymentService.patchPayment(PAYMENT_ID, PAYMENT_METHOD_GOV_PAY, false));
     }
 
     @Test
@@ -140,6 +140,6 @@ public class PaymentServiceImplTests {
         when(internalApiClient.privatePayment().patch(eq(PATCH_PAYMENT_VALID_URI), any(PaymentApi.class))).thenReturn(paymentPatch);
         when(paymentPatch.execute()).thenThrow(URIValidationException.class);
 
-        assertThrows(ServiceException.class, () -> paymentService.patchPayment(PAYMENT_ID, PAYMENT_METHOD_GOV_PAY));
+        assertThrows(ServiceException.class, () -> paymentService.patchPayment(PAYMENT_ID, PAYMENT_METHOD_GOV_PAY, false));
     }
 }

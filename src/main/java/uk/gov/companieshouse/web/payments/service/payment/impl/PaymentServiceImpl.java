@@ -31,10 +31,15 @@ public class PaymentServiceImpl implements PaymentService {
     private PaymentTransformer transformer;
 
     @Override
-    public PaymentSummary getPayment(String paymentId)
+    public PaymentSummary getPayment(String paymentId, Boolean isAPIKey)
             throws ServiceException {
-
-        ApiClient apiClient = apiClientService.getPublicApiClient();
+        
+        ApiClient apiClient = null;
+        if (isAPIKey) {
+            apiClient = apiClientService.getPublicApiClientWithKey();
+        } else {
+            apiClient = apiClientService.getPublicApiClient();
+        }
         ApiResponse<PaymentApi> apiResponse;
 
         try {
@@ -50,10 +55,15 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public void patchPayment(String paymentId, String paymentMethod)
+    public void patchPayment(String paymentId, String paymentMethod, Boolean isAPIKey)
             throws ServiceException {
 
-        InternalApiClient apiClient = apiClientService.getPrivateApiClient();
+        InternalApiClient apiClient = null;
+        if (isAPIKey) {
+            apiClient = apiClientService.getPrivateApiClientWithKey();
+        } else {
+            apiClient = apiClientService.getPrivateApiClient();
+        }
 
         try {
             String uriPatch = PATCH_PAYMENT_URI.expand(paymentId).toString();

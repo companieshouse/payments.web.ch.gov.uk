@@ -12,7 +12,8 @@ import uk.gov.companieshouse.auth.filter.HijackFilter;
 
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
-
+    // NOTE: These configurations should not be modified without thorough testing of all scenarios. These configurations
+    // are set up to allow no authentication for api key users, so beware of modifying.
     @Configuration
     @Order(1)
     public static class APIKeyPaymentsWebSecurityFilterConfig extends WebSecurityConfigurerAdapter {

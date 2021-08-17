@@ -55,7 +55,7 @@ public class PaymentSummaryControllerTests {
     void getRequestSuccessDisplaySummary() throws Exception {
         PaymentSummary paymentSummary = new PaymentSummary();
         paymentSummary.setStatus(PaymentStatus.PAYMENT_STATUS_PENDING.paymentStatus());
-        when(paymentService.getPayment(PAYMENT_ID)).thenReturn(paymentSummary);
+        when(paymentService.getPayment(PAYMENT_ID, false)).thenReturn(paymentSummary);
         this.mockMvc.perform(get(PAYMENT_SUMMARY_PATH))
                 .andExpect(status().isOk())
                 .andExpect(view().name(controller.getTemplateName()))
@@ -67,8 +67,8 @@ public class PaymentSummaryControllerTests {
     void getRequestSuccessDontDisplaySummary() throws Exception {
         PaymentSummary paymentSummary = new PaymentSummary();
         paymentSummary.setStatus(PaymentStatus.PAYMENT_STATUS_PENDING.paymentStatus());
-        when(paymentService.getPayment(PAYMENT_ID)).thenReturn(paymentSummary);
-        when(externalPaymentService.createExternalPayment(PAYMENT_ID)).thenReturn(JOURNEY_NEXT_URL);
+        when(paymentService.getPayment(PAYMENT_ID, false)).thenReturn(paymentSummary);
+        when(externalPaymentService.createExternalPayment(PAYMENT_ID, false)).thenReturn(JOURNEY_NEXT_URL);
         this.mockMvc.perform(get(PAYMENT_SUMMARY_DONT_DISPLAY_PATH))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:" + JOURNEY_NEXT_URL));
@@ -78,7 +78,7 @@ public class PaymentSummaryControllerTests {
     @DisplayName("Failure due to error on GET request for payment summary")
     void getRequestFailureInGetPayment() throws Exception {
 
-        doThrow(ServiceException.class).when(paymentService).getPayment(PAYMENT_ID);
+        doThrow(ServiceException.class).when(paymentService).getPayment(PAYMENT_ID, false);
 
         this.mockMvc.perform(get(PAYMENT_SUMMARY_PATH))
                 .andExpect(status().isOk())
@@ -90,7 +90,7 @@ public class PaymentSummaryControllerTests {
     void getRequestErrorWhenPaymentStatusPaid() throws Exception {
         PaymentSummary paymentSummary = new PaymentSummary();
         paymentSummary.setStatus(PaymentStatus.PAYMENT_STATUS_PAID.paymentStatus());
-        when(paymentService.getPayment(PAYMENT_ID)).thenReturn(paymentSummary);
+        when(paymentService.getPayment(PAYMENT_ID, false)).thenReturn(paymentSummary);
         this.mockMvc.perform(get(PAYMENT_SUMMARY_PATH))
                 .andExpect(status().isOk())
                 .andExpect(view().name(ERROR_VIEW));
@@ -100,7 +100,7 @@ public class PaymentSummaryControllerTests {
     @Test
     @DisplayName("Post Payment Summary success path")
     void postRequestSuccess() throws Exception {
-        when(externalPaymentService.createExternalPayment(PAYMENT_ID)).thenReturn(JOURNEY_NEXT_URL);
+        when(externalPaymentService.createExternalPayment(PAYMENT_ID, false)).thenReturn(JOURNEY_NEXT_URL);
         this.mockMvc.perform(post(PAYMENT_SUMMARY_PATH))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:" + JOURNEY_NEXT_URL));
@@ -110,7 +110,7 @@ public class PaymentSummaryControllerTests {
     @DisplayName("Failure due to error on PATCH request for external payment method")
     void postRequestFailureOnPatchPayment() throws Exception {
 
-        doThrow(ServiceException.class).when(paymentService).patchPayment(PAYMENT_ID, PaymentMethod.GOV_PAY.getPaymentMethod());
+        doThrow(ServiceException.class).when(paymentService).patchPayment(PAYMENT_ID, PaymentMethod.GOV_PAY.getPaymentMethod(), false);
 
         this.mockMvc.perform(post(PAYMENT_SUMMARY_PATH))
                 .andExpect(status().isOk())
@@ -121,7 +121,7 @@ public class PaymentSummaryControllerTests {
     @DisplayName("Failure due to error on POST request to GovPay")
     void postRequestFailureOnPostExternal() throws Exception {
 
-        doThrow(ServiceException.class).when(externalPaymentService).createExternalPayment(PAYMENT_ID);
+        doThrow(ServiceException.class).when(externalPaymentService).createExternalPayment(PAYMENT_ID, false);
 
         this.mockMvc.perform(post(PAYMENT_SUMMARY_PATH))
                 .andExpect(status().isOk())

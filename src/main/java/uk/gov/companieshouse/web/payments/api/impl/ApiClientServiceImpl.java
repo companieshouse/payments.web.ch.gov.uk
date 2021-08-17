@@ -9,17 +9,27 @@ import uk.gov.companieshouse.web.payments.api.ApiClientService;
 
 @Component
 public class ApiClientServiceImpl implements ApiClientService {
-    @Value("${paymentPrivilegeKey}") // via application property
+    @Value("${paymentPrivilegeKey}")
     private String paymentPrivilegeKey;
 
     @Override
     public ApiClient getPublicApiClient() {
+        return ApiClientManager.getSDK();
+    }
+
+    @Override
+    public ApiClient getPublicApiClientWithKey() {
         return ApiClientManager.getSDK(paymentPrivilegeKey);
     }
 
     @Override
     public InternalApiClient getPrivateApiClient() {
         return ApiClientManager.getPrivateSDK();
+    }
+
+    @Override
+    public InternalApiClient getPrivateApiClientWithKey() {
+        return ApiClientManager.getPrivateSDK(paymentPrivilegeKey);
     }
 
 }

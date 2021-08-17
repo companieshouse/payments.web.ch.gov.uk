@@ -1,5 +1,6 @@
 package uk.gov.companieshouse.web.payments.service.externalpayment.impl;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriTemplate;
@@ -22,9 +23,14 @@ public class ExternalPaymentServiceImpl implements ExternalPaymentService{
     ApiClientService apiClientService;
 
     @Override
-    public String createExternalPayment(String paymentId) throws ServiceException {
+    public String createExternalPayment(String paymentId, Boolean isAPIKey) throws ServiceException {
 
-        InternalApiClient apiClient = apiClientService.getPrivateApiClient();
+        InternalApiClient apiClient = null;
+        if (isAPIKey) {
+            apiClient = apiClientService.getPrivateApiClientWithKey();
+        } else {
+            apiClient = apiClientService.getPrivateApiClient();
+        }
         String externalPaymentUrl;
 
         try {

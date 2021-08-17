@@ -67,7 +67,7 @@ public class ExternalPaymentServiceImplTests {
         when(apiClient.privateExternalPayment().create(eq(VALID_URI), any(ExternalPaymentApi.class))).thenReturn(externalPaymentCreate);
         when(externalPaymentCreate.execute()).thenReturn(apiResponse);
 
-        String nextUrl = externalPaymentService.createExternalPayment(PAYMENT_ID);
+        String nextUrl = externalPaymentService.createExternalPayment(PAYMENT_ID, false);
 
         assertEquals(NEXT_URL, nextUrl);
     }
@@ -80,7 +80,7 @@ public class ExternalPaymentServiceImplTests {
         when(apiClient.privateExternalPayment().create(eq(VALID_URI), any(ExternalPaymentApi.class))).thenReturn(externalPaymentCreate);
         when(externalPaymentCreate.execute()).thenThrow(ApiErrorResponseException.class);
 
-        assertThrows(ServiceException.class, () -> externalPaymentService.createExternalPayment(PAYMENT_ID));
+        assertThrows(ServiceException.class, () -> externalPaymentService.createExternalPayment(PAYMENT_ID, false));
     }
 
     @Test
@@ -91,6 +91,6 @@ public class ExternalPaymentServiceImplTests {
         when(apiClient.privateExternalPayment().create(eq(VALID_URI), any(ExternalPaymentApi.class))).thenReturn(externalPaymentCreate);
         when(externalPaymentCreate.execute()).thenThrow(URIValidationException.class);
 
-        assertThrows(ServiceException.class, () -> externalPaymentService.createExternalPayment(PAYMENT_ID));
+        assertThrows(ServiceException.class, () -> externalPaymentService.createExternalPayment(PAYMENT_ID, false));
     }
 }
