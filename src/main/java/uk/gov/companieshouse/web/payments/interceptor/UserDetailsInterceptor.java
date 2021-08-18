@@ -26,11 +26,16 @@ public class UserDetailsInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable ModelAndView modelAndView) throws Exception {
+        Boolean urlContainsAPIKey = false;
+
+        if (request.getRequestURI() != null) {
+            urlContainsAPIKey = request.getRequestURI().contains("api-key");
+        }
 
         if (modelAndView != null && (request.getMethod().equalsIgnoreCase("GET") ||
                 (request.getMethod().equalsIgnoreCase("POST") &&
                         !modelAndView.getViewName().startsWith(UrlBasedViewResolver.REDIRECT_URL_PREFIX)))
-                && !request.getRequestURI().contains("api-key")) {
+                && !urlContainsAPIKey) {
             Map<String, Object> sessionData = sessionService.getSessionDataFromContext();
             Map<String, Object> signInInfo = (Map<String, Object>) sessionData.get(SIGN_IN_KEY);
             if (signInInfo != null) {
