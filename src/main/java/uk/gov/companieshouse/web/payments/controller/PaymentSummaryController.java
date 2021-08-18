@@ -16,7 +16,7 @@ import uk.gov.companieshouse.web.payments.util.PaymentStatus;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/payments/{paymentId}/pay")
+@RequestMapping({"/payments/{paymentId}/pay", "/payments/{paymentId}/pay/api-key"})
 public class PaymentSummaryController extends BaseController {
 
     private static final String PAYMENT_SUMMARY_VIEW = "payments/paymentSummary";
@@ -39,9 +39,9 @@ public class PaymentSummaryController extends BaseController {
                                      HttpServletRequest request) {
 
         PaymentSummary paymentSummary;
-
+        Boolean isAPIKey = request.getRequestURI().contains("api-key");
         try {
-            paymentSummary = paymentService.getPayment(paymentId);
+            paymentSummary = paymentService.getPayment(paymentId, isAPIKey);
         } catch (ServiceException e) {
             LOGGER.errorRequest(request, e.getMessage(), e);
             return ERROR_VIEW;
@@ -65,24 +65,23 @@ public class PaymentSummaryController extends BaseController {
     @PostMapping
     public String postExternalPayment(@PathVariable String paymentId, HttpServletRequest request) {
         String journeyUrl;
+        Boolean isAPIKey = request.getRequestURI().contains("api-key");
 
         // Patch chosen Payment Method for payment session.
         try {
             String paymentMethod = PaymentMethod.GOV_PAY.getPaymentMethod();
-            paymentService.patchPayment(paymentId, paymentMethod);
+            paymentService.patchPayment(paymentId, paymentMethod, isAPIKey);
         } catch (ServiceException e) {
             LOGGER.errorRequest(request, e.getMessage(), e);
             return ERROR_VIEW;
         }
-
         // Post to API to start external journey with chosen Payment provider.
         try {
-            journeyUrl = externalPaymentService.createExternalPayment(paymentId);
+            journeyUrl = externalPaymentService.createExternalPayment(paymentId, isAPIKey);
         } catch (ServiceException e) {
             LOGGER.errorRequest(request, e.getMessage(), e);
             return ERROR_VIEW;
         }
-
         return UrlBasedViewResolver.REDIRECT_URL_PREFIX + journeyUrl;
     }
 }

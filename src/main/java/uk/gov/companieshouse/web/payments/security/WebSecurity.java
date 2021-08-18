@@ -12,15 +12,24 @@ import uk.gov.companieshouse.auth.filter.HijackFilter;
 
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
-
+    // NOTE: These configurations should not be modified without thorough testing of all scenarios. These configurations
+    // are set up to allow no authentication for api key users, so beware of modifying.
     @Configuration
     @Order(1)
-    public static class PaymentsWebSecurityFilterConfig extends WebSecurityConfigurerAdapter {
-
+    public static class APIKeyPaymentsWebSecurityFilterConfig extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
+            http.antMatcher("/payments/*/pay/api-key");
+        }
+    }
 
-            http.addFilterBefore(new SessionHandler(), BasicAuthenticationFilter.class)
+    @Configuration
+    @Order(2)
+    public static class PaymentsWebSecurityFilterConfig extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.antMatcher("/payments/*/pay")
+                    .addFilterBefore(new SessionHandler(), BasicAuthenticationFilter.class)
                     .addFilterBefore(new HijackFilter(), BasicAuthenticationFilter.class)
                     .addFilterBefore(new UserAuthFilter(), BasicAuthenticationFilter.class);
         }

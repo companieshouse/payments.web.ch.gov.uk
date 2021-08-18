@@ -29,8 +29,8 @@ public class UserDetailsInterceptor extends HandlerInterceptorAdapter {
 
         if (modelAndView != null && (request.getMethod().equalsIgnoreCase("GET") ||
                 (request.getMethod().equalsIgnoreCase("POST") &&
-                        !modelAndView.getViewName().startsWith(UrlBasedViewResolver.REDIRECT_URL_PREFIX)))) {
-
+                        !modelAndView.getViewName().startsWith(UrlBasedViewResolver.REDIRECT_URL_PREFIX)))
+                && !request.getRequestURI().contains("api-key")) {
             Map<String, Object> sessionData = sessionService.getSessionDataFromContext();
             Map<String, Object> signInInfo = (Map<String, Object>) sessionData.get(SIGN_IN_KEY);
             if (signInInfo != null) {

@@ -12,5 +12,9 @@ public interface ApiClientService {
 
     ApiClient getPublicApiClient();
 
+    ApiClient getPublicApiClientWithKey();
+
     InternalApiClient getPrivateApiClient();
+
+    InternalApiClient getPrivateApiClientWithKey();
 }
