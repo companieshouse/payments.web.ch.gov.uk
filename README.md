@@ -32,3 +32,12 @@ Key                | Description
 Page           | Address
 ---------------|-----------------------------
 Payment Summary| `/payments/<payment_id>/pay`
+
+### Building a Docker container image
+
+This project uses jib-maven-plugin to build Docker container images. To build a container image, run the following
+command on the command line:
+
+```bash
+mvn compile jib:dockerBuild -Dimage=169942020521.dkr.ecr.eu-west-1.amazonaws.com/local/payments.web.ch.gov.uk:latest
+```
