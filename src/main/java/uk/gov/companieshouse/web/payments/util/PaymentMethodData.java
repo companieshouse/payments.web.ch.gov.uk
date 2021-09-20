@@ -1,11 +1,12 @@
 package uk.gov.companieshouse.web.payments.util;
 
-public enum PaymentMethod {
-    GOV_PAY("GovPay");
+public enum PaymentMethodData {
+    GOVPAY("GovPay"),
+    PAYPAL("PayPal");
 
     private String paymentMethod;
 
-    private PaymentMethod(String paymentMethod) {
+    private PaymentMethodData(String paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 

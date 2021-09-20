@@ -3,10 +3,12 @@ package uk.gov.companieshouse.web.payments.transformer.impl;
 import org.joda.money.Money;
 import org.joda.money.format.MoneyFormatter;
 import org.joda.money.format.MoneyFormatterBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.api.model.payment.PaymentApi;
 import uk.gov.companieshouse.web.payments.model.Payment;
 import uk.gov.companieshouse.web.payments.model.PaymentSummary;
+import uk.gov.companieshouse.web.payments.transformer.PaymentMethodTransformer;
 import uk.gov.companieshouse.web.payments.transformer.PaymentTransformer;
 
 import java.util.Currency;
@@ -18,6 +20,9 @@ import static org.joda.money.CurrencyUnit.GBP;
 
 @Component
 public class PaymentTransformerImpl implements PaymentTransformer {
+
+    @Autowired
+    private PaymentMethodTransformer paymentMethodTransformer;
 
     @Override
     public PaymentSummary getPayment(PaymentApi paymentApi) {
@@ -38,7 +43,11 @@ public class PaymentTransformerImpl implements PaymentTransformer {
         paymentSummary.setStatus(paymentApi.getStatus());
 
         List<Payment> payments = paymentApi.getCosts().stream()
-                .map(p -> new Payment( p.getDescription(), formatAmount(p.getAmount(), f))).collect(Collectors.toList());
+                .map(p -> new Payment(
+                        p.getDescription(),
+                        formatAmount(p.getAmount(), f),
+                        paymentMethodTransformer.getReadablePaymentMethods(p.getAvailablePaymentMethods()))
+                ).collect(Collectors.toList());
 
         paymentSummary.setPayments(payments);
         return paymentSummary;
