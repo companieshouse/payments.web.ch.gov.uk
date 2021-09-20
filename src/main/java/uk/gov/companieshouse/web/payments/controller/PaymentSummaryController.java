@@ -68,10 +68,10 @@ public class PaymentSummaryController extends BaseController {
         // If there is only one payment method do not display screen to choose payment type
         if (availablePaymentMethods.getAvailablePaymentMethods().size() == 1) {
             if (summary.equals(false)) {
-                // If summary query parameter is set to false do not display summary screen and return ExternalPayment URL
                 PaymentMethodChoice paymentMethodChoice = new PaymentMethodChoice();
                 paymentMethodChoice.setSelectedPaymentMethod(availablePaymentMethods.getAvailablePaymentMethods().get(0));
 
+                // If summary query parameter is set to false do not display summary screen and return ExternalPayment URL
                 return postExternalPayment(paymentId, request, paymentMethodChoice, null, null);
             } else {
                 // If no summary query parameter is set then show summary screen
@@ -100,27 +100,31 @@ public class PaymentSummaryController extends BaseController {
             BindingResult bindingResult,
             Model model) {
 
-        if (bindingResult != null) {
-            if (bindingResult.hasErrors()) {
-                // Generate payments summary again to repopulate available payment methods
-                PaymentSummary paymentSummary;
-                Boolean isAPIKey = request.getRequestURI().contains("api-key");
-                try {
-                    paymentSummary = paymentService.getPayment(paymentId, isAPIKey);
-                } catch (ServiceException e) {
-                    LOGGER.errorRequest(request, e.getMessage(), e);
-                    return ERROR_VIEW;
-                }
-                AvailablePaymentMethods availablePaymentMethods = new AvailablePaymentMethods();
-                availablePaymentMethods.setAvailablePaymentMethods(paymentSummary.getPayments().get(0).getPaymentMethods());
+        Boolean isAPIKey = request.getRequestURI().contains("api-key");
 
+        // Generate payments summary again to repopulate available payment methods
+        PaymentSummary paymentSummary;
+        try {
+            paymentSummary = paymentService.getPayment(paymentId, isAPIKey);
+        } catch (ServiceException e) {
+            LOGGER.errorRequest(request, e.getMessage(), e);
+            return ERROR_VIEW;
+        }
+        AvailablePaymentMethods availablePaymentMethods = new AvailablePaymentMethods();
+        availablePaymentMethods.setAvailablePaymentMethods(paymentSummary.getPayments().get(0).getPaymentMethods());
+
+        // Only validate page if there is more than one payment method available to be chosen
+        if (availablePaymentMethods.getAvailablePaymentMethods().size() > 1) {
+            if (bindingResult.hasErrors()) {
                 model.addAttribute("availablePaymentMethods", availablePaymentMethods.getAvailablePaymentMethods());
                 return PAYMENT_METHOD_CHOICE_VIEW;
             }
+        } else {
+            // If there is only one payment method set it as the selected payment method
+            paymentMethodChoice.setSelectedPaymentMethod(availablePaymentMethods.getAvailablePaymentMethods().get(0));
         }
 
         String journeyUrl;
-        Boolean isAPIKey = request.getRequestURI().contains("api-key");
 
         // Patch chosen Payment Method for payment session.
         try {

@@ -207,6 +207,17 @@ public class PaymentSummaryControllerTests {
     @Test
     @DisplayName("Post Payment Summary success path")
     void postRequestSuccess() throws Exception {
+        PaymentSummary paymentSummary = new PaymentSummary();
+        Payment payment = new Payment(
+                "description",
+                "750",
+                Arrays.asList(PaymentMethodReadable.GOVPAY.getPaymentMethod(), PaymentMethodReadable.PAYPAL.getPaymentMethod())
+        );
+
+        paymentSummary.setStatus(PaymentStatus.PAYMENT_STATUS_PENDING.paymentStatus());
+        paymentSummary.setPayments(Arrays.asList(payment));
+
+        when(paymentService.getPayment(PAYMENT_ID, false)).thenReturn(paymentSummary);
         when(externalPaymentService.createExternalPayment(PAYMENT_ID, false)).thenReturn(JOURNEY_NEXT_URL);
         when(paymentMethodTransformer.getDataPaymentMethod(PaymentMethodReadable.GOVPAY.getPaymentMethod())).thenReturn(PaymentMethodData.GOVPAY.getPaymentMethod());
 
@@ -222,6 +233,17 @@ public class PaymentSummaryControllerTests {
     @Test
     @DisplayName("Failure due to error on PATCH request for external payment method")
     void postRequestFailureOnPatchPayment() throws Exception {
+        PaymentSummary paymentSummary = new PaymentSummary();
+        Payment payment = new Payment(
+                "description",
+                "750",
+                Arrays.asList(PaymentMethodReadable.GOVPAY.getPaymentMethod(), PaymentMethodReadable.PAYPAL.getPaymentMethod())
+        );
+
+        paymentSummary.setStatus(PaymentStatus.PAYMENT_STATUS_PENDING.paymentStatus());
+        paymentSummary.setPayments(Arrays.asList(payment));
+
+        when(paymentService.getPayment(PAYMENT_ID, false)).thenReturn(paymentSummary);
         when(paymentMethodTransformer.getDataPaymentMethod(PaymentMethodReadable.GOVPAY.getPaymentMethod())).thenReturn(PaymentMethodData.GOVPAY.getPaymentMethod());
         doThrow(ServiceException.class).when(paymentService).patchPayment(PAYMENT_ID, PaymentMethodData.GOVPAY.getPaymentMethod(), false);
 
@@ -234,6 +256,17 @@ public class PaymentSummaryControllerTests {
     @Test
     @DisplayName("Failure due to error on POST request to GovPay")
     void postRequestFailureOnPostExternal() throws Exception {
+        PaymentSummary paymentSummary = new PaymentSummary();
+        Payment payment = new Payment(
+                "description",
+                "750",
+                Arrays.asList(PaymentMethodReadable.GOVPAY.getPaymentMethod(), PaymentMethodReadable.PAYPAL.getPaymentMethod())
+        );
+
+        paymentSummary.setStatus(PaymentStatus.PAYMENT_STATUS_PENDING.paymentStatus());
+        paymentSummary.setPayments(Arrays.asList(payment));
+
+        when(paymentService.getPayment(PAYMENT_ID, false)).thenReturn(paymentSummary);
         when(paymentMethodTransformer.getDataPaymentMethod(PaymentMethodReadable.GOVPAY.getPaymentMethod())).thenReturn(PaymentMethodData.GOVPAY.getPaymentMethod());
         doThrow(ServiceException.class).when(externalPaymentService).createExternalPayment(PAYMENT_ID, false);
 
