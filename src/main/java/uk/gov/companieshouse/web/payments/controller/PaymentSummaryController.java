@@ -34,7 +34,7 @@ public class PaymentSummaryController extends BaseController {
 
     @GetMapping
     public String getPaymentSummary(@PathVariable String paymentId,
-                                    @RequestParam(value = "summary", required = false, defaultValue = "true") Boolean summary,
+                                    @RequestParam(value = "summary", required = false, defaultValue = "false") Boolean summary,
                                      Model model,
                                      HttpServletRequest request) {
 

@@ -30,8 +30,8 @@ public class PaymentSummaryControllerTests {
 
     private static final String PAYMENT_ID = "paymentId";
     private static final String PAYMENT_SUMMARY_PATH = "/payments/" + PAYMENT_ID + "/pay";
-    private static final String SUMMARY_FALSE_PARAMETER = "?summary=false";
-    private static final String PAYMENT_SUMMARY_DONT_DISPLAY_PATH = PAYMENT_SUMMARY_PATH + SUMMARY_FALSE_PARAMETER;
+    private static final String SUMMARY_TRUE_PARAMETER = "?summary=true";
+    private static final String PAYMENT_SUMMARY_DISPLAY_PATH = PAYMENT_SUMMARY_PATH + SUMMARY_TRUE_PARAMETER;
     private static final String JOURNEY_NEXT_URL = "payment.service/gov/uk/123456789";
 
     private MockMvc mockMvc;
@@ -56,7 +56,7 @@ public class PaymentSummaryControllerTests {
         PaymentSummary paymentSummary = new PaymentSummary();
         paymentSummary.setStatus(PaymentStatus.PAYMENT_STATUS_PENDING.paymentStatus());
         when(paymentService.getPayment(PAYMENT_ID, false)).thenReturn(paymentSummary);
-        this.mockMvc.perform(get(PAYMENT_SUMMARY_PATH))
+        this.mockMvc.perform(get(PAYMENT_SUMMARY_DISPLAY_PATH))
                 .andExpect(status().isOk())
                 .andExpect(view().name(controller.getTemplateName()))
                 .andExpect(model().attributeExists("paymentSummary"));
@@ -69,7 +69,7 @@ public class PaymentSummaryControllerTests {
         paymentSummary.setStatus(PaymentStatus.PAYMENT_STATUS_PENDING.paymentStatus());
         when(paymentService.getPayment(PAYMENT_ID, false)).thenReturn(paymentSummary);
         when(externalPaymentService.createExternalPayment(PAYMENT_ID, false)).thenReturn(JOURNEY_NEXT_URL);
-        this.mockMvc.perform(get(PAYMENT_SUMMARY_DONT_DISPLAY_PATH))
+        this.mockMvc.perform(get(PAYMENT_SUMMARY_PATH))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:" + JOURNEY_NEXT_URL));
     }
