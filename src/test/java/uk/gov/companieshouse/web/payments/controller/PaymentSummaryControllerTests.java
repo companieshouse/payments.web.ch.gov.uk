@@ -30,8 +30,6 @@ public class PaymentSummaryControllerTests {
 
     private static final String PAYMENT_ID = "paymentId";
     private static final String PAYMENT_SUMMARY_PATH = "/payments/" + PAYMENT_ID + "/pay";
-    private static final String SUMMARY_TRUE_PARAMETER = "?summary=true";
-    private static final String PAYMENT_SUMMARY_DISPLAY_PATH = PAYMENT_SUMMARY_PATH + SUMMARY_TRUE_PARAMETER;
     private static final String JOURNEY_NEXT_URL = "payment.service/gov/uk/123456789";
 
     private MockMvc mockMvc;
@@ -48,18 +46,6 @@ public class PaymentSummaryControllerTests {
     @BeforeEach
     private void setup() {
         this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-    }
-
-    @Test
-    @DisplayName("Payment Summary view success path - Display Summary Screen")
-    void getRequestSuccessDisplaySummary() throws Exception {
-        PaymentSummary paymentSummary = new PaymentSummary();
-        paymentSummary.setStatus(PaymentStatus.PAYMENT_STATUS_PENDING.paymentStatus());
-        when(paymentService.getPayment(PAYMENT_ID, false)).thenReturn(paymentSummary);
-        this.mockMvc.perform(get(PAYMENT_SUMMARY_DISPLAY_PATH))
-                .andExpect(status().isOk())
-                .andExpect(view().name(controller.getTemplateName()))
-                .andExpect(model().attributeExists("paymentSummary"));
     }
 
     @Test

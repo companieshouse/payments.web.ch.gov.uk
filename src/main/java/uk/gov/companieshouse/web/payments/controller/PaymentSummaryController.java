@@ -52,14 +52,7 @@ public class PaymentSummaryController extends BaseController {
             return  ERROR_VIEW;
         }
 
-        // If the query parameter is set to not display summary screen then return GovPay URL
-        if (summary.equals(false)) {
-            return postExternalPayment(paymentId, request);
-        }
-
-        model.addAttribute("paymentSummary", paymentSummary);
-
-        return getTemplateName();
+        return postExternalPayment(paymentId, request);
     }
 
     @PostMapping
