@@ -1,7 +1,7 @@
 package uk.gov.companieshouse.web.payments.util;
 
 public enum PaymentMethodData {
-    GOVPAY("GovPay"),
+    GOVPAY("credit-card"),
     PAYPAL("PayPal");
 
     private String paymentMethod;
