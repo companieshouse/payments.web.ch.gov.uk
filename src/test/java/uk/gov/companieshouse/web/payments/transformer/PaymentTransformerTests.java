@@ -2,6 +2,10 @@ package uk.gov.companieshouse.web.payments.transformer;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.companieshouse.api.model.payment.Cost;
 import uk.gov.companieshouse.api.model.payment.CreatedByApi;
 import uk.gov.companieshouse.api.model.payment.PaymentApi;
@@ -9,12 +13,13 @@ import uk.gov.companieshouse.web.payments.model.PaymentSummary;
 import uk.gov.companieshouse.web.payments.transformer.impl.PaymentTransformerImpl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-
+@ExtendWith(MockitoExtension.class)
 public class PaymentTransformerTests {
 
     private static final String MULTIPLE_PAYMENTS_AMOUNT = "300";
@@ -29,6 +34,10 @@ public class PaymentTransformerTests {
     private static final String AMOUNT_ITEM_2_FORMATTED = "£100.00";
     private static final String EMAIL = "email@companieshouse.gov.uk";
 
+    @Mock
+    private PaymentMethodTransformer paymentMethodTransformer;
+
+    @InjectMocks
     private PaymentTransformer transformer = new PaymentTransformerImpl();
 
     @Test
@@ -75,6 +84,7 @@ public class PaymentTransformerTests {
         Cost cost  = new Cost();
         cost.setAmount(SINGLE_PAYMENT_AMOUNT);
         cost.setDescription(DESCRIPTION_ITEM_1);
+        cost.setAvailablePaymentMethods(Arrays.asList("GovPay", "PayPal"));
         costs.add(cost);
         paymentApi.setCosts(costs);
         return paymentApi;
@@ -91,12 +101,14 @@ public class PaymentTransformerTests {
         Cost cost1  = new Cost();
         cost1.setAmount(AMOUNT_ITEM_1);
         cost1.setDescription(DESCRIPTION_ITEM_1);
+        cost1.setAvailablePaymentMethods(Arrays.asList("GovPay", "PayPal"));
         costs.add(cost1);
 
         // Add Cost 2
         Cost cost2  = new Cost();
         cost2.setAmount(AMOUNT_ITEM_2);
         cost2.setDescription(DESCRIPTION_ITEM_2);
+        cost2.setAvailablePaymentMethods(Arrays.asList("GovPay", "PayPal"));
         costs.add(cost2);
 
         paymentApi.setCosts(costs);
