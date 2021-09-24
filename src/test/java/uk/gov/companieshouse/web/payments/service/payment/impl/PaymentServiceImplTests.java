@@ -40,7 +40,7 @@ public class PaymentServiceImplTests {
 
     private static final String PATCH_PAYMENT_VALID_URI = "/private/payments/" + PAYMENT_ID;
 
-    private static final String PAYMENT_METHOD_GOV_PAY = "GovPay";
+    private static final String PAYMENT_METHOD_GOV_PAY = "credit-card";
 
     @Mock
     private ApiClientService apiClientService;
