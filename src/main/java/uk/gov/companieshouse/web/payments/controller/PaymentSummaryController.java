@@ -76,6 +76,7 @@ public class PaymentSummaryController extends BaseController {
             } else {
                 // If no summary query parameter is set then show summary screen
                 model.addAttribute("paymentSummary", paymentSummary);
+                model.addAttribute("chosenPaymentMethod", availablePaymentMethods.getAvailablePaymentMethods());
                 return getTemplateName();
             }
         } else {
