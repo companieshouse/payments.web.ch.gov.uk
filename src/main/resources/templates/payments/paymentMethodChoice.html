@@ -31,13 +31,14 @@
 
                         <div class="govuk-radios" th:each="paymentMethod : ${availablePaymentMethods}" style="margin-bottom:1em;">
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input"
+                                <input class="govuk-radios__input piwik-event"
                                        th:id="${paymentMethod}"
                                        name="available-payment-method"
                                        type="radio"
                                        th:value="${paymentMethod}"
                                        th:field="*{selectedPaymentMethod}"
-                                       th:errorclass="govuk-error-message"/>
+                                       th:errorclass="govuk-error-message"
+                                       th:attr="data-event-id=${paymentMethod}"/>
                                 <label class="govuk-label govuk-radios__label" th:for="${paymentMethod}" th:text="${paymentMethod}">keyvalue</label>
                             </div>
                         </div>
@@ -46,7 +47,6 @@
                 </div>
 
                 <input id="next-button" class="govuk-button piwik-event" data-event-id="Payment Summary - Continue" type="submit" role="button" value="Continue to payment"/>
-
             </form>
         </div>
     </div>
