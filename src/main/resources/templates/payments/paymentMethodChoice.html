@@ -32,13 +32,13 @@
                         <div class="govuk-radios" th:each="paymentMethod : ${availablePaymentMethods}" style="margin-bottom:1em;">
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input"
-                                       id="availablePaymentMethod"
+                                       th:id="${paymentMethod}"
                                        name="available-payment-method"
                                        type="radio"
                                        th:value="${paymentMethod}"
                                        th:field="*{selectedPaymentMethod}"
                                        th:errorclass="govuk-error-message"/>
-                                <label class="govuk-label govuk-radios__label" for="availablePaymentMethod" th:text="${paymentMethod}">keyvalue</label>
+                                <label class="govuk-label govuk-radios__label" th:for="${paymentMethod}" th:text="${paymentMethod}">keyvalue</label>
                             </div>
                         </div>
 
