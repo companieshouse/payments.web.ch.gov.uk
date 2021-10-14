@@ -10,7 +10,9 @@ import uk.gov.companieshouse.web.payments.model.Payment;
 import uk.gov.companieshouse.web.payments.model.PaymentSummary;
 import uk.gov.companieshouse.web.payments.transformer.PaymentMethodTransformer;
 import uk.gov.companieshouse.web.payments.transformer.PaymentTransformer;
+import uk.gov.companieshouse.web.payments.util.PaymentMethodData;
 
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
@@ -42,11 +44,20 @@ public class PaymentTransformerImpl implements PaymentTransformer {
 
         paymentSummary.setStatus(paymentApi.getStatus());
 
+        List<String> availablePaymentMethods = new ArrayList<>();
+
+        // Set the available payment methods to only acceptable methods from the first cost resource
+        for (String paymentMethod : paymentApi.getCosts().get(0).getAvailablePaymentMethods()) {
+            if (paymentMethod.equalsIgnoreCase(PaymentMethodData.PAYPAL.getPaymentMethod()) || paymentMethod.equalsIgnoreCase(PaymentMethodData.GOVPAY.getPaymentMethod())) {
+                availablePaymentMethods.add(paymentMethod);
+            }
+        }
+
         List<Payment> payments = paymentApi.getCosts().stream()
                 .map(p -> new Payment(
                         p.getDescription(),
                         formatAmount(p.getAmount(), f),
-                        paymentMethodTransformer.getReadablePaymentMethods(p.getAvailablePaymentMethods()))
+                        paymentMethodTransformer.getReadablePaymentMethods(availablePaymentMethods))
                 ).collect(Collectors.toList());
 
         paymentSummary.setPayments(payments);
