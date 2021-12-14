@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -34,6 +35,7 @@
         <joda-money.version>1.0.1</joda-money.version>
         <hamcrest-library-version>2.2</hamcrest-library-version>
         <spring-test.version>5.2.3.RELEASE</spring-test.version>
+        <log4j2.version>2.16.0</log4j2.version>
 
         <!-- Jacoco -->
         <jacoco-maven-plugin.version>0.7.7.201606060606</jacoco-maven-plugin.version>
