@@ -81,12 +81,4 @@ module "ecs-service" {
   app_environment_filename  = local.app_environment_filename
   use_set_environment_files = local.use_set_environment_files
 
-  # eric options for eric running API module
-  use_eric_reverse_proxy    = true
-  eric_version              = var.eric_version
-  eric_cpus                 = var.eric_cpus
-  eric_memory               = var.eric_memory
-  eric_port                 = local.eric_port
-  eric_environment_filename = local.eric_environment_filename
-  eric_secrets              = local.eric_secrets
 }
