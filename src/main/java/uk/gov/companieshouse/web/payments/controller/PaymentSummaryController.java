@@ -16,7 +16,7 @@ import uk.gov.companieshouse.web.payments.service.payment.PaymentService;
 import uk.gov.companieshouse.web.payments.transformer.PaymentMethodTransformer;
 import uk.gov.companieshouse.web.payments.util.PaymentStatus;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -41,7 +41,7 @@ public class PaymentSummaryController extends BaseController {
     }
 
     @GetMapping
-    public String getPaymentSummary(@PathVariable String paymentId,
+    public String getPaymentSummary(@PathVariable("paymentId") String paymentId,
                                     @RequestParam(value = "summary", required = false, defaultValue = "true") Boolean summary,
                                      Model model,
                                      HttpServletRequest request) {
@@ -95,7 +95,7 @@ public class PaymentSummaryController extends BaseController {
 
     @PostMapping
     public String postExternalPayment(
-            @PathVariable String paymentId,
+            @PathVariable("paymentId") String paymentId,
             HttpServletRequest request,
             @ModelAttribute("paymentMethods") @Valid PaymentMethodChoice paymentMethodChoice,
             BindingResult bindingResult,
