@@ -223,7 +223,7 @@ public class PaymentSummaryControllerTests {
 
         this.mockMvc.perform(post(PAYMENT_SUMMARY_PATH)
                 .param(SELECTED_PAYMENT_METHOD_MODEL_ATTR, PaymentMethodReadable.GOVPAY.getPaymentMethod()))
-//                .andExpect(model().attributeHasNoErrors(PAYMENT_METHODS_MODEL_ATTR))
+                .andExpect(model().attribute(PAYMENT_METHODS_MODEL_ATTR, Matcher))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:" + JOURNEY_NEXT_URL));
 

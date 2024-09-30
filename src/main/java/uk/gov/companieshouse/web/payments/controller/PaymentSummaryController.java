@@ -17,7 +17,7 @@ import uk.gov.companieshouse.web.payments.transformer.PaymentMethodTransformer;
 import uk.gov.companieshouse.web.payments.util.PaymentStatus;
 
 import jakarta.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping({"/payments/{paymentId}/pay", "/payments/{paymentId}/pay/api-key"})
@@ -97,7 +97,7 @@ public class PaymentSummaryController extends BaseController {
     public String postExternalPayment(
             @PathVariable("paymentId") String paymentId,
             HttpServletRequest request,
-            @ModelAttribute("paymentMethods") @Valid PaymentMethodChoice paymentMethodChoice,
+            @Valid @ModelAttribute("paymentMethods") PaymentMethodChoice paymentMethodChoice,
             BindingResult bindingResult,
             Model model) {
 
