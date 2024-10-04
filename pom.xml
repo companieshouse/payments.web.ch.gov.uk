@@ -34,7 +34,6 @@
         <common-web-java.version>3.0.9</common-web-java.version>
         <joda-money.version>1.0.5</joda-money.version>
         <hamcrest-library-version>3.0</hamcrest-library-version>
-        <spring-test.version>6.1.13</spring-test.version>
         <log4j2.version>2.24.0</log4j2.version>
         <api-sdk-java.version>6.0.9</api-sdk-java.version>
         <!-- Maven and Surefire plugins -->
@@ -128,7 +127,6 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>${spring-test.version}</version>
             <scope>test</scope>
         </dependency>
 
