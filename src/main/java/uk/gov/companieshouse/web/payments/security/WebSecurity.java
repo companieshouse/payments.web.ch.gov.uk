@@ -14,30 +14,22 @@ import uk.gov.companieshouse.session.handler.SessionHandler;
 import uk.gov.companieshouse.auth.filter.HijackFilter;
 
 @EnableWebSecurity
-public class WebSecurity {
-
-    @Configuration
-    @Order(1)
-    public static class APIKeyPaymentsWebSecurityFilterConfig {
-        @Bean
-        public SecurityFilterChain apiKeySecurityFilterChain(HttpSecurity http) throws Exception {
-            return ChsCsrfMitigationHttpSecurityBuilder.configureWebCsrfMitigations(
-                    http.authorizeHttpRequests(requests -> requests
-                            .requestMatchers(new AntPathRequestMatcher("/payments/*/pay/api-key")).permitAll()
-                            .anyRequest().authenticated())).build();
-        }
-    }
-}
-
 @Configuration
-@Order(2)
-class PaymentsWebSecurityFilterConfig {
+
+public class WebSecurity {
     @Bean
-    public SecurityFilterChain paymentsSecurityFilterChain(HttpSecurity http) throws Exception {
+    @Order(1)
+    public SecurityFilterChain healthcheckSecurityFilterChain(HttpSecurity http) throws Exception {
+        return ChsCsrfMitigationHttpSecurityBuilder.configureApiCsrfMitigations(
+                        http.securityMatcher("/payments-web/healthcheck", "/payments/*/pay/api-key"))
+                .build();
+    }
+
+    @Bean
+    @Order(2)
+    public SecurityFilterChain webKeySecurityFilterChain(HttpSecurity http) throws Exception {
         return ChsCsrfMitigationHttpSecurityBuilder.configureWebCsrfMitigations(
-                        http.authorizeHttpRequests(requests -> requests
-                                        .requestMatchers(new AntPathRequestMatcher("/payments/*/pay")).permitAll()
-                                        .anyRequest().authenticated())
+                        http.securityMatcher("/**")
                                 .addFilterBefore(new SessionHandler(), BasicAuthenticationFilter.class)
                                 .addFilterBefore(new HijackFilter(), BasicAuthenticationFilter.class)
                                 .addFilterBefore(new UserAuthFilter(), BasicAuthenticationFilter.class))
