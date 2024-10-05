@@ -42,6 +42,7 @@
         <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
         <junit-platform-surefire-provider.version>1.0.3</junit-platform-surefire-provider.version>
         <sonar-maven-plugin.version>4.0.0.4121</sonar-maven-plugin.version>
+        <jib-maven-plugin.version>3.4.1</jib-maven-plugin.version>
         <!-- Repositories -->
         <artifactoryResolveSnapshotRepo>libs-snapshot-local</artifactoryResolveSnapshotRepo>
         <artifactoryResolveReleaseRepo>virtual-release</artifactoryResolveReleaseRepo>
@@ -183,11 +184,6 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
         </dependency>
-        <dependency>
-          <groupId>jakarta.validation</groupId>
-          <artifactId>jakarta.validation-api</artifactId>
-          <version>3.1.0</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -231,7 +227,7 @@
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
-                <version>3.4.1</version>
+                <version>${jib-maven-plugin.version}</version>
                 <configuration>
                     <container>
                         <expandClasspathDependencies>true</expandClasspathDependencies>
