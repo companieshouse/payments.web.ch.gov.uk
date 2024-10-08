@@ -1,6 +1,6 @@
 package uk.gov.companieshouse.web.payments;
 
-import org.apache.tomcat.util.http.LegacyCookieProcessor;
+import org.apache.tomcat.util.http.Rfc6265CookieProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -43,7 +43,7 @@ public class PaymentsWebApplication implements WebMvcConfigurer {
             @Override
             public void customize(TomcatServletWebServerFactory factory) {
                 TomcatServletWebServerFactory tomcat = (TomcatServletWebServerFactory) factory;
-                tomcat.addContextCustomizers(context -> context.setCookieProcessor(new LegacyCookieProcessor()));
+                tomcat.addContextCustomizers(context -> context.setCookieProcessor(new Rfc6265CookieProcessor()));
             }
         };
     }

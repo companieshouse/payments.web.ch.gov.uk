@@ -1,38 +1,38 @@
 package uk.gov.companieshouse.web.payments.security;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import uk.gov.companieshouse.auth.filter.UserAuthFilter;
+import uk.gov.companieshouse.csrf.config.ChsCsrfMitigationHttpSecurityBuilder;
 import uk.gov.companieshouse.session.handler.SessionHandler;
 import uk.gov.companieshouse.auth.filter.HijackFilter;
 
 @EnableWebSecurity
-public class WebSecurity extends WebSecurityConfigurerAdapter {
-    // NOTE: These configurations should not be modified without thorough testing of all scenarios. These configurations
-    // are set up to allow no authentication for api key users, so beware of modifying.
-    @Configuration
+@Configuration
+
+public class WebSecurity {
+    @Bean
     @Order(1)
-    public static class APIKeyPaymentsWebSecurityFilterConfig extends WebSecurityConfigurerAdapter {
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http.antMatcher("/payments/*/pay/api-key");
-        }
+    public SecurityFilterChain healthcheckSecurityFilterChain(HttpSecurity http) throws Exception {
+        return ChsCsrfMitigationHttpSecurityBuilder.configureApiCsrfMitigations(
+                        http.securityMatcher("/payments-web/healthcheck", "/payments/*/pay/api-key"))
+                .build();
     }
 
-    @Configuration
+    @Bean
     @Order(2)
-    public static class PaymentsWebSecurityFilterConfig extends WebSecurityConfigurerAdapter {
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http.antMatcher("/payments/*/pay")
-                    .addFilterBefore(new SessionHandler(), BasicAuthenticationFilter.class)
-                    .addFilterBefore(new HijackFilter(), BasicAuthenticationFilter.class)
-                    .addFilterBefore(new UserAuthFilter(), BasicAuthenticationFilter.class);
-        }
+    public SecurityFilterChain webKeySecurityFilterChain(HttpSecurity http) throws Exception {
+        return ChsCsrfMitigationHttpSecurityBuilder.configureWebCsrfMitigations(
+                        http.securityMatcher("/**")
+                                .addFilterBefore(new SessionHandler(), BasicAuthenticationFilter.class)
+                                .addFilterBefore(new HijackFilter(), BasicAuthenticationFilter.class)
+                                .addFilterBefore(new UserAuthFilter(), BasicAuthenticationFilter.class))
+                .build();
     }
-
 }
