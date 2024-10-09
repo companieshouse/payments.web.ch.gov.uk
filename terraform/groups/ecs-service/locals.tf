@@ -8,8 +8,8 @@ locals {
   docker_repo                = "payments.web.ch.gov.uk"
   kms_alias                  = "alias/${var.aws_profile}/environment-services-kms"
   lb_listener_rule_priority  = 72
-  lb_listener_paths          = ["", "/healthcheck"]
-  healthcheck_path           = "/healthcheck" # healthcheck path for payments.web.ch.gov.uk
+  lb_listener_paths          = ["/payments/*/pay*","/payments/*/pay/*"]
+  healthcheck_path           = "payments-web/healthcheck" # healthcheck path for payments.web.ch.gov.uk
   healthcheck_matcher        = "200"
   vpc_name                   = local.stack_secrets["vpc_name"]
   s3_config_bucket           = data.vault_generic_secret.shared_s3.data["config_bucket_name"]

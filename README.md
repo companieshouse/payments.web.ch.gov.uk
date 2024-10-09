@@ -54,7 +54,7 @@ Application specific attributes | Value                                | Descrip
 :---------|:-----------------------------------------------------------------------------|:-----------
 **ECS Cluster**        |payments-service                                     | ECS cluster (stack) the service belongs to
 **Load balancer**      |{env}-chs-chgovuk                                            | The load balancer that sits in front of the service
-**Concourse pipeline**     |[Pipeline link]({{LINK_TO_PIPELINE}}) <br> [Pipeline code]({{LINK_TO_PIPELINE_CODE}})                                  | Concourse pipeline link in shared services
+**Concourse pipeline**     |[Pipeline link](https://ci-platform.companieshouse.gov.uk/teams/team-development/pipelines/payments.web.ch.gov.uk) <br> [Pipeline code](https://github.com/companieshouse/ci-pipelines/blob/master/pipelines/ssplatform/team-development/payments.web.ch.gov.uk})                                  | Concourse pipeline link in shared services
 
 
 ### Contributing
