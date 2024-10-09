@@ -53,7 +53,7 @@ This is done by calling a [module](https://github.com/companieshouse/terraform-m
 Application specific attributes | Value                                | Description
 :---------|:-----------------------------------------------------------------------------|:-----------
 **ECS Cluster**        |payments-service                                     | ECS cluster (stack) the service belongs to
-**Load balancer**      |{env}-chs-chgovuk                                            | The load balancer that sits in front of the service
+**Load balancer**      |{env}-chs-payments-web                                           | The load balancer that sits in front of the service
 **Concourse pipeline**     |[Pipeline link](https://ci-platform.companieshouse.gov.uk/teams/team-development/pipelines/payments.web.ch.gov.uk) <br> [Pipeline code](https://github.com/companieshouse/ci-pipelines/blob/master/pipelines/ssplatform/team-development/payments.web.ch.gov.uk})                                  | Concourse pipeline link in shared services
 
 

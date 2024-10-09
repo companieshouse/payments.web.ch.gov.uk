@@ -111,7 +111,7 @@ variable "use_set_environment_files" {
   description = "Toggle default global and shared environment files"
 }
 
-variable "payments_web_ch_gov_uk_version" {
+variable "payments_web_version" {
   type        = string
   description = "The version of the payments.web.ch.gov.uk container to run."
 }
