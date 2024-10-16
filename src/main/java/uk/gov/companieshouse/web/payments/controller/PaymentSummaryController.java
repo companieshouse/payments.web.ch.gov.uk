@@ -5,7 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import uk.gov.companieshouse.web.payments.exception.ServiceException;
 import uk.gov.companieshouse.web.payments.model.AvailablePaymentMethods;
@@ -16,8 +21,8 @@ import uk.gov.companieshouse.web.payments.service.payment.PaymentService;
 import uk.gov.companieshouse.web.payments.transformer.PaymentMethodTransformer;
 import uk.gov.companieshouse.web.payments.util.PaymentStatus;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping({"/payments/{paymentId}/pay", "/payments/{paymentId}/pay/api-key"})
@@ -41,7 +46,7 @@ public class PaymentSummaryController extends BaseController {
     }
 
     @GetMapping
-    public String getPaymentSummary(@PathVariable String paymentId,
+    public String getPaymentSummary(@PathVariable("paymentId") String paymentId,
                                     @RequestParam(value = "summary", required = false, defaultValue = "true") Boolean summary,
                                      Model model,
                                      HttpServletRequest request) {
@@ -95,9 +100,9 @@ public class PaymentSummaryController extends BaseController {
 
     @PostMapping
     public String postExternalPayment(
-            @PathVariable String paymentId,
+            @PathVariable("paymentId") String paymentId,
             HttpServletRequest request,
-            @ModelAttribute("paymentMethods") @Valid PaymentMethodChoice paymentMethodChoice,
+            @Valid @ModelAttribute("paymentMethods") PaymentMethodChoice paymentMethodChoice,
             BindingResult bindingResult,
             Model model) {
 
