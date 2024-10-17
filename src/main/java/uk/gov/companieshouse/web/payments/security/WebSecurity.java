@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import uk.gov.companieshouse.auth.filter.UserAuthFilter;
 import uk.gov.companieshouse.csrf.config.ChsCsrfMitigationHttpSecurityBuilder;
 import uk.gov.companieshouse.session.handler.SessionHandler;
@@ -15,7 +14,6 @@ import uk.gov.companieshouse.auth.filter.HijackFilter;
 
 @EnableWebSecurity
 @Configuration
-
 public class WebSecurity {
     @Bean
     @Order(1)
