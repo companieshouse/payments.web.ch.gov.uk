@@ -25,7 +25,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>21</java.version>
         <spring-boot-dependencies.version>3.3.3</spring-boot-dependencies.version>
-        <thymeleaf-layout-dialect.version>3.2.1</thymeleaf-layout-dialect.version>
+        <thymeleaf-layout-dialect.version>3.3.0</thymeleaf-layout-dialect.version>
         <mockito-junit-jupiter.version>5.9.0</mockito-junit-jupiter.version>
         <structured-logging.version>3.0.14</structured-logging.version>
         <java-session-handler.version>4.1.1</java-session-handler.version>
@@ -86,12 +86,6 @@
             <groupId>nz.net.ultraq.thymeleaf</groupId>
             <artifactId>thymeleaf-layout-dialect</artifactId>
             <version>${thymeleaf-layout-dialect.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>nz.net.ultraq.thymeleaf</groupId>
-                    <artifactId>thymeleaf-expression-processor</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
