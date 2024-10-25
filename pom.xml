@@ -25,14 +25,14 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>21</java.version>
         <spring-boot-dependencies.version>3.3.3</spring-boot-dependencies.version>
-        <thymeleaf-layout-dialect.version>3.2.0</thymeleaf-layout-dialect.version>
+        <thymeleaf-layout-dialect.version>3.3.0</thymeleaf-layout-dialect.version>
         <mockito-junit-jupiter.version>5.9.0</mockito-junit-jupiter.version>
         <structured-logging.version>3.0.14</structured-logging.version>
         <java-session-handler.version>4.1.1</java-session-handler.version>
         <web-security-java.version>3.1.0</web-security-java.version>
         <spring-security-core.version>6.3.3</spring-security-core.version>
         <sdk-manager-java.version>3.0.9</sdk-manager-java.version>
-        <common-web-java.version>3.0.9</common-web-java.version>
+        <common-web-java.version>3.0.17</common-web-java.version>
         <joda-money.version>1.0.5</joda-money.version>
         <hamcrest-library-version>3.0</hamcrest-library-version>
         <log4j2.version>2.24.0</log4j2.version>
