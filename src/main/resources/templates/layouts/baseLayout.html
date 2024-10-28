@@ -1,4 +1,72 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/chsBaseLayout (serviceName = 'payments-web') }">
+<html lang="en" class="govuk-template app-html-class" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title layout:title-pattern="$CONTENT_TITLE"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#0b0c0c">
+    <meta
+            property="og:image"
+            th:content="@{{http://cdn.chs.local}/images/govuk-opengraph-image.png(http://cdn.chs.local=${@environment.getProperty('cdn.url')})}">
+    <link
+            th:href="@{{http://cdn.chs.local}/stylesheets/chs-user-bar.css(http://cdn.chs.local=${@environment.getProperty('cdn.url')})}"
+            media="all" rel="stylesheet" type="text/css" />
+    <link
+            th:href="@{{http://cdn.chs.local}/stylesheets/govuk-frontend/v4.6.0/govuk-frontend-4.6.0.min.css(http://cdn.chs.local=${@environment.getProperty('cdn.url')})}"
+            media="all" rel="stylesheet" type="text/css" />
+    <link
+            th:href="@{{http://cdn.chs.local}/stylesheets/govuk-link_override.css(http://cdn.chs.local=${@environment.getProperty('cdn.url')})}"
+            media="all" rel="stylesheet" type="text/css" />
+    <link
+            rel="icon"
+            th:href="@{{http://cdn.chs.local}/images/govuk-frontend/v4.6.0/images/favicon.ico(http://cdn.chs.local=${@environment.getProperty('cdn.url')})}"
+            type="image/x-icon" />
+    <link
+            th:href="@{{http://cdn.chs.local}/stylesheets/extensions/languages-nav.css(http://cdn.chs.local=${@environment.getProperty('cdn.url')})}"
+            rel="stylesheet" type="text/css" />
+
+    <script th:inline="javascript">
+        window.SERVICE_NAME = [[${serviceName}]]
+        window.PIWIK_URL = [[${@environment.getProperty('piwik.url')}]];
+        window.PIWIK_SITE_ID = [[${@environment.getProperty('piwik.siteId')}]];
+    </script>
+</head>
+<body class="govuk-template__body app-body-class">
+
+<!-- templateName set by TemplateNameInterceptor and used in piwik-enable.js below for piwik/matomo event ids -->
+<div id="templateName" th:attr="data-id=${templateName},data-metadata=${metadata}" hidden></div>
+
+<script th:src="@{{http://cdn.chs.local}/javascripts/app/body-js-enable.js(http://cdn.chs.local=${@environment.getProperty('cdn.url')})}" type="text/javascript"></script>
+<script th:src="@{{http://cdn.chs.local}/javascripts/vendor/require.js(http://cdn.chs.local=${@environment.getProperty('cdn.url')})}" type="text/javascript"></script>
+<script th:src="@{{http://cdn.chs.local}/javascripts/vendor/jquery-3.5.1.min.js(http://cdn.chs.local=${@environment.getProperty('cdn.url')})}" type="text/javascript"></script>
+<script th:src="@{{http://cdn.chs.local}/javascripts/app/piwik-enable.js(http://cdn.chs.local=${@environment.getProperty('cdn.url')})}" type="text/javascript"></script>
+
+<div th:replace="~{fragments/piwikWithCookieCheck :: cookieBanner}"></div>
+
+<a href="#content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+
+<div class="entire-wrapper">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div class="govuk-width-container app-width-container">
+        <div th:replace="~{fragments/phaseBanner :: phaseBanner}"></div>
+        <div th:replace="~{fragments/back-button :: backLink}"></div>
+        <div th:replace="~{fragments/userBar :: userBar}"></div>
+        <div th:replace="~{fragments/adminSearch :: adminSearch}"></div>
+        <div th:if="${@environment.getProperty('welshLanguage.enabled')}">
+            <div th:replace="~{fragments/localesBanner :: localesBanner}"></div>
+        </div>
+        <main id="content" role="main" class="govuk-main-wrapper app-main-class">
+            <div layout:fragment="content"></div>
+        </main>
+    </div>
+</div>
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{{http://cdn.chs.local}/javascripts/app/js-enable.js(http://cdn.chs.local=${@environment.getProperty('cdn.url')})}" type="text/javascript"></script>
+<script th:src="@{{http://cdn.chs.local}/javascripts/vendor/selection-buttons.js(http://cdn.chs.local=${@environment.getProperty('cdn.url')})}" type="text/javascript"></script>
+
+<script th:src="@{{http://cdn.chs.local}/javascripts/app/cookie-consent/cookie-consent-1.0.0.js(http://cdn.chs.local=${@environment.getProperty('cdn.url')})}" type="text/javascript"></script>
+<script th:src="@{{http://cdn.chs.local}/javascripts/app/cookie-consent/matomo-only-cookie-consent.js(http://cdn.chs.local=${@environment.getProperty('cdn.url')})}" type="text/javascript"></script>
+</body>
+</html>
