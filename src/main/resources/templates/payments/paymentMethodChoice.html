@@ -15,7 +15,7 @@
 
             <form th:action="@{''}" th:object="${paymentMethods}" method="post" class="form" id="paymentSummary">
 
-                <div th:replace="fragments/globalErrors :: globalErrors"></div>
+                <div th:replace="~{fragments/globalErrors :: globalErrors}"></div>
                 <header>
                     <h1 id="page-title" class="govuk-heading-l">How do you want to pay?</h1>
                 </header>
