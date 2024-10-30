@@ -47,7 +47,7 @@
 <a href="#content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
 
 <div class="entire-wrapper">
-  <div th:replace="~{fragments/header :: header}"></div>
+  <div th:replace="~{fragments/header :: header (headerText = 'Pay Companies House')}"></div>
   <div class="govuk-width-container app-width-container">
     <div th:replace="~{fragments/phaseBanner :: phaseBanner}"></div>
     <div th:replace="~{fragments/back-button :: backLink}"></div>
