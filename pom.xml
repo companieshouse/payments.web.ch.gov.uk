@@ -37,6 +37,8 @@
         <hamcrest-library-version>3.0</hamcrest-library-version>
         <log4j2.version>2.24.0</log4j2.version>
         <api-sdk-java.version>6.0.9</api-sdk-java.version>
+        <spring-security-web.version>6.3.4</spring-security-web.version>
+        <spring-framework-dependencies.version>6.1.14</spring-framework-dependencies.version>
         <!-- Maven and Surefire plugins -->
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
@@ -94,47 +96,47 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>6.1.14</version>
+            <version>${spring-framework-dependencies.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
-            <version>6.1.14</version>
+            <version>${spring-framework-dependencies.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>6.1.14</version>
+            <version>${spring-framework-dependencies.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>6.1.14</version>
+            <version>${spring-framework-dependencies.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jcl</artifactId>
-            <version>6.1.14</version>
+            <version>${spring-framework-dependencies.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
-            <version>6.1.14</version>
+            <version>${spring-framework-dependencies.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>6.1.14</version>
+            <version>${spring-framework-dependencies.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-expression</artifactId>
-            <version>6.1.14</version>
+            <version>${spring-framework-dependencies.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -218,7 +220,7 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>6.3.4</version>
+            <version>${spring-security-web.version}</version>
         </dependency>
 
         <dependency>
@@ -284,7 +286,7 @@
                         <image>416670754337.dkr.ecr.eu-west-2.amazonaws.com/ci-corretto-build-21:latest</image>
                     </from>
                     <to>
-                        <image>169942020521.dkr.ecr.eu-west-2.amazonaws.com/local/payments.web.ch.gov.uk:latest</image>
+                        <image>416670754337.dkr.ecr.eu-west-2.amazonaws.com/payments.web.ch.gov.uk:latest</image>
                     </to>
 
                 </configuration>
