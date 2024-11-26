@@ -28,7 +28,6 @@ public class WebSecurity {
     public SecurityFilterChain webKeySecurityFilterChain(HttpSecurity http) throws Exception {
         return ChsCsrfMitigationHttpSecurityBuilder.configureWebCsrfMitigations(
                         http.securityMatcher("/**")
-                                .addFilterBefore(new SessionHandler(), BasicAuthenticationFilter.class)
                                 .addFilterBefore(new HijackFilter(), BasicAuthenticationFilter.class)
                                 .addFilterBefore(new UserAuthFilter(), BasicAuthenticationFilter.class))
                 .build();
