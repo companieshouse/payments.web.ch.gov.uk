@@ -34,7 +34,7 @@ public class PaymentServiceImpl implements PaymentService {
     public PaymentSummary getPayment(String paymentId, Boolean isAPIKey)
             throws ServiceException {
         
-        ApiClient apiClient = null;
+        ApiClient apiClient;
         if (isAPIKey) {
             apiClient = apiClientService.getPublicApiClientWithKey();
         } else {
@@ -58,7 +58,7 @@ public class PaymentServiceImpl implements PaymentService {
     public void patchPayment(String paymentId, String paymentMethod, Boolean isAPIKey)
             throws ServiceException {
 
-        InternalApiClient apiClient = null;
+        InternalApiClient apiClient;
         if (isAPIKey) {
             apiClient = apiClientService.getPrivateApiClientWithKey();
         } else {

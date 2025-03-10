@@ -4,9 +4,9 @@ public enum PaymentMethodData {
     GOVPAY("credit-card"),
     PAYPAL("PayPal");
 
-    private String paymentMethod;
+    private final String paymentMethod;
 
-    private PaymentMethodData(String paymentMethod) {
+    PaymentMethodData(String paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 

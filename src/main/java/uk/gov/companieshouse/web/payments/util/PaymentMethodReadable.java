@@ -4,9 +4,9 @@ public enum PaymentMethodReadable {
     GOVPAY("Credit or debit card"),
     PAYPAL("PayPal");
 
-    private String paymentMethod;
+    private final String paymentMethod;
 
-    private PaymentMethodReadable(String paymentMethod) {
+    PaymentMethodReadable(String paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 

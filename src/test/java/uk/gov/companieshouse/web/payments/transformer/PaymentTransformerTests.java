@@ -51,8 +51,8 @@ public class PaymentTransformerTests {
         assertEquals(SINGLE_PAYMENT_AMOUNT_FORMATTED, paymentSummary.getTotal());
         assertEquals(EMAIL, paymentSummary.getEmail());
         assertEquals(1, paymentSummary.getPayments().size());
-        assertEquals(SINGLE_PAYMENT_AMOUNT_FORMATTED, paymentSummary.getPayments().get(0).getCost());
-        assertEquals(DESCRIPTION_ITEM_1, paymentSummary.getPayments().get(0).getDescription());
+        assertEquals(SINGLE_PAYMENT_AMOUNT_FORMATTED, paymentSummary.getPayments().getFirst().getCost());
+        assertEquals(DESCRIPTION_ITEM_1, paymentSummary.getPayments().getFirst().getDescription());
     }
 
     @Test

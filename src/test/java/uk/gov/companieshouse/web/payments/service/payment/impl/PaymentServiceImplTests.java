@@ -80,7 +80,7 @@ public class PaymentServiceImplTests {
         paymentApi.setAmount(AMOUNT);
         PaymentSummary paymentSummary = new PaymentSummary();
         paymentSummary.setTotal(AMOUNT);
-        ApiResponse<PaymentApi> apiResponse = new ApiResponse<PaymentApi>(201, null, paymentApi);
+        ApiResponse<PaymentApi> apiResponse = new ApiResponse<>(201, null, paymentApi);
 
         when(apiClient.payment()).thenReturn(paymentResourceHandler);
         when(apiClient.payment().get(GET_PAYMENT_VALID_URI)).thenReturn(paymentGet);

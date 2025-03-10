@@ -51,7 +51,7 @@ public class ExternalPaymentServiceImplTests {
     private ExternalPaymentService externalPaymentService = new ExternalPaymentServiceImpl();
 
     @BeforeEach
-    private void init() {
+    public void init() {
         when(apiClientService.getPrivateApiClient()).thenReturn(apiClient);
     }
 

@@ -27,7 +27,7 @@ public class UserDetailsInterceptor implements HandlerInterceptor {
 
   public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
       @Nullable ModelAndView modelAndView) throws Exception {
-    Boolean urlContainsAPIKey = false;
+    boolean urlContainsAPIKey = false;
 
     if (request.getRequestURI() != null) {
       urlContainsAPIKey = request.getRequestURI().contains("api-key");
