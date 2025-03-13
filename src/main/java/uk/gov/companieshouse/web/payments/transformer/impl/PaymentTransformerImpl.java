@@ -47,7 +47,7 @@ public class PaymentTransformerImpl implements PaymentTransformer {
         List<String> availablePaymentMethods = new ArrayList<>();
 
         // Set the available payment methods to only acceptable methods from the first cost resource
-        for (String paymentMethod : paymentApi.getCosts().get(0).getAvailablePaymentMethods()) {
+        for (String paymentMethod : paymentApi.getCosts().getFirst().getAvailablePaymentMethods()) {
             if (paymentMethod.equalsIgnoreCase(PaymentMethodData.PAYPAL.getPaymentMethod()) || paymentMethod.equalsIgnoreCase(PaymentMethodData.GOVPAY.getPaymentMethod())) {
                 availablePaymentMethods.add(paymentMethod);
             }

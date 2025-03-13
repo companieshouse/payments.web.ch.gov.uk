@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PaymentMethodTransformerTests {
 
-    private PaymentMethodTransformer transformer = new PaymentMethodTransformerImpl();
+    private final PaymentMethodTransformer transformer = new PaymentMethodTransformerImpl();
 
     @Test
     @DisplayName("Get Readable Payment Methods - GovPay")

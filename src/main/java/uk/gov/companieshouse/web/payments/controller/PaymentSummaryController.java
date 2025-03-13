@@ -68,13 +68,13 @@ public class PaymentSummaryController extends BaseController {
         // Set the available payment methods using the first resource that is to be paid for
         // If there is more than one resource and they have different available payment methods this error will be found in the API.
         AvailablePaymentMethods availablePaymentMethods = new AvailablePaymentMethods();
-        availablePaymentMethods.setAvailablePaymentMethods(paymentSummary.getPayments().get(0).getPaymentMethods());
+        availablePaymentMethods.setAvailablePaymentMethods(paymentSummary.getPayments().getFirst().getPaymentMethods());
 
         // If there is only one payment method do not display screen to choose payment type
         if (availablePaymentMethods.getAvailablePaymentMethods().size() == 1) {
             if (summary.equals(false)) {
                 PaymentMethodChoice paymentMethodChoice = new PaymentMethodChoice();
-                paymentMethodChoice.setSelectedPaymentMethod(availablePaymentMethods.getAvailablePaymentMethods().get(0));
+                paymentMethodChoice.setSelectedPaymentMethod(availablePaymentMethods.getAvailablePaymentMethods().getFirst());
 
                 // If summary query parameter is set to false do not display summary screen and return ExternalPayment URL
                 return postExternalPayment(paymentId, request, paymentMethodChoice, null, null);
@@ -117,7 +117,7 @@ public class PaymentSummaryController extends BaseController {
             return ERROR_VIEW;
         }
         AvailablePaymentMethods availablePaymentMethods = new AvailablePaymentMethods();
-        availablePaymentMethods.setAvailablePaymentMethods(paymentSummary.getPayments().get(0).getPaymentMethods());
+        availablePaymentMethods.setAvailablePaymentMethods(paymentSummary.getPayments().getFirst().getPaymentMethods());
 
         // Only validate page if there is more than one payment method available to be chosen
         if (availablePaymentMethods.getAvailablePaymentMethods().size() > 1) {
@@ -127,7 +127,7 @@ public class PaymentSummaryController extends BaseController {
             }
         } else {
             // If there is only one payment method set it as the selected payment method
-            paymentMethodChoice.setSelectedPaymentMethod(availablePaymentMethods.getAvailablePaymentMethods().get(0));
+            paymentMethodChoice.setSelectedPaymentMethod(availablePaymentMethods.getAvailablePaymentMethods().getFirst());
         }
 
         String journeyUrl;

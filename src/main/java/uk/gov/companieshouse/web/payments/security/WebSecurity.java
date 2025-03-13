@@ -9,7 +9,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import uk.gov.companieshouse.auth.filter.UserAuthFilter;
 import uk.gov.companieshouse.csrf.config.ChsCsrfMitigationHttpSecurityBuilder;
-import uk.gov.companieshouse.session.handler.SessionHandler;
 import uk.gov.companieshouse.auth.filter.HijackFilter;
 
 @EnableWebSecurity
@@ -17,9 +16,9 @@ import uk.gov.companieshouse.auth.filter.HijackFilter;
 public class WebSecurity {
     @Bean
     @Order(1)
-    public SecurityFilterChain healthcheckSecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain apiKeySecurityFilterChain(HttpSecurity http) throws Exception {
         return ChsCsrfMitigationHttpSecurityBuilder.configureApiCsrfMitigations(
-                        http.securityMatcher("/payments-web/healthcheck", "/payments/*/pay/api-key"))
+                        http.securityMatcher("/payments/*/pay/api-key"))
                 .build();
     }
 

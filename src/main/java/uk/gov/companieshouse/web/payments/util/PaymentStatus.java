@@ -4,9 +4,9 @@ public enum PaymentStatus {
     PAYMENT_STATUS_PAID("paid"),
     PAYMENT_STATUS_PENDING("pending");
 
-    private String paymentStatus;
+    private final String paymentStatus;
 
-    private PaymentStatus(String paymentStatus) {
+    PaymentStatus(String paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
 

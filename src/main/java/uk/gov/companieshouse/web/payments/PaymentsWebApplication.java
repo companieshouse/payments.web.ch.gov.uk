@@ -42,7 +42,7 @@ public class PaymentsWebApplication implements WebMvcConfigurer {
         return new WebServerFactoryCustomizer<TomcatServletWebServerFactory>() {
             @Override
             public void customize(TomcatServletWebServerFactory factory) {
-                TomcatServletWebServerFactory tomcat = (TomcatServletWebServerFactory) factory;
+                TomcatServletWebServerFactory tomcat = factory;
                 tomcat.addContextCustomizers(context -> context.setCookieProcessor(new Rfc6265CookieProcessor()));
             }
         };

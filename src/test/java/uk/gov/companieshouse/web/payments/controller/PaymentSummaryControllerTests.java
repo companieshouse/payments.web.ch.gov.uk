@@ -1,5 +1,6 @@
 package uk.gov.companieshouse.web.payments.controller;
 
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -57,7 +58,7 @@ public class PaymentSummaryControllerTests {
     private PaymentSummaryController controller;
 
     @BeforeEach
-    private void setup() {
+    public void setup() {
         this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
@@ -94,7 +95,7 @@ public class PaymentSummaryControllerTests {
         );
 
         paymentSummary.setStatus(PaymentStatus.PAYMENT_STATUS_PENDING.paymentStatus());
-        paymentSummary.setPayments(Arrays.asList(payment));
+        paymentSummary.setPayments(List.of(payment));
 
         when(paymentService.getPayment(PAYMENT_ID, false)).thenReturn(paymentSummary);
 
@@ -139,7 +140,7 @@ public class PaymentSummaryControllerTests {
         );
 
         paymentSummary.setStatus(PaymentStatus.PAYMENT_STATUS_PENDING.paymentStatus());
-        paymentSummary.setPayments(Arrays.asList(payment));
+        paymentSummary.setPayments(List.of(payment));
 
         when(paymentService.getPayment(PAYMENT_ID, false)).thenReturn(paymentSummary);
 
@@ -159,7 +160,7 @@ public class PaymentSummaryControllerTests {
         );
 
         paymentSummary.setStatus(PaymentStatus.PAYMENT_STATUS_PENDING.paymentStatus());
-        paymentSummary.setPayments(Arrays.asList(payment));
+        paymentSummary.setPayments(List.of(payment));
 
         when(paymentService.getPayment(PAYMENT_ID, false)).thenReturn(paymentSummary);
 
@@ -181,7 +182,7 @@ public class PaymentSummaryControllerTests {
         );
 
         paymentSummary.setStatus(PaymentStatus.PAYMENT_STATUS_PENDING.paymentStatus());
-        paymentSummary.setPayments(Arrays.asList(payment));
+        paymentSummary.setPayments(List.of(payment));
 
         when(paymentService.getPayment(PAYMENT_ID, false)).thenReturn(paymentSummary);
 
@@ -213,7 +214,7 @@ public class PaymentSummaryControllerTests {
         );
 
         paymentSummary.setStatus(PaymentStatus.PAYMENT_STATUS_PENDING.paymentStatus());
-        paymentSummary.setPayments(Arrays.asList(payment));
+        paymentSummary.setPayments(List.of(payment));
 
         when(paymentService.getPayment(PAYMENT_ID, false)).thenReturn(paymentSummary);
         when(externalPaymentService.createExternalPayment(PAYMENT_ID, false)).thenReturn(JOURNEY_NEXT_URL);
@@ -239,7 +240,7 @@ public class PaymentSummaryControllerTests {
         );
 
         paymentSummary.setStatus(PaymentStatus.PAYMENT_STATUS_PENDING.paymentStatus());
-        paymentSummary.setPayments(Arrays.asList(payment));
+        paymentSummary.setPayments(List.of(payment));
 
         when(paymentService.getPayment(PAYMENT_ID, false)).thenReturn(paymentSummary);
         when(paymentMethodTransformer.getDataPaymentMethod(PaymentMethodReadable.GOVPAY.getPaymentMethod())).thenReturn(PaymentMethodData.GOVPAY.getPaymentMethod());
@@ -262,7 +263,7 @@ public class PaymentSummaryControllerTests {
         );
 
         paymentSummary.setStatus(PaymentStatus.PAYMENT_STATUS_PENDING.paymentStatus());
-        paymentSummary.setPayments(Arrays.asList(payment));
+        paymentSummary.setPayments(List.of(payment));
 
         when(paymentService.getPayment(PAYMENT_ID, false)).thenReturn(paymentSummary);
         when(paymentMethodTransformer.getDataPaymentMethod(PaymentMethodReadable.GOVPAY.getPaymentMethod())).thenReturn(PaymentMethodData.GOVPAY.getPaymentMethod());

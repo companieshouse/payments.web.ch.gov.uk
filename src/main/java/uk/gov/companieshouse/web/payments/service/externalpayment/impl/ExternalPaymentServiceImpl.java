@@ -24,7 +24,7 @@ public class ExternalPaymentServiceImpl implements ExternalPaymentService{
     @Override
     public String createExternalPayment(String paymentId, Boolean isAPIKey) throws ServiceException {
 
-        InternalApiClient apiClient = null;
+        InternalApiClient apiClient;
         if (isAPIKey) {
             apiClient = apiClientService.getPrivateApiClientWithKey();
         } else {
