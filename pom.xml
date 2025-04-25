@@ -28,8 +28,7 @@
         <hamcrest-library-version>3.0</hamcrest-library-version>
         <joda-money.version>2.0.0</joda-money.version>
         <spring-boot-dependencies.version>3.4.3</spring-boot-dependencies.version>
-        <spring-security-core.version>6.4.3</spring-security-core.version>
-        <spring-security-web.version>6.4.3</spring-security-web.version>
+        <spring-security-core.version>6.4.5</spring-security-core.version>
         <spring-boot-maven-plugin.version>3.4.3</spring-boot-maven-plugin.version>
         <thymeleaf-layout-dialect.version>3.4.0</thymeleaf-layout-dialect.version>
 
@@ -40,7 +39,7 @@
         <!-- Internal Dependencies-->
         <api-sdk-java.version>6.0.39</api-sdk-java.version>
         <common-web-java.version>3.0.38</common-web-java.version>
-        <java-session-handler.version>4.1.4</java-session-handler.version>
+        <java-session-handler.version>4.1.7</java-session-handler.version>
         <sdk-manager-java.version>3.0.10</sdk-manager-java.version>
         <structured-logging.version>3.0.26</structured-logging.version>
         <web-security-java.version>3.1.4</web-security-java.version>
@@ -227,16 +226,41 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
+            <version>${spring-security-core.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.security</groupId>
+                    <artifactId>spring-security-crypto</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
+            <version>${spring-security-core.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
+            <version>${spring-security-core.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.security</groupId>
+                    <artifactId>spring-security-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
+            <version>${spring-security-core.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.security</groupId>
+                    <artifactId>spring-security-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
