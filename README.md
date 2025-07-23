@@ -15,8 +15,10 @@ In order to run this Web App locally you will need to install:
 ### Getting Started
 
 1. [Configure your service](#configuration) if you want to override any of the defaults.
-1. Run `make`
-1. Run `./start.sh`
+2. Run `mvn compile jib:dockerBuild`
+3. Enable a module in docker-chs-development that depends on payments-web, for example the orders module `chs-dev modules enable orders`
+4. Run your local docker environment `chs-dev up`
+5. Check the status of the environment to make sure the service came up correctly `chs-dev status`
 
 
 ### Configuration
@@ -39,7 +41,7 @@ This project uses jib-maven-plugin to build Docker container images. To build a 
 command on the command line:
 
 ```bash
-mvn compile jib:dockerBuild -Dimage=169942020521.dkr.ecr.eu-west-1.amazonaws.com/local/payments.web.ch.gov.uk:latest
+mvn compile jib:dockerBuild -Dimage=416670754337.dkr.ecr.eu-west-2.amazonaws.com/payments.web.ch.gov.uk:latest
 ```
 
 ## Terraform ECS
