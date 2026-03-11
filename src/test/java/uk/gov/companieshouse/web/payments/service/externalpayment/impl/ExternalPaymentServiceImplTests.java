@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ExternalPaymentServiceImplTests {
+class ExternalPaymentServiceImplTests {
     private static final String PAYMENT_ID = "123456";
 
     private static final String VALID_URI = "/private/payments/" + PAYMENT_ID + "/external-journey";
@@ -48,10 +48,10 @@ public class ExternalPaymentServiceImplTests {
     private PrivateExternalPaymentResourceHandler privateExternalPaymentResourceHandler;
 
     @InjectMocks
-    private ExternalPaymentService externalPaymentService = new ExternalPaymentServiceImpl();
+    private ExternalPaymentService externalPaymentService = new ExternalPaymentServiceImpl(apiClientService);
 
     @BeforeEach
-    public void init() {
+    void init() {
         when(apiClientService.getPrivateApiClient()).thenReturn(apiClient);
     }
 

@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.never;
 
 @ExtendWith(MockitoExtension.class)
-public class UserDetailsInterceptorTests {
+class UserDetailsInterceptorTests {
 
     private static final String USER_EMAIL = "userEmail";
 

@@ -35,14 +35,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static uk.gov.companieshouse.web.payments.controller.BaseController.ERROR_VIEW;
 
 @ExtendWith(MockitoExtension.class)
-public class PaymentSummaryControllerTests {
+class PaymentSummaryControllerTests {
 
     private static final String PAYMENT_ID = "paymentId";
     private static final String PAYMENT_SUMMARY_PATH = "/payments/" + PAYMENT_ID + "/pay";
     private static final String SUMMARY_FALSE_PARAMETER = "?summary=false";
     private static final String PAYMENT_SUMMARY_DONT_DISPLAY_PATH = PAYMENT_SUMMARY_PATH + SUMMARY_FALSE_PARAMETER;
     private static final String JOURNEY_NEXT_URL = "payment.service/gov/uk/123456789";
-    private static final String PAYMENT_METHODS_MODEL_ATTR = "paymentMethods";
     private static final String SELECTED_PAYMENT_METHOD_MODEL_ATTR = "selectedPaymentMethod";
 
     private MockMvc mockMvc;
@@ -60,7 +59,7 @@ public class PaymentSummaryControllerTests {
     private PaymentSummaryController controller;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 

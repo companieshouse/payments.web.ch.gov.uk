@@ -1,5 +1,6 @@
 package uk.gov.companieshouse.web.payments.service.payment.impl;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -26,12 +27,13 @@ import uk.gov.companieshouse.web.payments.transformer.PaymentTransformer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.eq;
 
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class PaymentServiceImplTests {
+class PaymentServiceImplTests {
 
     private static final String PAYMENT_ID = "123456";
 
@@ -67,14 +69,22 @@ public class PaymentServiceImplTests {
     @Mock
     private PaymentTransformer paymentTransformer;
 
+    @Mock
+    private PaymentService paymentService;
+
     @InjectMocks
-    private PaymentService paymentService = new PaymentServiceImpl();
+    private PaymentServiceImpl paymentServiceImpl;
+
+    @BeforeEach
+    void setup() {
+        paymentService = new PaymentServiceImpl(apiClientService, paymentTransformer);
+    }
 
     @Test
     @DisplayName("Get Payment Session - Success Path")
     void getPaymentSessionSuccess() throws ServiceException, ApiErrorResponseException, URIValidationException {
 
-        when(apiClientService.getPublicApiClient()).thenReturn(apiClient);
+        when(apiClientService.getPublicApiClientWithKey()).thenReturn(apiClient);
 
         PaymentApi paymentApi = new PaymentApi();
         paymentApi.setAmount(AMOUNT);
@@ -87,7 +97,7 @@ public class PaymentServiceImplTests {
         when(paymentGet.execute()).thenReturn(apiResponse);
         when(paymentTransformer.getPayment(paymentApi)).thenReturn(paymentSummary);
 
-        String totalAmount = paymentService.getPayment(PAYMENT_ID, false).getTotal();
+        String totalAmount = paymentService.getPayment(PAYMENT_ID, true).getTotal();
 
         assertEquals(AMOUNT, totalAmount);
     }
@@ -142,5 +152,17 @@ public class PaymentServiceImplTests {
         when(paymentPatch.execute()).thenThrow(URIValidationException.class);
 
         assertThrows(ServiceException.class, () -> paymentService.patchPayment(PAYMENT_ID, PAYMENT_METHOD_GOV_PAY, false));
+    }
+
+    @Test
+    @DisplayName("Patch Payment Session - success")
+    void patchPaymentSessionUriValidationSuccess() throws ApiErrorResponseException, URIValidationException, ServiceException {
+        when(apiClientService.getPrivateApiClientWithKey()).thenReturn(internalApiClient);
+
+        when(internalApiClient.privatePayment()).thenReturn(privatePaymentResourceHandler);
+        when(internalApiClient.privatePayment().patch(eq(PATCH_PAYMENT_VALID_URI), any(PaymentApi.class))).thenReturn(paymentPatch);
+        paymentService.patchPayment(PAYMENT_ID, PAYMENT_METHOD_GOV_PAY, true);
+
+        verify(paymentPatch).execute();
     }
 }
