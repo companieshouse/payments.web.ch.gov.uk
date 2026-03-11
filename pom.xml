@@ -54,14 +54,6 @@
         <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
 
         <!-- SonarQube config -->
-        <sonar.projectName>payments.web.ch.gov.uk</sonar.projectName>
-        <!--suppress UnresolvedMavenProperty -->
-        <sonar.host.url>${CODE_ANALYSIS_HOST_URL}</sonar.host.url>
-        <!--suppress UnresolvedMavenProperty -->
-        <sonar.token>${CODE_ANALYSIS_TOKEN}</sonar.token>
-        <sonar.login/>
-        <sonar.password/>
-        <sonar.projectKey>uk.gov.companieshouse:payments.web.ch.gov.uk</sonar.projectKey>
         <sonar.java.binaries>${project.basedir}/target,${project.basedir}/target/*</sonar.java.binaries>
         <sonar-maven-plugin.version>5.2.0.4988</sonar-maven-plugin.version>
 
