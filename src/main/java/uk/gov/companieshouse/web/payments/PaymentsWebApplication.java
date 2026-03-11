@@ -39,8 +39,6 @@ public class PaymentsWebApplication implements WebMvcConfigurer {
 
     @Bean
     public WebServerFactoryCustomizer<TomcatServletWebServerFactory> webServerFactoryCustomizer() {
-        return factory -> {
-            factory.addContextCustomizers(context -> context.setCookieProcessor(new Rfc6265CookieProcessor()));
-        };
+        return factory -> factory.addContextCustomizers(context -> context.setCookieProcessor(new Rfc6265CookieProcessor()));
     }
 }
