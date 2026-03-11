@@ -52,6 +52,31 @@ class UserDetailsInterceptorTests {
     private UserDetailsInterceptor userDetailsInterceptor;
 
     @Test
+    @DisplayName("URL contains API Key")
+    void urlContainsApiKey() throws Exception {
+        userProfile.put(EMAIL_KEY, TEST_EMAIL_ADDRESS);
+
+        when(httpServletRequest.getMethod()).thenReturn(HttpMethod.GET.toString());
+        when(httpServletRequest.getRequestURI()).thenReturn("api-key");
+
+        userDetailsInterceptor.postHandle(httpServletRequest, httpServletResponse, new Object(), modelAndView);
+
+        verify(modelAndView, never()).addObject(anyString(), any());
+    }
+
+    @Test
+    @DisplayName("ModelAndView null")
+    void modelAndViewNull() throws Exception {
+        userProfile.put(EMAIL_KEY, TEST_EMAIL_ADDRESS);
+
+        when(httpServletRequest.getRequestURI()).thenReturn("api-key");
+
+        userDetailsInterceptor.postHandle(httpServletRequest, httpServletResponse, new Object(), null);
+
+        verify(modelAndView, never()).addObject(anyString(), any());
+    }
+
+    @Test
     @DisplayName("Tests the interceptor adds the user email to the model for GET requests")
     void postHandleForGetRequestSuccess() throws Exception {
         userProfile.put(EMAIL_KEY, TEST_EMAIL_ADDRESS);
@@ -72,7 +97,7 @@ class UserDetailsInterceptorTests {
 
     @Test
     @DisplayName("Tests the interceptor adds the user email to the model for POST requests which don't redirect")
-    void postHandleForPostRequestError() throws Exception {
+    void postHandleForPostRequestSuccess() throws Exception {
         userProfile.put(EMAIL_KEY, TEST_EMAIL_ADDRESS);
 
         Map<String, Object> signInInfo = new HashMap<>();
@@ -83,7 +108,7 @@ class UserDetailsInterceptorTests {
 
         when(sessionService.getSessionDataFromContext()).thenReturn(sessionData);
         when(httpServletRequest.getMethod()).thenReturn(HttpMethod.POST.toString());
-        when(modelAndView.getViewName()).thenReturn("error");
+        when(modelAndView.getViewName()).thenReturn("viewName");
 
         userDetailsInterceptor.postHandle(httpServletRequest, httpServletResponse, new Object(), modelAndView);
 
@@ -108,6 +133,53 @@ class UserDetailsInterceptorTests {
 
         when(sessionService.getSessionDataFromContext()).thenReturn(new HashMap<>());
         when(httpServletRequest.getMethod()).thenReturn(HttpMethod.GET.toString());
+
+        userDetailsInterceptor.postHandle(httpServletRequest, httpServletResponse, new Object(), modelAndView);
+
+        verify(modelAndView, never()).addObject(anyString(), any());
+    }
+
+    @Test
+    @DisplayName("Tests the interceptor does not add the user email to the model if summary_param is not null")
+    void postHandleForGetRequestWithNullSummaryParamIgnored() throws Exception {
+
+        Map<String, Object> signInInfo = new HashMap<>();
+        signInInfo.put(USER_PROFILE_KEY, userProfile);
+        Map<String, Object> sessionData = new HashMap<>();
+        sessionData.put(SIGN_IN_KEY, signInInfo);
+
+        when(sessionService.getSessionDataFromContext()).thenReturn(sessionData);
+        when(httpServletRequest.getMethod()).thenReturn(HttpMethod.GET.toString());
+        when(httpServletRequest.getParameter("summary")).thenReturn("notNull");
+
+        userDetailsInterceptor.postHandle(httpServletRequest, httpServletResponse, new Object(), modelAndView);
+
+        verify(modelAndView, never()).addObject(anyString(), any());
+    }
+
+    @Test
+    @DisplayName("Tests the interceptor adds the user email to the model if summary_param is true")
+    void postHandleForGetRequestWithSummaryParam() throws Exception {
+        Map<String, Object> signInInfo = new HashMap<>();
+        signInInfo.put(USER_PROFILE_KEY, userProfile);
+        Map<String, Object> sessionData = new HashMap<>();
+        sessionData.put(SIGN_IN_KEY, signInInfo);
+
+        when(sessionService.getSessionDataFromContext()).thenReturn(sessionData);
+        when(httpServletRequest.getMethod()).thenReturn(HttpMethod.GET.toString());
+        when(httpServletRequest.getParameter("summary")).thenReturn("true");
+
+        userDetailsInterceptor.postHandle(httpServletRequest, httpServletResponse, new Object(), modelAndView);
+
+        verify(modelAndView, times(1)).addObject(USER_EMAIL, TEST_EMAIL_ADDRESS);
+    }
+
+    @Test
+    @DisplayName("Request neither GET nor POST")
+    void neitherGetNorPost() throws Exception {
+        userProfile.put(EMAIL_KEY, TEST_EMAIL_ADDRESS);
+
+        when(httpServletRequest.getMethod()).thenReturn(HttpMethod.PATCH.toString());
 
         userDetailsInterceptor.postHandle(httpServletRequest, httpServletResponse, new Object(), modelAndView);
 
