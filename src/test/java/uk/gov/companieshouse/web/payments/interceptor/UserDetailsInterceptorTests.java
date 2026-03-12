@@ -128,6 +128,19 @@ class UserDetailsInterceptorTests {
     }
 
     @Test
+    @DisplayName("Tests the interceptor does not add the user email to the model for POST requests with missing viewName")
+    void postHandleForPostRequestNoViewNameIgnored() throws Exception {
+
+        when(httpServletRequest.getMethod()).thenReturn(HttpMethod.POST.toString());
+        when(modelAndView.getViewName()).thenReturn("redirect:abc");
+        when(modelAndView.getViewName()).thenReturn(null);
+
+        userDetailsInterceptor.postHandle(httpServletRequest, httpServletResponse, new Object(), modelAndView);
+
+        verify(modelAndView, never()).addObject(anyString(), any());
+    }
+
+    @Test
     @DisplayName("Tests the interceptor does not add the user email to the model if no sign in info is available")
     void postHandleForGetRequestWithoutSignInInfoIgnored() throws Exception {
 

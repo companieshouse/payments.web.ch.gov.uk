@@ -39,6 +39,7 @@ public class UserDetailsInterceptor implements HandlerInterceptor {
 
         if (modelAndView != null && (request.getMethod().equalsIgnoreCase("GET") ||
                 (request.getMethod().equalsIgnoreCase("POST") &&
+                        modelAndView.getViewName() != null &&
                         !modelAndView.getViewName().startsWith(UrlBasedViewResolver.REDIRECT_URL_PREFIX)))
                 && !urlContainsAPIKey) {
             Map<String, Object> sessionData = sessionService.getSessionDataFromContext();
