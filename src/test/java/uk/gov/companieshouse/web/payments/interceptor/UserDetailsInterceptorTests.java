@@ -56,7 +56,6 @@ class UserDetailsInterceptorTests {
     void urlContainsApiKey() throws Exception {
         userProfile.put(EMAIL_KEY, TEST_EMAIL_ADDRESS);
 
-        when(httpServletRequest.getMethod()).thenReturn(HttpMethod.GET.toString());
         when(httpServletRequest.getRequestURI()).thenReturn("api-key");
 
         userDetailsInterceptor.postHandle(httpServletRequest, httpServletResponse, new Object(), modelAndView);
