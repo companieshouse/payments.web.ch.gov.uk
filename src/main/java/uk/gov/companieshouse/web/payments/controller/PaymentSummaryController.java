@@ -1,7 +1,6 @@
 package uk.gov.companieshouse.web.payments.controller;
 
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.lang3.Strings;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,14 +30,17 @@ public class PaymentSummaryController extends BaseController {
     private static final String PAYMENT_SUMMARY_VIEW = "payments/paymentSummary";
     private static final String PAYMENT_METHOD_CHOICE_VIEW = "payments/paymentMethodChoice";
 
-    @Autowired
-    private PaymentService paymentService;
+    private final PaymentService paymentService;
 
-    @Autowired
-    private ExternalPaymentService externalPaymentService;
+    private final ExternalPaymentService externalPaymentService;
 
-    @Autowired
-    private PaymentMethodTransformer paymentMethodTransformer;
+    private final PaymentMethodTransformer paymentMethodTransformer;
+
+    public PaymentSummaryController(PaymentService paymentservice, ExternalPaymentService externalPaymentService, PaymentMethodTransformer paymentMethodTransformer) {
+        this.paymentService = paymentservice;
+        this.externalPaymentService = externalPaymentService;
+        this.paymentMethodTransformer = paymentMethodTransformer;
+    }
 
     @Override
     protected String getTemplateName() {
@@ -52,7 +54,7 @@ public class PaymentSummaryController extends BaseController {
                                      HttpServletRequest request) {
 
         PaymentSummary paymentSummary;
-        Boolean isAPIKey = request.getRequestURI().contains("api-key");
+        boolean isAPIKey = request.getRequestURI().contains("api-key");
         try {
             paymentSummary = paymentService.getPayment(paymentId, isAPIKey);
         } catch (ServiceException e) {
@@ -60,7 +62,7 @@ public class PaymentSummaryController extends BaseController {
             return ERROR_VIEW;
         }
 
-        if (StringUtils.equals(paymentSummary.getStatus(), (PaymentStatus.PAYMENT_STATUS_PAID.paymentStatus()))) {
+        if (Strings.CS.equals(paymentSummary.getStatus(), (PaymentStatus.PAYMENT_STATUS_PAID.paymentStatus()))) {
             LOGGER.errorRequest(request, "payment session status is paid, cannot pay again");
             return  ERROR_VIEW;
         }

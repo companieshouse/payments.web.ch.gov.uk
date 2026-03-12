@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(MockitoExtension.class)
-public class PaymentTransformerTests {
+class PaymentTransformerTests {
 
     private static final String MULTIPLE_PAYMENTS_AMOUNT = "300";
     private static final String MULTIPLE_PAYMENTS_AMOUNT_FORMATTED = "£300.00";
@@ -38,7 +38,7 @@ public class PaymentTransformerTests {
     private PaymentMethodTransformer paymentMethodTransformer;
 
     @InjectMocks
-    private PaymentTransformer transformer = new PaymentTransformerImpl();
+    private PaymentTransformerImpl transformer;
 
     @Test
     @DisplayName("Get Single Payment")

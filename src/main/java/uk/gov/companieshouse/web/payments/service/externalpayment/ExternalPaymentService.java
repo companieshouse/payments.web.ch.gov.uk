@@ -7,6 +7,6 @@ import uk.gov.companieshouse.web.payments.exception.ServiceException;
  */
 public interface ExternalPaymentService {
 
-    String createExternalPayment(String paymentId, Boolean isAPIKey)
+    String createExternalPayment(String paymentId, boolean isAPIKey)
         throws ServiceException;
 }

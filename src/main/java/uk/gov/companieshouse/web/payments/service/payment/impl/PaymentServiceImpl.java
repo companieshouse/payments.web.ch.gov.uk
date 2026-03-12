@@ -1,6 +1,5 @@
 package uk.gov.companieshouse.web.payments.service.payment.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriTemplate;
 import uk.gov.companieshouse.api.ApiClient;
@@ -24,16 +23,19 @@ public class PaymentServiceImpl implements PaymentService {
     private static final UriTemplate PATCH_PAYMENT_URI =
             new UriTemplate("/private/payments/{paymentId}");
 
-    @Autowired
-   private ApiClientService apiClientService;
+    private final ApiClientService apiClientService;
 
-    @Autowired
-    private PaymentTransformer transformer;
+    private final PaymentTransformer transformer;
+
+    public PaymentServiceImpl(ApiClientService apiClientService, PaymentTransformer paymentTransformer) {
+        this.apiClientService = apiClientService;
+        this.transformer = paymentTransformer;
+    }
 
     @Override
-    public PaymentSummary getPayment(String paymentId, Boolean isAPIKey)
+    public PaymentSummary getPayment(String paymentId, boolean isAPIKey)
             throws ServiceException {
-        
+
         ApiClient apiClient;
         if (isAPIKey) {
             apiClient = apiClientService.getPublicApiClientWithKey();
@@ -55,7 +57,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public void patchPayment(String paymentId, String paymentMethod, Boolean isAPIKey)
+    public void patchPayment(String paymentId, String paymentMethod, boolean isAPIKey)
             throws ServiceException {
 
         InternalApiClient apiClient;

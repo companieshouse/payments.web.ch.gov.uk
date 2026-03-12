@@ -8,9 +8,9 @@ import uk.gov.companieshouse.web.payments.model.PaymentSummary;
  */
 public interface PaymentService {
 
-    PaymentSummary getPayment(String paymentId, Boolean isAPIKey)
+    PaymentSummary getPayment(String paymentId, boolean isAPIKey)
             throws ServiceException;
 
-    void patchPayment(String paymentId, String paymentMethod, Boolean isAPIKey)
+    void patchPayment(String paymentId, String paymentMethod, boolean isAPIKey)
             throws ServiceException;
 }

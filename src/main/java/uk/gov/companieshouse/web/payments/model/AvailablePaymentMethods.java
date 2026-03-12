@@ -4,13 +4,13 @@ import java.util.List;
 
 public class AvailablePaymentMethods {
 
-    private List<String> availablePaymentMethods;
+    private List<String> paymentMethods;
 
     public List<String> getAvailablePaymentMethods() {
-        return availablePaymentMethods;
+        return paymentMethods;
     }
 
     public void setAvailablePaymentMethods(List<String> availablePaymentMethods) {
-        this.availablePaymentMethods = availablePaymentMethods;
+        this.paymentMethods = availablePaymentMethods;
     }
 }
