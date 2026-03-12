@@ -53,7 +53,7 @@ class UserDetailsInterceptorTests {
 
     @Test
     @DisplayName("URL contains API Key")
-    void urlContainsApiKey() throws Exception {
+    void urlContainsApiKey() {
         userProfile.put(EMAIL_KEY, TEST_EMAIL_ADDRESS);
 
         when(httpServletRequest.getRequestURI()).thenReturn("api-key");
@@ -65,7 +65,7 @@ class UserDetailsInterceptorTests {
 
     @Test
     @DisplayName("ModelAndView null")
-    void modelAndViewNull() throws Exception {
+    void modelAndViewNull() {
         userProfile.put(EMAIL_KEY, TEST_EMAIL_ADDRESS);
 
         when(httpServletRequest.getRequestURI()).thenReturn("api-key");
@@ -77,7 +77,7 @@ class UserDetailsInterceptorTests {
 
     @Test
     @DisplayName("Tests the interceptor adds the user email to the model for GET requests")
-    void postHandleForGetRequestSuccess() throws Exception {
+    void postHandleForGetRequestSuccess() {
         userProfile.put(EMAIL_KEY, TEST_EMAIL_ADDRESS);
 
         Map<String, Object> signInInfo = new HashMap<>();
@@ -96,7 +96,7 @@ class UserDetailsInterceptorTests {
 
     @Test
     @DisplayName("Tests the interceptor adds the user email to the model for POST requests which don't redirect")
-    void postHandleForPostRequestSuccess() throws Exception {
+    void postHandleForPostRequestSuccess() {
         userProfile.put(EMAIL_KEY, TEST_EMAIL_ADDRESS);
 
         Map<String, Object> signInInfo = new HashMap<>();
@@ -116,7 +116,7 @@ class UserDetailsInterceptorTests {
 
     @Test
     @DisplayName("Tests the interceptor does not add the user email to the model for POST requests")
-    void postHandleForPostRequestIgnored() throws Exception {
+    void postHandleForPostRequestIgnored() {
 
         when(httpServletRequest.getMethod()).thenReturn(HttpMethod.POST.toString());
         when(modelAndView.getViewName()).thenReturn("redirect:abc");
@@ -128,7 +128,7 @@ class UserDetailsInterceptorTests {
 
     @Test
     @DisplayName("Tests the interceptor does not add the user email to the model for POST requests with missing viewName")
-    void postHandleForPostRequestNoViewNameIgnored() throws Exception {
+    void postHandleForPostRequestNoViewNameIgnored() {
 
         when(httpServletRequest.getMethod()).thenReturn(HttpMethod.POST.toString());
         when(modelAndView.getViewName()).thenReturn("redirect:abc");
@@ -141,7 +141,7 @@ class UserDetailsInterceptorTests {
 
     @Test
     @DisplayName("Tests the interceptor does not add the user email to the model if no sign in info is available")
-    void postHandleForGetRequestWithoutSignInInfoIgnored() throws Exception {
+    void postHandleForGetRequestWithoutSignInInfoIgnored() {
 
         when(sessionService.getSessionDataFromContext()).thenReturn(new HashMap<>());
         when(httpServletRequest.getMethod()).thenReturn(HttpMethod.GET.toString());
@@ -153,7 +153,7 @@ class UserDetailsInterceptorTests {
 
     @Test
     @DisplayName("Tests the interceptor does not add the user email to the model if summary_param is not null")
-    void postHandleForGetRequestWithNullSummaryParamIgnored() throws Exception {
+    void postHandleForGetRequestWithNullSummaryParamIgnored() {
 
         Map<String, Object> signInInfo = new HashMap<>();
         signInInfo.put(USER_PROFILE_KEY, userProfile);
@@ -171,7 +171,7 @@ class UserDetailsInterceptorTests {
 
     @Test
     @DisplayName("Tests the interceptor adds the user email to the model if summary_param is true")
-    void postHandleForGetRequestWithSummaryParam() throws Exception {
+    void postHandleForGetRequestWithSummaryParam() {
         Map<String, Object> signInInfo = new HashMap<>();
         signInInfo.put(USER_PROFILE_KEY, userProfile);
         Map<String, Object> sessionData = new HashMap<>();
@@ -188,7 +188,7 @@ class UserDetailsInterceptorTests {
 
     @Test
     @DisplayName("Request neither GET nor POST")
-    void neitherGetNorPost() throws Exception {
+    void neitherGetNorPost() {
         userProfile.put(EMAIL_KEY, TEST_EMAIL_ADDRESS);
 
         when(httpServletRequest.getMethod()).thenReturn(HttpMethod.PATCH.toString());
