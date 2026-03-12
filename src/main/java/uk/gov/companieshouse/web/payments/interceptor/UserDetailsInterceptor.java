@@ -30,32 +30,44 @@ public class UserDetailsInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler,
-                           @Nullable ModelAndView modelAndView) throws Exception {
+                           @Nullable ModelAndView modelAndView) {
         boolean urlContainsAPIKey = false;
 
         if (request.getRequestURI() != null) {
             urlContainsAPIKey = request.getRequestURI().contains("api-key");
         }
 
-        if (modelAndView != null && (request.getMethod().equalsIgnoreCase("GET") ||
-                (request.getMethod().equalsIgnoreCase("POST") &&
-                        !modelAndView.getViewName().startsWith(UrlBasedViewResolver.REDIRECT_URL_PREFIX)))
-                && !urlContainsAPIKey) {
-            Map<String, Object> sessionData = sessionService.getSessionDataFromContext();
-            Map<String, Object> signInInfo = (Map<String, Object>) sessionData.get(SIGN_IN_KEY);
-            // These details should only be added when the summary screen is NOT skipped
-            // i.e. there is no summary parameter or the summary parameter is set to true.
-            // This is due to Spring adding these attributes as query parameters when
-            // redirecting in the postExternalPayment method of the
-            // PaymentSummaryController.
-            // This prevents exposing the users email address in the govpay logs.
-            if (signInInfo != null
-                    && (request.getParameter(SUMMARY_PARAM) == null
-                    || Boolean.parseBoolean(request.getParameter(SUMMARY_PARAM)))) {
-                Map<String, Object> userProfile = (Map<String, Object>) signInInfo
-                        .get(USER_PROFILE_KEY);
-                modelAndView.addObject(USER_EMAIL, userProfile.get(EMAIL_KEY));
+        if (modelAndView == null || urlContainsAPIKey) {
+            return;
+        }
+
+        if (request.getMethod().equalsIgnoreCase("POST")) {
+            var viewName = modelAndView.getViewName();
+            if (viewName == null) {
+                return;
             }
+            if (viewName.startsWith(UrlBasedViewResolver.REDIRECT_URL_PREFIX)) {
+                return;
+            }
+
+        } else if (!request.getMethod().equalsIgnoreCase("GET")) {
+            return;
+        }
+
+        Map<String, Object> sessionData = sessionService.getSessionDataFromContext();
+        Map<String, Object> signInInfo = (Map<String, Object>) sessionData.get(SIGN_IN_KEY);
+        // These details should only be added when the summary screen is NOT skipped
+        // i.e. there is no summary parameter or the summary parameter is set to true.
+        // This is due to Spring adding these attributes as query parameters when
+        // redirecting in the postExternalPayment method of the
+        // PaymentSummaryController.
+        // This prevents exposing the users email address in the govpay logs.
+        if (signInInfo != null
+                && (request.getParameter(SUMMARY_PARAM) == null
+                || Boolean.parseBoolean(request.getParameter(SUMMARY_PARAM)))) {
+            Map<String, Object> userProfile = (Map<String, Object>) signInInfo
+                    .get(USER_PROFILE_KEY);
+            modelAndView.addObject(USER_EMAIL, userProfile.get(EMAIL_KEY));
         }
     }
 }
