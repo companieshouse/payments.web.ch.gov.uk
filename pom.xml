@@ -30,7 +30,7 @@
         <opentelemetry-instrumentation-bom.version>2.25.0</opentelemetry-instrumentation-bom.version>
         <spring-boot-dependencies.version>3.5.11</spring-boot-dependencies.version>
         <spring-boot-maven-plugin.version>3.5.11</spring-boot-maven-plugin.version>
-        <spring-security-core.version>6.5.6</spring-security-core.version>
+        <spring-security-core.version>6.5.9</spring-security-core.version>
         <thymeleaf-layout-dialect.version>3.4.0</thymeleaf-layout-dialect.version>
         <kotlin-stdlib.version>2.2.21</kotlin-stdlib.version>
         <log4j.version>2.25.3</log4j.version>
