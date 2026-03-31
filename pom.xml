@@ -27,12 +27,12 @@
 
         <hamcrest.version>3.0</hamcrest.version>
         <joda-money.version>2.0.2</joda-money.version>
-        <opentelemetry-instrumentation-bom.version>2.25.0</opentelemetry-instrumentation-bom.version>
-        <spring-boot-dependencies.version>3.5.11</spring-boot-dependencies.version>
-        <spring-boot-maven-plugin.version>3.5.11</spring-boot-maven-plugin.version>
-        <spring-security-core.version>6.5.6</spring-security-core.version>
+        <opentelemetry-instrumentation.version>2.26.1</opentelemetry-instrumentation.version>
+        <spring-boot-dependencies.version>3.5.13</spring-boot-dependencies.version>
+        <spring-boot-maven-plugin.version>3.5.13</spring-boot-maven-plugin.version>
+        <spring-security-core.version>6.5.9</spring-security-core.version>
         <thymeleaf-layout-dialect.version>3.4.0</thymeleaf-layout-dialect.version>
-        <kotlin-stdlib.version>2.2.21</kotlin-stdlib.version>
+        <kotlin.version>2.3.20</kotlin.version>
         <log4j.version>2.25.3</log4j.version>
 
         <!-- Test Dependencies -->
@@ -53,10 +53,6 @@
         <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
         <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
 
-        <!-- SonarQube config -->
-        <sonar.java.binaries>${project.basedir}/target,${project.basedir}/target/*</sonar.java.binaries>
-        <sonar-maven-plugin.version>5.2.0.4988</sonar-maven-plugin.version>
-
     </properties>
 
     <dependencyManagement>
@@ -64,7 +60,7 @@
             <dependency>
                 <groupId>io.opentelemetry.instrumentation</groupId>
                 <artifactId>opentelemetry-instrumentation-bom</artifactId>
-                <version>${opentelemetry-instrumentation-bom.version}</version>
+                <version>${opentelemetry-instrumentation.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -75,6 +71,13 @@
                 <version>${spring-boot-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!-- CVE-2025-29582 -->
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib</artifactId>
+                <version>${kotlin.version}</version>
             </dependency>
 
         </dependencies>
@@ -237,26 +240,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.sonarsource.scanner.maven</groupId>
-            <artifactId>sonar-maven-plugin</artifactId>
-            <version>${sonar-maven-plugin.version}</version>
-            <exclusions>
-                <exclusion>
-                  <groupId>org.sonarsource.scanner.api</groupId>
-                  <artifactId>sonar-scanner-api</artifactId>
-                </exclusion>
-                <exclusion>
-                  <groupId>org.sonatype.plexus</groupId>
-                  <artifactId>plexus-sec-dispatcher</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-lang</groupId>
-                    <artifactId>commons-lang</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
             <groupId>uk.gov.companieshouse</groupId>
             <artifactId>java-session-handler</artifactId>
             <version>${java-session-handler.version}</version>
@@ -334,13 +317,6 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-to-slf4j</artifactId>
             <version>${log4j.version}</version>
-        </dependency>
-
-        <!-- CVE-2025-29582 -->
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib</artifactId>
-            <version>${kotlin-stdlib.version}</version>
         </dependency>
 
     </dependencies>
