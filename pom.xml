@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>payments.web.ch.gov.uk</artifactId>
@@ -24,18 +24,26 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <java.version>21</java.version>
-        <spring-boot.version>3.5.15</spring-boot.version>
+        <spring-boot.version>4.1.0</spring-boot.version>
         <thymeleaf-layout-dialect.version>3.4.0</thymeleaf-layout-dialect.version>
 
         <!-- CH dependencies -->
-        <ch-boms.version>0.1.8</ch-boms.version>
+        <ch-boms.version>0.1.16</ch-boms.version>
+
+        <!-- ch-core-bom (imported via ch-dependency-bom) pins tomcat.version for
+             services on Spring Boot 3, but Spring Boot 4.1.0 manages Tomcat 11.0.x
+             (Jakarta Servlet 6.1) itself. Without this override, the CH bom's older pin wins
+             and silently downgrades Tomcat below what Spring Boot 4 expects. Override here to
+             the latest patched Tomcat 11.x line until ch-boms tracks Spring Boot major version
+             (see ch-ai-dev spring-boot-4-migration skill / ch-core-bom follow-up). -->
+        <tomcat.version>11.0.24</tomcat.version>
 
         <joda-money.version>2.0.2</joda-money.version>
 
         <!-- Internal Dependencies-->
-        <api-sdk-java.version>6.6.15</api-sdk-java.version>
-        <private-api-sdk-java.version>6.0.29</private-api-sdk-java.version>
-        <common-web-java.version>4.1.5</common-web-java.version>
+        <api-sdk-java.version>7.2.2</api-sdk-java.version>
+        <private-api-sdk-java.version>7.2.12</private-api-sdk-java.version>
+        <common-web-java.version>5.0.4</common-web-java.version>
 
         <!-- Maven and Surefire plugins -->
         <jib-maven-plugin.version>3.4.6</jib-maven-plugin.version>
@@ -72,11 +80,40 @@
                 <scope>import</scope>
             </dependency>
 
+            <dependency>
+                <groupId>io.opentelemetry.instrumentation</groupId>
+                <artifactId>opentelemetry-instrumentation-bom</artifactId>
+                <version>2.26.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <!-- CVE-2026-33186 -->
             <dependency>
                 <groupId>io.grpc</groupId>
                 <artifactId>grpc-context</artifactId>
                 <version>1.80.0</version>
+            </dependency>
+
+            <!-- ch-core-bom (imported transitively via ch-dependency-bom) pins tomcat.version
+                 for Spring Boot 3 services, which downgrades Tomcat below what Spring Boot
+                 4.1.0 itself manages (Jakarta Servlet 6.1). Override explicitly here until
+                 ch-boms tracks Spring Boot major version (see ch-ai-dev
+                 spring-boot-4-migration skill / ch-core-bom follow-up). -->
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-core</artifactId>
+                <version>${tomcat.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-websocket</artifactId>
+                <version>${tomcat.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-el</artifactId>
+                <version>${tomcat.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -98,8 +135,15 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-opentelemetry</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>io.opentelemetry.instrumentation</groupId>
-            <artifactId>opentelemetry-spring-boot-starter</artifactId>
+            <artifactId>opentelemetry-logback-appender-1.0</artifactId>
+            <version>2.26.1-alpha</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
