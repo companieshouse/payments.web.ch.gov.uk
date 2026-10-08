@@ -1,5 +1,5 @@
 # Companies House Payments Web Service
-The Companies House Web Service for handling payments. This application is written using the [Spring Boot](http://projects.spring.io/spring-boot/) Java framework.
+The Companies House Web Service for handling payments. This application is written using the [Spring Boot](https://spring.io/projects/spring-boot) 4 Java framework.
 
 - Retrieves Payments data via the [SDK Manager](https://github.com/companieshouse/sdk-manager-java).
 - Displays web screens required for payments.
@@ -15,8 +15,8 @@ In order to run this Web App locally you will need to install:
 ### Getting Started
 
 1. [Configure your service](#configuration) if you want to override any of the defaults.
-2. Run `mvn compile jib:dockerBuild`
-3. Enable a module in docker-chs-development that depends on payments-web, for example the orders module `chs-dev modules enable orders`
+2. Enable a module in docker-chs-development that depends on payments-web, for example the orders module `chs-dev modules enable orders`
+3. Enable development mode for the service `chs-dev development enable payments-web`. This builds the service from your local checkout using the `java` builder (Java 21).
 4. Run your local docker environment `chs-dev up`
 5. Check the status of the environment to make sure the service came up correctly `chs-dev status`
 
@@ -27,6 +27,8 @@ Key                | Description
 -------------------|------------------------------------
 `PAYMENTS_WEB_PORT`|The port of the Payments Web service
 `HUMAN_LOG`        |For human readable logs
+`OTEL_LOG_ENABLED` |Set to `true` to export logs, traces and metrics via OpenTelemetry (default `false`)
+`OTEL_EXPORTER_OTLP_ENDPOINT`|Base URL of the OTLP collector; `/v1/logs`, `/v1/traces` and `/v1/metrics` are appended
 
 
 ### Web Pages
@@ -35,14 +37,19 @@ Page           | Address
 ---------------|-----------------------------
 Payment Summary| `/payments/<payment_id>/pay`
 
-### Building a Docker container image
-
-This project uses jib-maven-plugin to build Docker container images. To build a container image, run the following
-command on the command line:
+### Building
 
 ```bash
-mvn compile jib:dockerBuild -Dimage=416670754337.dkr.ecr.eu-west-2.amazonaws.com/payments.web.ch.gov.uk:latest
+mvn clean package
 ```
+
+### Running the tests
+
+```bash
+mvn test
+```
+
+The container image used in ECS is built in the pipeline from `ecs-image-build/Dockerfile` using the packaged jar.
 
 ## Terraform ECS
 
