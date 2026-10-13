@@ -1,4 +1,3 @@
-// FILE 2: src/main/java/.../internationalisation/ChSessionLocaleResolver.java
 package uk.gov.companieshouse.web.payments.internationalisation;
 
 import java.util.Locale;

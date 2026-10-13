@@ -7,6 +7,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
 import java.util.Locale;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -32,8 +33,7 @@ class MessageConfigTest {
         // Assert
         assertInstanceOf(ResourceBundleMessageSource.class, messageSource, "MessageSource should be an instance of ResourceBundleMessageSource");
         ResourceBundleMessageSource resourceBundleMessageSource = (ResourceBundleMessageSource) messageSource;
-        assertEquals("locales/common-messages", resourceBundleMessageSource.getBasenameSet().iterator().next(), "Basename should be 'locales/common-messages'");
-    }
+        assertEquals(Set.of("locales/messages", "locales/common-messages"), resourceBundleMessageSource.getBasenameSet(), "Basename should include the local and shared message files");    }
 
     @Test
     @DisplayName("MessageSource should resolve English messages")
@@ -47,5 +47,26 @@ class MessageConfigTest {
     void testMessageSourceResolvesWelshMessages() {
         String message = messageSource.getMessage("label.lang.cy", null, new Locale("cy"));
         assertEquals("Cymraeg", message);
+    }
+
+    @Test
+    @DisplayName("MessageSource should resolve local payments messages")
+    void testMessageSourceResolvesLocalMessages() {
+        String message = messageSource.getMessage("payment.summary.heading", null, Locale.ENGLISH);
+        assertEquals("Review your payment", message);
+    }
+
+    @Test
+    @DisplayName("MessageSource should resolve shared common-web-java footer messages")
+    void testMessageSourceResolvesSharedFooterMessages() {
+        String message = messageSource.getMessage("label.footer.cookies", null, Locale.ENGLISH);
+        assertEquals("Cookies", message);
+    }
+
+    @Test
+    @DisplayName("MessageSource should resolve local payments messages in Welsh")
+    void testMessageSourceResolvesLocalMessagesInWelsh() {
+        String message = messageSource.getMessage("payment.summary.heading", null, new Locale("cy"));
+        assertEquals("Test update unit test after translation", message);
     }
 }

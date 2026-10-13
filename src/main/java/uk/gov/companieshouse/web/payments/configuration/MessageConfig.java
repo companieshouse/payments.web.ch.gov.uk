@@ -22,7 +22,7 @@ public class MessageConfig implements WebMvcConfigurer {
 
         // This will match the resources folder files that begin with 'messages'
         // e.g. messages_wl.properties, messages_fr.properties
-        messageSource.setBasenames("locales/common-messages");
+        messageSource.setBasenames("locales/messages", "locales/common-messages");
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }
