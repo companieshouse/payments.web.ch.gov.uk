@@ -14,40 +14,31 @@
     <parent>
         <groupId>uk.gov.companieshouse</groupId>
         <artifactId>companies-house-parent</artifactId>
-        <version>2.1.14</version>
+        <version>2.1.20</version>
         <relativePath/>
     </parent>
 
     <properties>
         <start-class>uk.gov.companieshouse.web.payments.PaymentsWebApplication</start-class>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <java.version>21</java.version>
-        <spring-boot.version>3.5.15</spring-boot.version>
+        <spring-boot.version>4.1.1</spring-boot.version>
         <thymeleaf-layout-dialect.version>3.4.0</thymeleaf-layout-dialect.version>
 
         <!-- CH dependencies -->
-        <ch-boms.version>0.1.8</ch-boms.version>
+        <ch-boms.version>0.1.28</ch-boms.version>
 
         <joda-money.version>2.0.2</joda-money.version>
 
         <!-- Internal Dependencies-->
-        <api-sdk-java.version>6.6.15</api-sdk-java.version>
-        <private-api-sdk-java.version>6.0.29</private-api-sdk-java.version>
+        <api-sdk-java.version>7.2.8</api-sdk-java.version>
+        <private-api-sdk-java.version>7.2.33</private-api-sdk-java.version>
         <common-web-java.version>4.1.5</common-web-java.version>
-
-        <!-- Maven and Surefire plugins -->
-        <jib-maven-plugin.version>3.4.6</jib-maven-plugin.version>
-        <maven.compiler.release>${java.version}</maven.compiler.release>
-        <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
-        <maven-surefire-plugin.version>3.5.5</maven-surefire-plugin.version>
 
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!-- Import the CH Dependency BOM to manage versions of common dependencies -->
+            <!-- Must stay before spring-boot-dependencies so CH-approved versions take precedence -->
             <dependency>
                 <groupId>uk.gov.companieshouse</groupId>
                 <artifactId>ch-dependency-bom</artifactId>
@@ -71,13 +62,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
-            <!-- CVE-2026-33186 -->
-            <dependency>
-                <groupId>io.grpc</groupId>
-                <artifactId>grpc-context</artifactId>
-                <version>1.80.0</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -98,8 +82,13 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-opentelemetry</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>io.opentelemetry.instrumentation</groupId>
-            <artifactId>opentelemetry-spring-boot-starter</artifactId>
+            <artifactId>opentelemetry-logback-appender-1.0</artifactId>
         </dependency>
 
         <dependency>
@@ -132,7 +121,7 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
 
         <dependency>
@@ -147,28 +136,16 @@
         </dependency>
 
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-junit-jupiter</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Test scope -->
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <scope>test</scope>
+            <exclusions>
+                <!-- clashes with org.json:json (checked vs unchecked JSONException) -->
+                <exclusion>
+                    <groupId>com.vaadin.external.google</groupId>
+                    <artifactId>android-json</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -212,7 +189,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -227,44 +203,6 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <release>${maven.compiler.release}</release>
-                    <fork>true</fork>
-                    <meminitial>128m</meminitial>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                    <maxmem>512m</maxmem>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
-                <configuration>
-                    <argLine>${argLine}</argLine>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-                <version>${jib-maven-plugin.version}</version>
-                <configuration>
-                    <container>
-                        <expandClasspathDependencies>true</expandClasspathDependencies>
-                    </container>
-                    <from>
-                        <image>416670754337.dkr.ecr.eu-west-2.amazonaws.com/ci-corretto-build-21:latest</image>
-                    </from>
-                    <to>
-                        <image>416670754337.dkr.ecr.eu-west-2.amazonaws.com/payments.web.ch.gov.uk:latest</image>
-                    </to>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 </project>
