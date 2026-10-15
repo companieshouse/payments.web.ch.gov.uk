@@ -45,7 +45,7 @@ class MessageConfigTest {
     @Test
     @DisplayName("MessageSource should resolve Welsh messages")
     void testMessageSourceResolvesWelshMessages() {
-        String message = messageSource.getMessage("label.lang.cy", null, new Locale("cy"));
+        String message = messageSource.getMessage("label.lang.cy", null, Locale.forLanguageTag("cy"));
         assertEquals("Cymraeg", message);
     }
 
