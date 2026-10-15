@@ -1,11 +1,14 @@
 package uk.gov.companieshouse.web.payments.internationalisation;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mockStatic;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.BeforeEach;
-import org.springframework.test.context.TestPropertySource;
+import org.mockito.MockedStatic;
+import uk.gov.companieshouse.session.handler.SessionHandler;
+
+import java.util.Map;
 
 class SessionProviderTests {
 
@@ -22,9 +25,16 @@ class SessionProviderTests {
     }
 
     @Test
-    void testGetSessionDataFromContextMethodExists() {
-        assertNotNull(sessionProvider);
-        assertTrue(sessionProvider.getClass().getMethods().length > 0);
+    void testGetSessionDataFromContextReturnsSessionData() {
+        Map<String, Object> sessionData = Map.of("lang", "cy");
+
+        try (MockedStatic<SessionHandler> sessionHandler = mockStatic(SessionHandler.class)) {
+            sessionHandler.when(SessionHandler::getSessionDataFromContext)
+                    .thenReturn(sessionData);
+
+            assertSame(sessionData, sessionProvider.getSessionDataFromContext());
+            sessionHandler.verify(SessionHandler::getSessionDataFromContext);
+        }
     }
 
 }

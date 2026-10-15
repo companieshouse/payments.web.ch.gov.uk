@@ -5,7 +5,7 @@
       layout:decorate="~{layouts/baseLayout}">
 
 <head>
-    <title>Make Payment</title>
+    <title th:text="#{payment.method.page.title}">Make Payment</title>
 </head>
 <body>
 <div id="payments-main-content" layout:fragment="content">
@@ -17,7 +17,7 @@
 
                 <div th:replace="~{fragments/globalErrors :: globalErrors}"></div>
                 <header>
-                    <h1 id="page-title" class="govuk-heading-l">How do you want to pay?</h1>
+                    <h1 id="page-title" class="govuk-heading-l" th:text="#{payment.method.heading}">How do you want to pay?</h1>
                 </header>
 
                 <div class="govuk-form-group" th:classappend="${#fields.hasErrors('selectedPaymentMethod')} ? 'govuk-form-group--error' : ''">
@@ -46,7 +46,7 @@
                     </fieldset>
                 </div>
 
-                <input id="next-button" class="govuk-button piwik-event" data-event-id="Payment Summary - Continue" type="submit" role="button" value="Continue to payment"/>
+                <input id="next-button" class="govuk-button piwik-event" data-event-id="Payment Summary - Continue" type="submit" role="button" th:value="#{payment.button.continue.payment}" value="Continue to payment"/>
             </form>
         </div>
     </div>

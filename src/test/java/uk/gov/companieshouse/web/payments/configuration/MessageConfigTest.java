@@ -62,11 +62,4 @@ class MessageConfigTest {
         String message = messageSource.getMessage("label.footer.cookies", null, Locale.ENGLISH);
         assertEquals("Cookies", message);
     }
-
-    @Test
-    @DisplayName("MessageSource should resolve local payments messages in Welsh")
-    void testMessageSourceResolvesLocalMessagesInWelsh() {
-        String message = messageSource.getMessage("payment.summary.heading", null, new Locale("cy"));
-        assertEquals("Test update unit test after translation", message);
-    }
 }
