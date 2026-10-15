@@ -5,6 +5,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import uk.gov.companieshouse.web.payments.model.PaymentMethodChoice;
 
 import java.util.Locale;
 import java.util.Set;
@@ -61,5 +63,21 @@ class MessageConfigTest {
     void testMessageSourceResolvesSharedFooterMessages() {
         String message = messageSource.getMessage("label.footer.cookies", null, Locale.ENGLISH);
         assertEquals("Cookies", message);
+    }
+
+    @Test
+    @DisplayName("Missing payment method resolves validation message")
+    void testMissingPaymentMethodResolvesValidationMessage() {
+        try (var validator = new LocalValidatorFactoryBean()) {
+            validator.setValidationMessageSource(messageSource);
+            validator.afterPropertiesSet();
+
+            var violations = validator.validate(new PaymentMethodChoice());
+
+            assertEquals(1, violations.size());
+            var violation = violations.iterator().next();
+            assertEquals("selectedPaymentMethod", violation.getPropertyPath().toString());
+            assertEquals("Please choose a payment method", violation.getMessage());
+        }
     }
 }
