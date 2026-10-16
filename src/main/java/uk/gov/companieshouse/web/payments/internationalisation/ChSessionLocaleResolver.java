@@ -12,6 +12,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import uk.gov.companieshouse.session.Session;
 
+/**
+ * Resolves the locale from the CH session's {@code lang} value,
+ * falling back to the legacy {@code extra_data.lang} value and then the default locale.
+ * Locale changes are stored in the session's top-level {@code lang} value.
+ */
 @Component
 public class ChSessionLocaleResolver implements LocaleResolver {
     private static final String LANG_SESSION_KEY = "lang";
@@ -20,6 +25,11 @@ public class ChSessionLocaleResolver implements LocaleResolver {
     private SessionProvider sessionProvider;
     private Locale defaultLocale = Locale.getDefault();
 
+    /**
+     * Creates a locale resolver using the supplied session provider.
+     *
+     * @param sessionProvider provider of the current CH session
+     */
     @Autowired
     public ChSessionLocaleResolver(SessionProvider sessionProvider) {
         this.sessionProvider = sessionProvider;
@@ -76,10 +86,20 @@ public class ChSessionLocaleResolver implements LocaleResolver {
         session.store();
     }
 
+    /**
+     * Sets the provider used to access the current CH session.
+     *
+     * @param sessionProvider the session provider to use
+     */
     public void setSessionProvider(SessionProvider sessionProvider) {
         this.sessionProvider = sessionProvider;
     }
 
+    /**
+     * Sets the locale used when the session contains no language preference.
+     *
+     * @param defaultLocale the fallback locale
+     */
     public void setDefaultLocale(Locale defaultLocale) {
         this.defaultLocale = defaultLocale;
     }
