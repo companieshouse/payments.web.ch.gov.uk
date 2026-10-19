@@ -5,7 +5,7 @@
       layout:decorate="~{layouts/baseLayout.html}">
 
 <head>
-    <title>Make Payment</title>
+    <title th:text="#{payment.summary.title}">Make Payment</title>
 </head>
 <body>
 <div id="payments-main-content" layout:fragment="content">
@@ -14,13 +14,13 @@
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
                 <h1 id="page-title " class="govuk-heading-xl">
-                    <span id="page-title-heading">Review your payment</span>
+                    <span id="page-title-heading" th:text="#{payment.summary.heading}">Review your payment</span>
                 </h1>
                 <table class="govuk-table">
                     <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
-                        <th class="govuk-table__header" scope="col">Item</th>
-                        <th class="govuk-table__header govuk-table__header--numeric" scope="col">Amount to pay</th>
+                        <th class="govuk-table__header" scope="col" th:text="#{payment.table.item}">Item</th>
+                        <th class="govuk-table__header govuk-table__header--numeric" scope="col" th:text="#{payment.table.amount}">Amount to pay</th>
                     </tr>
                     </thead>
                     <tbody class="govuk-table__body">
@@ -35,10 +35,10 @@
                     </tbody>
                 </table>
 
-                <h2 th:text="${'The total amount to pay is ' + paymentSummary.total}" id="page-total" class="govuk-heading-m">
+                <h2 th:text="|#{payment.total.label} ${paymentSummary.total}|" id="page-total" class="govuk-heading-m">
                 </h2>
                 <div class="form-group">
-                    <input id="next-button" class="govuk-button piwik-event" th:attr="data-event-id=${chosenPaymentMethod[0]} + ' Payment Summary - Continue'" type="submit" role="button" value="Continue"/>
+                    <input id="next-button" class="govuk-button piwik-event" th:attr="data-event-id=${chosenPaymentMethod[0]} + ' Payment Summary - Continue'" type="submit" role="button" th:value="#{payment.button.continue}" value="Continue"/>
                 </div>
             </div>
         </div>
