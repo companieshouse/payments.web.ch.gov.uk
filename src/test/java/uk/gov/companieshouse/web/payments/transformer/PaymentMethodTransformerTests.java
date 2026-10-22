@@ -90,4 +90,11 @@ class PaymentMethodTransformerTests {
 
         assertEquals("UNRECOGNISED_PAYMENT_METHOD", dataPaymentMethod);
     }
+    @Test
+    @DisplayName("Get message key for payments methods in English")
+    void getMessageKeyForPaymentMethods() {
+        assertEquals("payment.method.card", PaymentMethodReadable.messageKeyFor(PaymentMethodReadable.GOVPAY.getPaymentMethod()));
+        assertEquals("payment.method.paypal", PaymentMethodReadable.messageKeyFor(PaymentMethodReadable.PAYPAL.getPaymentMethod()));
+        assertEquals("payment.method.unrecognised", PaymentMethodReadable.messageKeyFor(PaymentMethodReadable.UNRECOGNISED.getPaymentMethod()));
+    }
 }
