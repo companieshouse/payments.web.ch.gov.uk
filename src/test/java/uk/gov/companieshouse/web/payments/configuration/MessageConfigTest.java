@@ -88,5 +88,7 @@ class MessageConfigTest {
 
         assertEquals("Cerdyn credyd neu ddebyd", messageSource.getMessage("payment.method.card", null, welsh));
         assertEquals("PayPal", messageSource.getMessage("payment.method.paypal", null, welsh));
+        assertEquals("Dull talu heb ei gydnabod",
+                messageSource.getMessage("payment.method.unrecognised", null, welsh));
     }
 }
