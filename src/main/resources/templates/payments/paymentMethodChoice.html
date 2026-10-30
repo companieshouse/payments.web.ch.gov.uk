@@ -39,7 +39,11 @@
                                        th:field="*{selectedPaymentMethod}"
                                        th:errorclass="govuk-error-message"
                                        th:attr="data-event-id=${paymentMethod}"/>
-                                <label class="govuk-label govuk-radios__label" th:for="${paymentMethod}" th:text="${paymentMethod}">keyvalue</label>
+                                <label class="govuk-label govuk-radios__label"
+                                       th:for="${paymentMethod}"
+                                       th:text="${#messages.msg(T(uk.gov.companieshouse.web.payments.util.PaymentMethodReadable).messageKeyFor(paymentMethod))}">
+                                    keyvalue
+                                </label>
                             </div>
                         </div>
 

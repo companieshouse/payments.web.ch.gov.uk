@@ -80,4 +80,15 @@ class MessageConfigTest {
             assertEquals("Please choose a payment method", violation.getMessage());
         }
     }
+
+    @Test
+    @DisplayName("Get message key for payments methods in Welsh")
+    void getMessageKeyForPaymentMethodsInWelsh() {
+        Locale welsh = Locale.forLanguageTag("cy");
+
+        assertEquals("Cerdyn credyd neu ddebyd", messageSource.getMessage("payment.method.card", null, welsh));
+        assertEquals("PayPal", messageSource.getMessage("payment.method.paypal", null, welsh));
+        assertEquals("Dull talu heb ei gydnabod",
+                messageSource.getMessage("payment.method.unrecognised", null, welsh));
+    }
 }
