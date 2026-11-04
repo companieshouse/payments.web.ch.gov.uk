@@ -4,10 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.util.ReflectionTestUtils;
 import uk.gov.companieshouse.session.Session;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +17,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verifyNoInteractions;
 
 @ExtendWith(MockitoExtension.class)
 class ChSessionLocaleResolverTests {
@@ -40,13 +39,12 @@ class ChSessionLocaleResolverTests {
 
     private Map<String, Object> sessionData;
 
-    @InjectMocks
     private ChSessionLocaleResolver localeResolver;
 
     @BeforeEach
-    public void setUp() {
-        localeResolver.setSessionProvider(sessionProvider);
-        ReflectionTestUtils.setField(localeResolver, "defaultLocale", Locale.ENGLISH);
+    void setUp() {
+        localeResolver = new ChSessionLocaleResolver(sessionProvider, true);
+        localeResolver.setDefaultLocale(Locale.ENGLISH);
     }
 
     private void initSessionData(String lang) {
@@ -143,5 +141,47 @@ class ChSessionLocaleResolverTests {
 
         Locale welshLocale = Locale.forLanguageTag("cy");
         assertEquals(welshLocale, locale);
+    }
+
+    @Test
+    @DisplayName("Returns English without reading the session when Welsh is disabled")
+    void testReturnsEnglishWhenWelshIsDisabled() {
+        localeResolver = new ChSessionLocaleResolver(sessionProvider, false);
+
+        Locale locale = localeResolver.resolveLocale(request);
+
+        assertEquals(Locale.ENGLISH, locale);
+        verify(request).setAttribute("onWelshJourney", false);
+        verifyNoInteractions(sessionProvider);
+    }
+
+    @Test
+    @DisplayName("Ignores language changes when Welsh is disabled")
+    void shouldIgnoreWelshLanguageChangeWhenDisabled() {
+        localeResolver = new ChSessionLocaleResolver(sessionProvider, false);
+
+        localeResolver.setLocale(request, response, Locale.forLanguageTag("cy"));
+
+        verifyNoInteractions(sessionProvider, session);
+    }
+
+    @Test
+    @DisplayName("Marks the journey as Welsh when Welsh is selected")
+    void shouldMarkWelshJourneyWhenWelshIsSelected() {
+        setupSessionData("cy");
+
+        localeResolver.resolveLocale(request);
+
+        verify(request).setAttribute("onWelshJourney", true);
+    }
+
+    @Test
+    @DisplayName("Does not mark the journey as Welsh when English is selected")
+    void shouldNotMarkWelshJourneyWhenEnglishIsSelected() {
+        setupSessionData("en");
+
+        localeResolver.resolveLocale(request);
+
+        verify(request).setAttribute("onWelshJourney", false);
     }
 }

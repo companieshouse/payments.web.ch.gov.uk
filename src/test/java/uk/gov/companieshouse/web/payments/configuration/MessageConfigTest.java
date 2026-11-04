@@ -6,6 +6,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import uk.gov.companieshouse.web.payments.model.PaymentMethodChoice;
 
 import java.util.Locale;
@@ -13,6 +16,10 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class MessageConfigTest {
 
@@ -90,5 +97,17 @@ class MessageConfigTest {
         assertEquals("PayPal", messageSource.getMessage("payment.method.paypal", null, welsh));
         assertEquals("Dull talu heb ei gydnabod",
                 messageSource.getMessage("payment.method.unrecognised", null, welsh));
+    }
+
+    @Test
+    @DisplayName("LocaleChangeInterceptor should exclude healthcheck path")
+    void shouldExcludeHealthcheckFromLocaleChangeInterceptor() {
+        var registry = mock(InterceptorRegistry.class);
+        var registration = mock(InterceptorRegistration.class);
+        when(registry.addInterceptor(any(LocaleChangeInterceptor.class))).thenReturn(registration);
+
+        new MessageConfig().addInterceptors(registry);
+
+        verify(registration).excludePathPatterns("/payments-web/healthcheck");
     }
 }
