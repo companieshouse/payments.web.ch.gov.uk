@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import uk.gov.companieshouse.session.Session;
 
+import org.springframework.beans.factory.annotation.Value;
+
 /**
  * Resolves the locale from the CH session's {@code lang} value,
  * falling back to the legacy {@code extra_data.lang} value and then the default locale.
@@ -21,6 +23,7 @@ import uk.gov.companieshouse.session.Session;
 public class ChSessionLocaleResolver implements LocaleResolver {
     private static final String LANG_SESSION_KEY = "lang";
     private static final String EXTRA_DATA_SESSION_KEY = "extra_data";
+    private final boolean welshLanguageEnabled;
 
     private SessionProvider sessionProvider;
     private Locale defaultLocale = Locale.getDefault();
@@ -29,27 +32,34 @@ public class ChSessionLocaleResolver implements LocaleResolver {
      * Creates a locale resolver using the supplied session provider.
      *
      * @param sessionProvider provider of the current CH session
+     * @param welshLanguageEnabled whether Welsh is enabled
      */
     @Autowired
-    public ChSessionLocaleResolver(SessionProvider sessionProvider) {
+    public ChSessionLocaleResolver(SessionProvider sessionProvider, @Value("${welshLanguage.enabled:false}") boolean welshLanguageEnabled) {
         this.sessionProvider = sessionProvider;
+        this.welshLanguageEnabled = welshLanguageEnabled;
     }
 
     @Override
-    public Locale resolveLocale(HttpServletRequest httpServletRequest) {
-        Locale locale = getLocaleFromSession();
-        httpServletRequest.setAttribute("onWelshJourney", locale != null);
-        if (locale == null) {
-            locale = defaultLocale;
+    public Locale resolveLocale(HttpServletRequest request) {
+        if (!welshLanguageEnabled) {
+            request.setAttribute("onWelshJourney", false);
+            return Locale.ENGLISH;
         }
-        return locale;
+
+        Locale locale = getLocaleFromSession();
+        request.setAttribute("onWelshJourney",
+                locale != null && "cy".equals(locale.getLanguage()));
+
+        return locale == null ? defaultLocale : locale;
     }
 
     @Override
-    public void setLocale(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Locale locale) {
-        setLocaleInSession(locale);
+    public void setLocale(HttpServletRequest request, HttpServletResponse response, Locale locale) {
+        if (welshLanguageEnabled) {
+            setLocaleInSession(locale);
+        }
     }
-
     private Locale getLocaleFromSession() {
         Map<String, Object> sessionData = sessionProvider.getSessionDataFromContext();
         String languageTag = languageTagFrom(sessionData.get(LANG_SESSION_KEY));
