@@ -40,14 +40,8 @@ public class MessageConfig implements WebMvcConfigurer {
         return localeChangeInterceptor;
     }
 
-    /**
-     * Registers language switching, excluding the health check.
-     *
-     * @param registry the interceptor registry
-     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(localeChangeInterceptor())
-                .excludePathPatterns("/payments-web/healthcheck");
+        registry.addInterceptor(localeChangeInterceptor());
     }
 }
