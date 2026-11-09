@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 
 public class PaymentMethodChoice {
 
-    @NotNull(message = "{payment.method.required}")
+    @NotNull(message = "Please choose a payment method")
     private String selectedPaymentMethod;
 
     public String getSelectedPaymentMethod() {
