@@ -1,7 +1,9 @@
 package uk.gov.companieshouse.web.payments.controller;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.webmvc.error.ErrorController;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.LocaleResolver;
@@ -10,7 +12,7 @@ import org.springframework.web.servlet.LocaleResolver;
  * Supplies shared template attributes to application controllers only,
  * excluding actuator endpoints that have no CH session.
  */
-@ControllerAdvice(basePackageClasses = BaseController.class)
+@ControllerAdvice(basePackageClasses = BaseController.class, assignableTypes = ErrorController.class)
 public class GlobalController {
 
     private final LocaleResolver localeResolver;
@@ -33,6 +35,13 @@ public class GlobalController {
      */
     @ModelAttribute("requestURI")
     public String getRequestURI(HttpServletRequest request) {
+        Object originalRequestURI =
+                request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI);
+
+        if (originalRequestURI instanceof String originalURI) {
+            return originalURI;
+        }
+
         return request.getRequestURI();
     }
 

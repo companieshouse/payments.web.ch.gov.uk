@@ -1,5 +1,6 @@
 package uk.gov.companieshouse.web.payments.controller;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Locale;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.LocaleResolver;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -66,5 +68,22 @@ class GlobalControllerTest {
     @Test
     void shouldReturnSameRequestForSharedFragments() {
         assertSame(request, controller.getRequest(request));
+    }
+
+    @Test
+    void shouldReturnOriginalRequestURIForErrorDispatch() {
+        when(request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI)).thenReturn(PAYMENT_URI);
+
+        assertEquals(PAYMENT_URI, controller.getRequestURI(request));
+
+        verify(request, never()).getRequestURI();
+    }
+
+    @Test
+    void shouldReturnCurrentRequestURIWhenErrorAttributeIsNotAString() {
+        when(request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI)).thenReturn(400);
+        when(request.getRequestURI()).thenReturn("/error");
+
+        assertEquals("/error", controller.getRequestURI(request));
     }
 }
