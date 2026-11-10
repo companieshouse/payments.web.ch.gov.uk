@@ -29,7 +29,6 @@ Key                | Description
 `HUMAN_LOG`        |For human readable logs
 `OTEL_LOG_ENABLED` |Set to `true` to export logs, traces and metrics via OpenTelemetry (default `false`)
 `OTEL_EXPORTER_OTLP_ENDPOINT`|Base URL of the OTLP collector; `/v1/logs`, `/v1/traces` and `/v1/metrics` are appended
-`FEATURE_FLAG_WELSH_LANG_ENABLED_031126`|Controls Welsh language support. Set per environment in `ecs-service-configs-dev`  `ecs-service-configs-production`; defaults to `false` when unset
 
 
 ### Web Pages
