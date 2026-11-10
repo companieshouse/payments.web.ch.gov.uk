@@ -34,7 +34,7 @@ public class PaymentMethodTransformerImpl implements PaymentMethodTransformer {
         } else if (paymentMethod.equalsIgnoreCase(PaymentMethodData.PAYPAL.getPaymentMethod())) {
             return PaymentMethodReadable.PAYPAL.getPaymentMethod();
         } else {
-            return PaymentMethodReadable.UNRECOGNISED.getPaymentMethod();
+            return "unrecognised payment method";
         }
     }
 

@@ -22,5 +22,4 @@ class MessageConfigTest {
         ResourceBundleMessageSource resourceBundleMessageSource = (ResourceBundleMessageSource) messageSource;
         assertEquals("locales/common-messages", resourceBundleMessageSource.getBasenameSet().iterator().next(), "Basename should be 'locales/common-messages'");
     }
-
 }
