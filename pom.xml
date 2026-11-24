@@ -21,18 +21,18 @@
     <properties>
         <start-class>uk.gov.companieshouse.web.payments.PaymentsWebApplication</start-class>
 
-        <spring-boot.version>4.1.1</spring-boot.version>
+        <spring-boot.version>4.1.2</spring-boot.version>
         <thymeleaf-layout-dialect.version>3.4.0</thymeleaf-layout-dialect.version>
 
         <!-- CH dependencies -->
-        <ch-boms.version>0.1.28</ch-boms.version>
+        <ch-boms.version>0.1.42</ch-boms.version>
 
         <joda-money.version>2.0.2</joda-money.version>
 
         <!-- Internal Dependencies-->
-        <api-sdk-java.version>7.2.8</api-sdk-java.version>
-        <private-api-sdk-java.version>7.2.33</private-api-sdk-java.version>
-        <common-web-java.version>4.1.5</common-web-java.version>
+        <api-sdk-java.version>7.2.14</api-sdk-java.version>
+        <private-api-sdk-java.version>7.2.53</private-api-sdk-java.version>
+        <common-web-java.version>6.0.1</common-web-java.version>
 
     </properties>
 
